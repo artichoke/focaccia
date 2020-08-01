@@ -13,6 +13,7 @@
 //! Case folding comparisons for byte content resolved from `Symbol`s.
 
 #![cfg_attr(not(feature = "std"), no_std)]
+#![doc(html_root_url = "https://docs.rs/focaccia/1.0.0")]
 
 // Ensure code blocks in README.md compile
 #[cfg(doctest)]

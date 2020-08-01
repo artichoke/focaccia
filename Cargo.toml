@@ -1,8 +1,20 @@
 [package]
 name = "focaccia"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["Ryan Lopopolo <rjl@hyperbo.la>"]
 edition = "2018"
+description = "no_std implementation of Unicode case folding comparison functions"
+repository = "https://github.com/artichoke/focaccia"
+readme = "README.md"
+license = "MIT"
+keywords = ["case-folding", "case-insensitive", "case", "no_std", "unicode"]
+categories = ["internationalization", "no-std", "text-processing"]
+include = [
+  "src/**/*.rs",
+  "tests/**/*.rs",
+  "LICENSE",
+  "README.md"
+]
 
 [features]
 default = ["std"]
@@ -11,3 +23,8 @@ default = ["std"]
 std = []
 
 [dependencies]
+
+[dev-dependencies]
+# Check that crate versions are properly updated in documentation and code when
+# bumping the version.
+version-sync = "0.9"
