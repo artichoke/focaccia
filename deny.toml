@@ -6,7 +6,9 @@ ignore = []
 
 [licenses]
 unlicensed = "deny"
-allow = []
+allow = [
+  "MIT"
+]
 deny = []
 copyleft = "deny"
 allow-osi-fsf-free = "neither"
@@ -25,6 +27,6 @@ skip-tree = []
 unknown-registry = "deny"
 unknown-git = "deny"
 allow-registry = [
-  "https://github.com/rust-lang/crates.io-index",
+  # "https://github.com/rust-lang/crates.io-index",
 ]
 allow-git = []
