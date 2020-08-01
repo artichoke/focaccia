@@ -8,8 +8,9 @@ programming language.
 [There is lots to do](https://github.com/artichoke/artichoke/issues).
 
 Focaccia is used to implement Unicode case comparison routines for the
-[`Symbol`](https://ruby-doc.org/core-2.6.3/Symbol.html) and [`String`](https://ruby-doc.org/core-2.6.3/String.html) classes
-in Artichoke's implementation of Ruby Core.
+[`Symbol`](https://ruby-doc.org/core-2.6.3/Symbol.html) and
+[`String`](https://ruby-doc.org/core-2.6.3/String.html) classes in Artichoke's
+implementation of Ruby Core.
 
 If Artichoke does not run Ruby source code in the same way that MRI does, it is
 a bug and we would appreciate if you
@@ -83,15 +84,15 @@ tasks by running:
 
 ```console
 $ bundle exec rake --tasks
-rake doc               # Generate Rust API documentation
-rake doc:open          # Generate Rust API documentation and open it in a web browser
-rake lint              # Lint and format
-rake lint:clippy       # Run Clippy
-rake lint:format       # Format sources
-rake lint:rubocop      # Run RuboCop
-rake test              # Run Focaccia unit tests
-rake unicode:build     # Rebuild Rust generated Rust sources from Unicode data
-rake unicode:update    # Update Unicode data
+rake doc             # Generate Rust API documentation
+rake doc:open        # Generate Rust API documentation and open it in a web browser
+rake lint            # Lint and format
+rake lint:clippy     # Run Clippy
+rake lint:format     # Format sources
+rake lint:rubocop    # Run RuboCop
+rake test            # Run Artichoke unit tests
+rake unicode:build   # Rebuild Rust generated Rust sources from Unicode data
+rake unicode:update  # Update Unicode data
 ```
 
 To lint Ruby sources, Focaccia uses
@@ -102,6 +103,7 @@ To lint Ruby sources, Focaccia uses
 $ bundle exec rake lint
 $ bundle exec rake lint:rubocop
 ```
+
 ### Node.js
 
 Node.js is an optional dependency that is used for formatting text sources with
