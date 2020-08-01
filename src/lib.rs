@@ -12,7 +12,7 @@
 
 //! Case folding comparisons for byte content resolved from `Symbol`s.
 
-#![no_std]
+#![cfg_attr(not(feature = "std"), no_std)]
 
 // Ensure code blocks in README.md compile
 #[cfg(doctest)]
@@ -27,6 +27,9 @@ macro_rules! readme {
 }
 #[cfg(doctest)]
 readme!();
+
+use core::convert::TryFrom;
+use core::fmt;
 
 mod folding;
 
@@ -95,6 +98,55 @@ impl Fold {
             Self::Full | Self::Lithuanian => unicode_full_casecmp(left, right),
             Self::Ascii => left.eq_ignore_ascii_case(right),
             Self::Turkic => unicode_full_turkic_casecmp(left, right),
+        }
+    }
+}
+
+/// Error type for returned when a folding scheme could not be resolved in a
+/// [`TryFrom`] implementation.
+#[derive(Default, Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+pub struct NoSuchFoldingScheme(());
+
+impl NoSuchFoldingScheme {
+    /// Construct a new [`NoSuchFoldingScheme`] error.
+    pub fn new() -> Self {
+        Self::default()
+    }
+}
+
+impl fmt::Display for NoSuchFoldingScheme {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("No such Unicode case folding scheme exists")
+    }
+}
+
+#[cfg(feature = "std")]
+impl std::error::Error for NoSuchFoldingScheme {}
+
+impl TryFrom<Option<&str>> for Fold {
+    type Error = NoSuchFoldingScheme;
+
+    fn try_from(value: Option<&str>) -> Result<Self, Self::Error> {
+        match value {
+            None => Ok(Self::Full),
+            Some("ascii") => Ok(Self::Ascii),
+            Some("turkic") => Ok(Self::Turkic),
+            Some("lithuanian") => Ok(Self::Lithuanian),
+            _ => Err(NoSuchFoldingScheme::new()),
+        }
+    }
+}
+
+impl TryFrom<Option<&[u8]>> for Fold {
+    type Error = NoSuchFoldingScheme;
+
+    fn try_from(value: Option<&[u8]>) -> Result<Self, Self::Error> {
+        match value {
+            None => Ok(Self::Full),
+            Some(scheme) if scheme == b"ascii" => Ok(Self::Ascii),
+            Some(scheme) if scheme == b"turkic" => Ok(Self::Turkic),
+            Some(scheme) if scheme == b"lithuanian" => Ok(Self::Lithuanian),
+            _ => Err(NoSuchFoldingScheme::new()),
         }
     }
 }
