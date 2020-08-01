@@ -61,10 +61,10 @@ mappings.each do |line|
   rs.puts '=> continue,'
 
   rs.puts "(Some('\\u{#{map_to_right.shift}}'), Some('\\u{#{code}}')) "
-  unless map_to_left.empty?
+  unless map_to_right.empty?
     rs.puts 'if '
     rs.puts "matches!(left.next(), Some('\\u{#{map_to_right.shift}}'))"
-    rs.puts " && matches!(right.next(), Some('\\u{#{map_to_right.shift}}'))" until map_to_right.empty?
+    rs.puts " && matches!(left.next(), Some('\\u{#{map_to_right.shift}}'))" until map_to_right.empty?
   end
   rs.puts '=> continue,'
 end

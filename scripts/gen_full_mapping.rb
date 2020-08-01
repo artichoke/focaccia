@@ -44,10 +44,10 @@ mappings.each do |line|
   rs.puts '=> continue,'
 
   rs.puts "(Some('\\u{#{map_to_right.shift}}'), Some('\\u{#{code}}')) "
-  unless map_to_left.empty?
+  unless map_to_right.empty?
     rs.puts 'if '
     rs.puts "matches!(left.next(), Some('\\u{#{map_to_right.shift}}'))"
-    rs.puts " && matches!(right.next(), Some('\\u{#{map_to_right.shift}}'))" until map_to_right.empty?
+    rs.puts " && matches!(left.next(), Some('\\u{#{map_to_right.shift}}'))" until map_to_right.empty?
   end
   rs.puts '=> continue,'
 end
@@ -64,7 +64,7 @@ rs.puts(<<~TESTS)
   #[cfg(test)]
   mod tests {
       use super::casecmp;
-  
+
       #[test]
       fn compares_symbols_without_regard_to_case() {
           assert!(!casecmp("abcdef", "abcde"));
@@ -72,7 +72,7 @@ rs.puts(<<~TESTS)
           assert!(!casecmp("abcdef", "abcdefg"));
           assert!(casecmp("abcdef", "ABCDEF"));
       }
-  
+
       #[test]
       fn doesent_consider_non_ascii_chars_equal_that_arent() {
           // -- UTF-8 --
@@ -80,7 +80,7 @@ rs.puts(<<~TESTS)
           let lower_a_tilde = "ã";
           let upper_a_umlaut = "Ä";
           let lower_a_umlaut = "ä";
-  
+
           // From `spec/core/symbol/casecmp_spec.rb`:
           //
           // ```ruby
@@ -94,7 +94,7 @@ rs.puts(<<~TESTS)
           assert!(!casecmp(upper_a_tilde, upper_a_umlaut));
           assert!(!casecmp(upper_a_umlaut, upper_a_tilde));
       }
-  
+
       #[test]
       fn does_case_mapping_for_unicode_chars() {
           // -- UTF-8 --
@@ -102,7 +102,7 @@ rs.puts(<<~TESTS)
           let lower_a_tilde = "ã";
           let upper_a_umlaut = "Ä";
           let lower_a_umlaut = "ä";
-  
+
           // From `spec/core/symbol/casecmp_spec.rb`:
           //
           // ```ruby
