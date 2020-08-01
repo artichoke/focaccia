@@ -58,7 +58,9 @@ namespace :unicode do
   task :update do
     open('https://www.unicode.org/Public/UCD/latest/ucd/CaseFolding.txt') do |data|
       File.open('CaseFolding.txt', 'w') do |file|
-        file.write(data)
+        data.each_line do |line|
+          file.write(line)
+        end
       end
     end
   end
