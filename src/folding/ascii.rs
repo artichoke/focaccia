@@ -141,11 +141,11 @@ mod tests {
     fn exhaustive() {
         let lower = 'a'..'z';
         let upper = 'A'..'Z';
-        let mut lbuf = [0; 4];
-        let mut rbuf = [0; 4];
+        let mut l_buf = [0; 4];
+        let mut r_buf = [0; 4];
         for (left, right) in lower.zip(upper) {
-            let left = left.encode_utf8(&mut lbuf);
-            let right = right.encode_utf8(&mut rbuf);
+            let left = left.encode_utf8(&mut l_buf);
+            let right = right.encode_utf8(&mut r_buf);
             assert!(matches!(
                 casecmp(left.as_bytes(), right.as_bytes()),
                 Ordering::Equal

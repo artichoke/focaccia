@@ -1,6 +1,8 @@
 #![warn(clippy::all)]
 #![warn(clippy::pedantic)]
 #![warn(clippy::cargo)]
+#![cfg_attr(test, allow(clippy::non_ascii_literal))]
+#![cfg_attr(test, allow(clippy::shadow_unrelated))]
 #![warn(missing_docs, intra_doc_link_resolution_failure)]
 #![warn(missing_debug_implementations)]
 #![warn(missing_copy_implementations)]
