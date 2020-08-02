@@ -1,17 +1,24 @@
 use core::iter::FusedIterator;
 
-pub mod full;
-pub mod turkic;
+mod lookup;
+
+pub use lookup::lookup;
+
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+pub enum Mode {
+    Full,
+    Turkic,
+}
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Mapping {
-    Single(char),
-    Double(char, char),
-    Triple(char, char, char),
+    Single(u32),
+    Double(u32, u32),
+    Triple(u32, u32, u32),
 }
 
 impl IntoIterator for Mapping {
-    type Item = char;
+    type Item = u32;
     type IntoIter = Iter;
 
     fn into_iter(self) -> Self::IntoIter {
@@ -29,7 +36,7 @@ pub struct Iter {
 }
 
 impl Iterator for Iter {
-    type Item = char;
+    type Item = u32;
 
     fn next(&mut self) -> Option<Self::Item> {
         let next = match self.mapping {
