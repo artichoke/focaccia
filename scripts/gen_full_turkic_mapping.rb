@@ -8,8 +8,9 @@ rs = File.open('src/folding/mapping/turkic.rs', 'w')
 rs.puts(<<~AUTOGEN)
   use super::Mapping;
 
-  #[allow(clippy::match_same_arms)]
   #[must_use]
+  #[allow(clippy::match_same_arms)]
+  #[allow(clippy::too_many_lines)]
   pub fn lookup(c: char) -> Mapping {
       match c {
 AUTOGEN
@@ -63,5 +64,5 @@ end
 
 rs.puts '        _ => Mapping::Single(c),'
 
-rs.puts '   }'
+rs.puts '    }'
 rs.puts '}'

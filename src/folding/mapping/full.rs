@@ -2,6 +2,7 @@ use super::Mapping;
 
 #[must_use]
 #[allow(clippy::match_same_arms)]
+#[allow(clippy::too_many_lines)]
 pub fn lookup(c: char) -> Mapping {
     match c {
         '\u{0000}'..='\u{0041}' if c < '\u{0041}' => Mapping::Single(c),
