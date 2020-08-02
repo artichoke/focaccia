@@ -5,7 +5,6 @@ use crate::folding::mapping::{lookup, Mode};
 /// This function is implemented with a lookup table generated from Unicode case
 /// folding tables.
 #[must_use]
-#[allow(clippy::match_same_arms)]
 pub fn casecmp(left: &str, right: &str) -> bool {
     let left = left.chars().flat_map(|c| lookup(c, Mode::Turkic));
     let right = right.chars().flat_map(|c| lookup(c, Mode::Turkic));
