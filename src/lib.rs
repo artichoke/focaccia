@@ -175,7 +175,9 @@ impl CaseFold {
 /// Error type for returned when a folding scheme could not be resolved in a
 /// [`TryFrom`] implementation.
 #[derive(Default, Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
-pub struct NoSuchCaseFoldingScheme(());
+pub struct NoSuchCaseFoldingScheme {
+    _private: (),
+}
 
 impl NoSuchCaseFoldingScheme {
     /// Construct a new [`NoSuchCaseFoldingScheme`] error.
