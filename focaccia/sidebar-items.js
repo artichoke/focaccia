@@ -1,1 +1,1 @@
-initSidebarItems({});
+initSidebarItems({"enum":[["CaseFold","Unicode case folding strategies."]],"fn":[["ascii_casecmp","Compare two bytestrings with ASCII case folding."],["unicode_full_casecmp","Compare two strings with Full Unicode case folding."],["unicode_full_turkic_casecmp","Compare two strings with Full Unicode case folding for Turkic languages."]],"struct":[["NoSuchCaseFoldingScheme","Error type for returned when a folding scheme could not be resolved in a [`TryFrom`] implementation."]]});
