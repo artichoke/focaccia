@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
+
 # rubocop:disable Metrics/LineLength
 
 mappings = File.readlines('CaseFolding.txt')
@@ -24,8 +25,8 @@ mappings.each do |line|
   char_mappings[code][mode] = map_to
 end
 
-range_start = char_mappings.keys.sort.first
-last = char_mappings.keys.sort.first
+range_start = char_mappings.keys.min
+last = char_mappings.keys.min
 
 ranges = []
 
@@ -45,6 +46,7 @@ ranges.each do |range|
   start = range[:start]
   last = range[:end]
   next if char_mappings[start][:full].length > 1
+
   start_offset = char_mappings[start][:full][0] - start
   (start..last).each do |char|
     char_offset = char_mappings[char][:full][0] - char
@@ -81,10 +83,10 @@ ranges.each do |range|
   offset = range[:offset]
   mapping = char_mappings[start]
   if mapping.key?(:turkic) && mapping.key?(:full)
-    raise unless last - start == 0
+    raise unless (last - start).zero?
 
     char = start.to_s(16).upcase.rjust(4, '0')
-    full = mapping[:full].map { |char| char.to_s(16).upcase.rjust(4, '0') }
+    full = mapping[:full].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
     case full.length
     when 1
       rs.puts "        '\\u{#{char}}' if mode == Mode::Full => Mapping::Single(0x#{full[0]}),"
@@ -95,7 +97,7 @@ ranges.each do |range|
     else
       raise "Unsupported mapping length: #{map.inspect} for code #{code}"
     end
-    turkic = mapping[:turkic].map { |char| char.to_s(16).upcase.rjust(4, '0') }
+    turkic = mapping[:turkic].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
     case turkic.length
     when 1
       rs.puts "        '\\u{#{char}}' if mode == Mode::Turkic => Mapping::Single(0x#{turkic[0]}),"
@@ -117,7 +119,7 @@ ranges.each do |range|
       op_offset = -offset
     end
     op_offset = op_offset.to_s(16).rjust(4, '0')
-    if last - start == 0
+    if (last - start).zero?
       rs.puts "        '\\u{#{base}}' => Mapping::Single(0x#{base}_u32.wrapping_#{op}(0x#{op_offset})),"
     else
       finish = last.to_s(16).upcase
@@ -125,7 +127,7 @@ ranges.each do |range|
     end
   elsif mapping.key?(:full)
     char = start.to_s(16).upcase.rjust(4, '0')
-    map = mapping[:full].map { |char| char.to_s(16).upcase.rjust(4, '0') }
+    map = mapping[:full].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
     case map.length
     when 1
       rs.puts "        '\\u{#{char}}' => Mapping::Single(0x#{map[0]}),"
