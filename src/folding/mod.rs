@@ -2,6 +2,7 @@
 
 mod ascii;
 mod full;
+mod mapping;
 mod turkic;
 
 pub use ascii::casecmp as ascii_casecmp;
