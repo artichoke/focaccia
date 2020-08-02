@@ -68,12 +68,8 @@
 <span id="68">68</span>
 <span id="69">69</span>
 <span id="70">70</span>
-<span id="71">71</span>
-<span id="72">72</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
-
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">folding</span>::<span class="ident">mapping</span>::<span class="ident">full</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">folding</span>::<span class="ident">mapping</span>::{<span class="ident">lookup</span>, <span class="ident">Mode</span>};
 
 <span class="doccomment">/// Compare two strings with Full Unicode case folding.</span>
 <span class="doccomment">///</span>
@@ -82,9 +78,9 @@
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">match_same_arms</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">casecmp</span>(<span class="ident">left</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">right</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-    <span class="kw">let</span> <span class="ident">left</span> <span class="op">=</span> <span class="ident">left</span>.<span class="ident">chars</span>().<span class="ident">flat_map</span>(<span class="ident">full</span>::<span class="ident">lookup</span>);
-    <span class="kw">let</span> <span class="ident">right</span> <span class="op">=</span> <span class="ident">right</span>.<span class="ident">chars</span>().<span class="ident">flat_map</span>(<span class="ident">full</span>::<span class="ident">lookup</span>);
-    <span class="macro">matches</span><span class="macro">!</span>(<span class="ident">left</span>.<span class="ident">cmp</span>(<span class="ident">right</span>), <span class="ident">Ordering</span>::<span class="ident">Equal</span>)
+    <span class="kw">let</span> <span class="ident">left</span> <span class="op">=</span> <span class="ident">left</span>.<span class="ident">chars</span>().<span class="ident">flat_map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">lookup</span>(<span class="ident">c</span>, <span class="ident">Mode</span>::<span class="ident">Full</span>));
+    <span class="kw">let</span> <span class="ident">right</span> <span class="op">=</span> <span class="ident">right</span>.<span class="ident">chars</span>().<span class="ident">flat_map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">lookup</span>(<span class="ident">c</span>, <span class="ident">Mode</span>::<span class="ident">Full</span>));
+    <span class="ident">left</span>.<span class="ident">eq</span>(<span class="ident">right</span>)
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
