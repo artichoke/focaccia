@@ -1,6 +1,4 @@
-use core::cmp::Ordering;
-
-use crate::folding::mapping::full;
+use crate::folding::mapping::{lookup, Mode};
 
 /// Compare two strings with Full Unicode case folding.
 ///
@@ -9,9 +7,9 @@ use crate::folding::mapping::full;
 #[must_use]
 #[allow(clippy::match_same_arms)]
 pub fn casecmp(left: &str, right: &str) -> bool {
-    let left = left.chars().flat_map(full::lookup);
-    let right = right.chars().flat_map(full::lookup);
-    matches!(left.cmp(right), Ordering::Equal)
+    let left = left.chars().flat_map(|c| lookup(c, Mode::Full));
+    let right = right.chars().flat_map(|c| lookup(c, Mode::Full));
+    left.eq(right)
 }
 
 #[cfg(test)]

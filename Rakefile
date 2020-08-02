@@ -50,8 +50,7 @@ end
 namespace :unicode do
   desc 'Rebuild Rust generated Rust sources from Unicode data'
   task :build do
-    sh 'ruby scripts/gen_full_mapping.rb'
-    sh 'ruby scripts/gen_full_turkic_mapping.rb'
+    sh 'ruby scripts/gen_case_lookups.rb'
   end
 
   desc 'Update Unicode data'

@@ -1,6 +1,4 @@
-use core::cmp::Ordering;
-
-use crate::folding::mapping::turkic;
+use crate::folding::mapping::{lookup, Mode};
 
 /// Compare two strings with Full Unicode case folding for Turkic languages.
 ///
@@ -9,9 +7,9 @@ use crate::folding::mapping::turkic;
 #[must_use]
 #[allow(clippy::match_same_arms)]
 pub fn casecmp(left: &str, right: &str) -> bool {
-    let left = left.chars().flat_map(turkic::lookup);
-    let right = right.chars().flat_map(turkic::lookup);
-    matches!(left.cmp(right), Ordering::Equal)
+    let left = left.chars().flat_map(|c| lookup(c, Mode::Turkic));
+    let right = right.chars().flat_map(|c| lookup(c, Mode::Turkic));
+    left.eq(right)
 }
 
 #[cfg(test)]
