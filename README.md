@@ -38,40 +38,55 @@ focaccia = "1.0"
 Then make case insensitive string comparisons like:
 
 ```rust
+use core::cmp::Ordering;
 use focaccia::CaseFold;
+
 let fold = CaseFold::Full;
-assert!(fold.casecmp("MASSE", "Maße"));
-assert!(!fold.casecmp("São Paulo", "Sao Paulo"));
+assert_eq!(fold.casecmp("MASSE", "Maße"), Ordering::Equal);
+assert_eq!(fold.casecmp("São Paulo", "Sao Paulo"), Ordering::Greater);
+
+assert!(fold.case_eq("MASSE", "Maße"));
+assert!(!fold.case_eq("São Paulo", "Sao Paulo"));
 ```
 
 For text known to be ASCII, Focaccia can make a more performant comparison
 check:
 
 ```rust
+use core::cmp::Ordering;
 use focaccia::CaseFold;
+
 let fold = CaseFold::Ascii;
-assert!(fold.casecmp("Crate: focaccia", "Crate: FOCACCIA"));
-assert!(!fold.casecmp("Fabled", "failed"));
+assert_eq!(fold.casecmp("Crate: focaccia", "Crate: FOCACCIA"), Ordering::Equal);
+assert_eq!(fold.casecmp("Fabled", "failed"), Ordering::Less);
+
+assert!(fold.case_eq("Crate: focaccia", "Crate: FOCACCIA"));
+assert!(!fold.case_eq("Fabled", "failed"));
 ```
 
 ASCII case comparison can be checked on a byte slice:
 
 ```rust
 use core::cmp::Ordering;
-assert_eq!(
-    focaccia::ascii_casecmp(b"Artichoke Ruby", b"artichoke ruby"),
-    Ordering::Equal,
-);
+use focaccia::{ascii_casecmp, ascii_case_eq};
+
+assert_eq!(ascii_casecmp(b"Artichoke Ruby", b"artichoke ruby"), Ordering::Equal);
+assert!(ascii_case_eq(b"Artichoke Ruby", b"artichoke ruby"));
 ```
 
 Turkic case folding is similar to full case folding with additional mappings for
 [dotted and dotless I]:
 
 ```rust
+use core::cmp::Ordering;
 use focaccia::CaseFold;
+
 let fold = CaseFold::Turkic;
-assert!(fold.casecmp("İstanbul", "istanbul"));
-assert!(!fold.casecmp("İstanbul", "Istanbul"));
+assert!(matches!(fold.casecmp("İstanbul", "istanbul"), Ordering::Equal));
+assert!(!matches!(fold.casecmp("İstanbul", "Istanbul"), Ordering::Equal));
+
+assert!(fold.case_eq("İstanbul", "istanbul"));
+assert!(!fold.case_eq("İstanbul", "Istanbul"));
 ```
 
 ## Implementation
