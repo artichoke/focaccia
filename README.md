@@ -24,7 +24,7 @@ comparisons. ASCII folding supports determining case-insensitive ordering.
 > text. (W3C, Case Folding)
 
 _focaccia_ is a flat Italian bread. The focaccia crate compares UTF-8 strings by
-flattening them to normalized downcase. Artichoke goes well with focaccia.
+flattening them to folded downcase. Artichoke goes well with focaccia.
 
 ## Usage
 
