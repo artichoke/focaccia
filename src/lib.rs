@@ -163,7 +163,7 @@ impl CaseFold {
     /// functions.
     #[inline]
     #[must_use]
-    pub fn casecmp(&self, left: &str, right: &str) -> bool {
+    pub fn casecmp(self, left: &str, right: &str) -> bool {
         match self {
             Self::Full | Self::Lithuanian => unicode_full_casecmp(left, right),
             Self::Ascii => left.eq_ignore_ascii_case(right),
@@ -179,6 +179,8 @@ pub struct NoSuchCaseFoldingScheme(());
 
 impl NoSuchCaseFoldingScheme {
     /// Construct a new [`NoSuchCaseFoldingScheme`] error.
+    #[inline]
+    #[must_use]
     pub fn new() -> Self {
         Self::default()
     }
@@ -202,7 +204,7 @@ impl TryFrom<Option<&str>> for CaseFold {
             Some("ascii") => Ok(Self::Ascii),
             Some("turkic") => Ok(Self::Turkic),
             Some("lithuanian") => Ok(Self::Lithuanian),
-            _ => Err(NoSuchCaseFoldingScheme::new()),
+            Some(_) => Err(NoSuchCaseFoldingScheme::new()),
         }
     }
 }
@@ -216,7 +218,7 @@ impl TryFrom<Option<&[u8]>> for CaseFold {
             Some(scheme) if scheme == b"ascii" => Ok(Self::Ascii),
             Some(scheme) if scheme == b"turkic" => Ok(Self::Turkic),
             Some(scheme) if scheme == b"lithuanian" => Ok(Self::Lithuanian),
-            _ => Err(NoSuchCaseFoldingScheme::new()),
+            Some(_) => Err(NoSuchCaseFoldingScheme::new()),
         }
     }
 }
