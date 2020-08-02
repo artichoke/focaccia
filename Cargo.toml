@@ -1,9 +1,30 @@
 [package]
 name = "focaccia"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["Ryan Lopopolo <rjl@hyperbo.la>"]
 edition = "2018"
+description = "no_std implementation of Unicode case folding comparisons"
+repository = "https://github.com/artichoke/focaccia"
+readme = "README.md"
+license = "MIT"
+keywords = ["case-folding", "case-insensitive", "case", "no_std", "unicode"]
+categories = ["internationalization", "no-std", "text-processing"]
+include = [
+  "src/**/*.rs",
+  "tests/**/*.rs",
+  "LICENSE",
+  "README.md"
+]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[features]
+default = ["std"]
+# Enable a dependency on the Rust `std` library. This feature implements the
+# `Error` trait on error structs in `focaccia`.
+std = []
 
 [dependencies]
+
+[dev-dependencies]
+# Check that crate versions are properly updated in documentation and code when
+# bumping the version.
+version-sync = "0.9"
