@@ -2,6 +2,8 @@ use core::char;
 use core::cmp::Ordering;
 use focaccia::{unicode_full_turkic_case_eq, unicode_full_turkic_casecmp};
 
+#[must_use]
+#[allow(clippy::too_many_lines)]
 fn lookup_naive(c: char, buf: &mut [u8; 4]) -> &str {
     match c {
         '\u{0041}' => "\u{0061}",
@@ -1499,7 +1501,7 @@ fn lookup_naive(c: char, buf: &mut [u8; 4]) -> &str {
 }
 
 #[test]
-fn full_fold_exhaustive() {
+fn full_turkic_fold_exhaustive() {
     let mut enc = [0; 4];
     let mut buf = [0; 4];
     for codepoint in 0..=0x10FFFF {

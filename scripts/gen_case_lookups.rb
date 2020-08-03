@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/LineLength
-
 mappings = File.readlines('CaseFolding.txt')
 
 char_mappings = Hash.new { |hash, key| hash[key] = {} }
@@ -158,6 +156,8 @@ rs.puts(<<~AUTOGEN)
   use core::cmp::Ordering;
   use focaccia::{unicode_full_case_eq, unicode_full_casecmp};
 
+  #[must_use]
+  #[allow(clippy::too_many_lines)]
   fn lookup_naive(c: char, buf: &mut [u8; 4]) -> &str {
       match c {
 AUTOGEN
@@ -221,6 +221,8 @@ rs.puts(<<~AUTOGEN)
   use core::cmp::Ordering;
   use focaccia::{unicode_full_turkic_case_eq, unicode_full_turkic_casecmp};
 
+  #[must_use]
+  #[allow(clippy::too_many_lines)]
   fn lookup_naive(c: char, buf: &mut [u8; 4]) -> &str {
       match c {
 AUTOGEN
@@ -255,7 +257,7 @@ rs.puts
 
 rs.puts(<<~TEST)
   #[test]
-  fn full_fold_exhaustive() {
+  fn full_turkic_fold_exhaustive() {
       let mut enc = [0; 4];
       let mut buf = [0; 4];
       for codepoint in 0..=0x10FFFF {
@@ -281,4 +283,3 @@ rs.puts(<<~TEST)
   }
 TEST
 rs.close
-# rubocop:enable Metrics/LineLength

@@ -2,6 +2,8 @@ use core::char;
 use core::cmp::Ordering;
 use focaccia::{unicode_full_case_eq, unicode_full_casecmp};
 
+#[must_use]
+#[allow(clippy::too_many_lines)]
 fn lookup_naive(c: char, buf: &mut [u8; 4]) -> &str {
     match c {
         '\u{0041}' => "\u{0061}",
