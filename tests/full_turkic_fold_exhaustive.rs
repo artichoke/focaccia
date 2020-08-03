@@ -1513,14 +1513,28 @@ fn full_turkic_fold_exhaustive() {
                 "Correctness check failed for: {}. Expected: {}. Got: {}.",
                 ch,
                 left,
-                right
+                right,
+            );
+            assert!(
+                unicode_full_turkic_case_eq(right, left),
+                "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                ch,
+                right,
+                left,
             );
             assert!(
                 matches!(unicode_full_turkic_casecmp(left, right), Ordering::Equal),
                 "Correctness check failed for: {}. Expected: {}. Got: {}.",
                 ch,
                 left,
-                right
+                right,
+            );
+            assert!(
+                matches!(unicode_full_turkic_casecmp(right, left), Ordering::Equal),
+                "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                ch,
+                right,
+                left,
             );
         }
     }
