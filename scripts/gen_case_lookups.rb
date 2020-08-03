@@ -33,7 +33,8 @@ ranges = []
 char_mappings.keys.sort.drop(1).each do |key|
   if key == last + 1 \
     && char_mappings[key][:full].length == char_mappings[last][:full].length \
-    && char_mappings[key][:full].first == char_mappings[last][:full].first + 1
+    && char_mappings[key][:full].first == char_mappings[last][:full].first + 1 \
+    && char_mappings[key][:full].length == 1
     last = key
     next
   end
@@ -41,6 +42,7 @@ char_mappings.keys.sort.drop(1).each do |key|
   range_start = key
   last = key
 end
+ranges << { start: range_start, end: last, span: last - range_start + 1 }
 
 ranges.each do |range|
   start = range[:start]
@@ -147,4 +149,129 @@ rs.puts '        _ => Mapping::Single(c as u32),'
 
 rs.puts '    }'
 rs.puts '}'
+rs.close
+
+rs = File.open('tests/full_fold_exhaustive.rs', 'w')
+
+rs.puts(<<~AUTOGEN)
+  use focaccia::unicode_full_case_eq;
+  use core::char;
+  use core::str;
+
+  enum Mapping {
+      One(char),
+      Two(char, char),
+      Three(char, char, char),
+  }
+
+  fn lookup_naive(c: char) -> Mapping {
+      match c {
+AUTOGEN
+
+char_mappings.keys.sort.each do |from|
+  mapping = char_mappings[from]
+
+  char = from.to_s(16).upcase.rjust(4, '0')
+  full = mapping[:full].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
+
+  case full.length
+  when 1
+    rs.puts "        '\\u{#{char}}' => Mapping::One('\\u{#{full[0]}}'),"
+  when 2
+    rs.puts "        '\\u{#{char}}' => Mapping::Two('\\u{#{full[0]}}', '\\u{#{full[1]}}'),"
+  when 3
+    rs.puts "        '\\u{#{char}}' => Mapping::Three('\\u{#{full[0]}}', '\\u{#{full[1]}}', '\\u{#{full[2]}}'),"
+  else
+    raise "Unsupported mapping length: #{map.inspect} for code #{code}"
+  end
+end
+
+rs.puts '        _ => Mapping::One(c),'
+rs.puts '    }'
+rs.puts '}'
+rs.puts
+
+rs.puts(<<~TEST)
+  #[test]
+  fn full_fold_correctness() {
+      for codepoint in 0..=0x10FFFF {
+          if let Some(ch) = char::from_u32(codepoint) {
+              match lookup_naive(ch) {
+                  Mapping::One(a) => {
+                      let mut l_buf = [0; 4];
+                      let left = ch.encode_utf8(&mut l_buf);
+
+                      let mut r_buf = [0; 4];
+                      let right = a.encode_utf8(&mut r_buf);
+
+                      assert!(
+                          unicode_full_case_eq(left, right),
+                          "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                          ch,
+                          left,
+                          right
+                      );
+                  }
+                  Mapping::Two(a, b) => {
+                      let mut l_buf = [0; 4];
+                      let left = ch.encode_utf8(&mut l_buf);
+
+                      let mut r_buf = [0; 8];
+                      let mut r_buf_a = [0; 4];
+                      let mut r_buf_b = [0; 4];
+
+                      let x_chunk = a.encode_utf8(&mut r_buf_a);
+                      let x_len = x_chunk.len();
+                      let y_chunk = b.encode_utf8(&mut r_buf_b);
+                      let y_len = y_chunk.len();
+
+                      r_buf[..x_len].copy_from_slice(x_chunk.as_bytes());
+                      r_buf[x_len..x_len + y_len].copy_from_slice(y_chunk.as_bytes());
+
+                      let right = str::from_utf8(&r_buf[..x_len + y_len]).unwrap();
+
+                      assert!(
+                          unicode_full_case_eq(left, right),
+                          "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                          ch,
+                          left,
+                          right
+                      );
+                  }
+                  Mapping::Three(a, b, c) => {
+                      let mut l_buf = [0; 4];
+                      let left = ch.encode_utf8(&mut l_buf);
+
+                      let mut r_buf = [0; 12];
+                      let mut r_buf_a = [0; 4];
+                      let mut r_buf_b = [0; 4];
+                      let mut r_buf_c = [0; 4];
+
+                      let x_chunk = a.encode_utf8(&mut r_buf_a);
+                      let x_len = x_chunk.len();
+                      let y_chunk = b.encode_utf8(&mut r_buf_b);
+                      let y_len = y_chunk.len();
+                      let z_chunk = c.encode_utf8(&mut r_buf_c);
+                      let z_len = z_chunk.len();
+
+                      r_buf[..x_len].copy_from_slice(x_chunk.as_bytes());
+                      r_buf[x_len..x_len + y_len].copy_from_slice(y_chunk.as_bytes());
+                      r_buf[x_len + y_len..x_len + y_len + z_len].copy_from_slice(z_chunk.as_bytes());
+
+                      let right = str::from_utf8(&r_buf[..x_len + y_len + z_len]).unwrap();
+
+                      assert!(
+                          unicode_full_case_eq(left, right),
+                          "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                          ch,
+                          left,
+                          right
+                      );
+                  }
+              }
+          }
+      }
+  }
+TEST
+rs.close
 # rubocop:enable Metrics/LineLength
