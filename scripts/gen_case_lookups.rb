@@ -213,4 +213,72 @@ rs.puts(<<~TEST)
   }
 TEST
 rs.close
+
+rs = File.open('tests/full_turkic_fold_exhaustive.rs', 'w')
+
+rs.puts(<<~AUTOGEN)
+  use core::char;
+  use core::cmp::Ordering;
+  use focaccia::{unicode_full_turkic_case_eq, unicode_full_turkic_casecmp};
+
+  fn lookup_naive(c: char, buf: &mut [u8; 4]) -> &str {
+      match c {
+AUTOGEN
+
+char_mappings.keys.sort.each do |from|
+  mapping = char_mappings[from]
+
+  char = from.to_s(16).upcase.rjust(4, '0')
+  full =
+    if mapping[:turkic]
+      mapping[:turkic].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
+    else
+      mapping[:full].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
+    end
+
+  case full.length
+  when 1
+    rs.puts "        '\\u{#{char}}' => \"\\u{#{full[0]}}\","
+  when 2
+    rs.puts "        '\\u{#{char}}' => \"\\u{#{full[0]}}\\u{#{full[1]}}\","
+  when 3
+    rs.puts "        '\\u{#{char}}' => \"\\u{#{full[0]}}\\u{#{full[1]}}\\u{#{full[2]}}\","
+  else
+    raise "Unsupported mapping length: #{map.inspect} for code #{code}"
+  end
+end
+
+rs.puts '        _ => c.encode_utf8(buf),'
+rs.puts '    }'
+rs.puts '}'
+rs.puts
+
+rs.puts(<<~TEST)
+  #[test]
+  fn full_fold_exhaustive() {
+      let mut enc = [0; 4];
+      let mut buf = [0; 4];
+      for codepoint in 0..=0x10FFFF {
+          if let Some(ch) = char::from_u32(codepoint) {
+              let left = ch.encode_utf8(&mut enc);
+              let right = lookup_naive(ch, &mut buf);
+              assert!(
+                  unicode_full_turkic_case_eq(left, right),
+                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                  ch,
+                  left,
+                  right
+              );
+              assert!(
+                  matches!(unicode_full_turkic_casecmp(left, right), Ordering::Equal),
+                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                  ch,
+                  left,
+                  right
+              );
+          }
+      }
+  }
+TEST
+rs.close
 # rubocop:enable Metrics/LineLength
