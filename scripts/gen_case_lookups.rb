@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/LineLength
-
 mappings = File.readlines('CaseFolding.txt')
 
 char_mappings = Hash.new { |hash, key| hash[key] = {} }
@@ -41,11 +39,11 @@ char_mappings.keys.sort.drop(1).each do |key|
   range_start = key
   last = key
 end
+ranges << { start: range_start, end: last, span: last - range_start + 1 }
 
 ranges.each do |range|
   start = range[:start]
   last = range[:end]
-  next if char_mappings[start][:full].length > 1
 
   start_offset = char_mappings[start][:full][0] - start
   (start..last).each do |char|
@@ -68,12 +66,19 @@ rs.puts(<<~AUTOGEN)
   #[allow(clippy::match_same_arms)]
   #[allow(clippy::too_many_lines)]
   pub fn lookup(c: char, mode: Mode) -> Mapping {
-      match c {
-          // Turkic mapping in ASCII range
-          // 0049; T; 0131; # LATIN CAPITAL LETTER I
-          '\\u{0049}' if mode == Mode::Turkic => Mapping::Single(0x0131_u32),
-          c if c.is_ascii() => Mapping::Single(c.to_ascii_lowercase() as u32),
+      let char_bytes = u32::from(c).to_be_bytes();
+      let mid_byte = char_bytes[2];
+      let high_bytes = u16::from_be_bytes([char_bytes[0], char_bytes[1]]);
+      match (high_bytes, mid_byte) {
+          (0x0000, 0x00) => match c {
+              // Turkic mapping in ASCII range
+              // 0049; T; 0131; # LATIN CAPITAL LETTER I
+              '\\u{0049}' if mode == Mode::Turkic => Mapping::Single(0x0131),
+              c if c.is_ascii() => Mapping::Single(c.to_ascii_lowercase().into()),
 AUTOGEN
+
+last_high_bytes = 0x00
+last_mid_byte = 0x00
 
 ranges.each do |range|
   next if range[:end] < 128
@@ -82,6 +87,18 @@ ranges.each do |range|
   last = range[:end]
   offset = range[:offset]
   mapping = char_mappings[start]
+
+  mid_byte = ((start >> 8) & 0xFF)
+  high_bytes = ((start >> 16) & 0xFFFF)
+
+  if high_bytes != last_high_bytes || mid_byte != last_mid_byte
+    rs.puts '            _ => Mapping::Single(c.into()),'
+    rs.puts '        },'
+    rs.puts "        (0x#{high_bytes.to_s(16).upcase.rjust(4, '0')}, 0x#{mid_byte.to_s(16).upcase.rjust(2, '0')}) => match c {"
+    last_high_bytes = high_bytes
+    last_mid_byte = mid_byte
+  end
+
   if mapping.key?(:turkic) && mapping.key?(:full)
     raise unless (last - start).zero?
 
@@ -89,27 +106,27 @@ ranges.each do |range|
     full = mapping[:full].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
     case full.length
     when 1
-      rs.puts "        '\\u{#{char}}' if mode == Mode::Full => Mapping::Single(0x#{full[0]}),"
+      rs.puts "            '\\u{#{char}}' if mode == Mode::Full => Mapping::Single(0x#{full[0]}),"
     when 2
-      rs.puts "        '\\u{#{char}}' if mode == Mode::Full => Mapping::Double(0x#{full[0]}, 0x#{full[1]}),"
+      rs.puts "            '\\u{#{char}}' if mode == Mode::Full => Mapping::Double(0x#{full[0]}, 0x#{full[1]}),"
     when 3
-      rs.puts "        '\\u{#{char}}' if mode == Mode::Full => Mapping::Triple(0x#{full[0]}, 0x#{full[1]}}, 0x#{full[2]}),"
+      rs.puts "            '\\u{#{char}}' if mode == Mode::Full => Mapping::Triple(0x#{full[0]}, 0x#{full[1]}}, 0x#{full[2]}),"
     else
       raise "Unsupported mapping length: #{map.inspect} for code #{code}"
     end
     turkic = mapping[:turkic].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
     case turkic.length
     when 1
-      rs.puts "        '\\u{#{char}}' if mode == Mode::Turkic => Mapping::Single(0x#{turkic[0]}),"
+      rs.puts "            '\\u{#{char}}' if mode == Mode::Turkic => Mapping::Single(0x#{turkic[0]}),"
     when 2
-      rs.puts "        '\\u{#{char}}' if mode == Mode::Turkic => Mapping::Double(0x#{turkic[0]}, 0x#{turkic[1]}),"
+      rs.puts "            '\\u{#{char}}' if mode == Mode::Turkic => Mapping::Double(0x#{turkic[0]}, 0x#{turkic[1]}),"
     when 3
-      rs.puts "        '\\u{#{char}}' if mode == Mode::Turkic => Mapping::Triple(0x#{turkic[0]}, 0x#{turkic[1]}, 0x#{turkic[2]}),"
+      rs.puts "            '\\u{#{char}}' if mode == Mode::Turkic => Mapping::Triple(0x#{turkic[0]}, 0x#{turkic[1]}, 0x#{turkic[2]}),"
     else
       raise "Unsupported mapping length: #{map.inspect} for code #{code}"
     end
   elsif mapping.key?(:full) && !offset.nil?
-    raise 'cannot use offsets with long mappings' if mapping[:full].length > 1
+    full = mapping[:full].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
 
     base = start.to_s(16).upcase.rjust(4, '0')
     op = 'add'
@@ -119,22 +136,32 @@ ranges.each do |range|
       op_offset = -offset
     end
     op_offset = op_offset.to_s(16).rjust(4, '0')
-    if (last - start).zero?
-      rs.puts "        '\\u{#{base}}' => Mapping::Single(0x#{base}_u32.wrapping_#{op}(0x#{op_offset})),"
-    else
-      finish = last.to_s(16).upcase
-      rs.puts "        '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Single((c as u32).wrapping_#{op}(0x#{op_offset})),"
+    if (last - start).zero? && full.length == 1
+      rs.puts "            '\\u{#{base}}' => Mapping::Single(0x#{full[0]}),"
+    elsif full.length == 1
+      finish = last.to_s(16).upcase.rjust(4, '0')
+      rs.puts "            '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Single(u32::from(c).wrapping_#{op}(0x#{op_offset})),"
+    elsif (last - start).zero? && full.length == 2
+      rs.puts "            '\\u{#{base}}' => Mapping::Double(0x#{full[0]}, 0x#{full[1]}),"
+    elsif full.length == 2
+      finish = last.to_s(16).upcase.rjust(4, '0')
+      rs.puts "            '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Double(u32::from(c).wrapping_#{op}(0x#{op_offset}), 0x#{full[1]}),"
+    elsif (last - start).zero? && full.length == 3
+      rs.puts "            '\\u{#{base}}' => Mapping::Triple(0x#{full[0]}, 0x#{full[1]}, 0x#{full[2]}),"
+    elsif full.length == 3
+      finish = last.to_s(16).upcase.rjust(4, '0')
+      rs.puts "            '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Triple(u32::from(c).wrapping_#{op}(0x#{op_offset}), 0x#{full[1]}, 0x#{full[2]}),"
     end
   elsif mapping.key?(:full)
     char = start.to_s(16).upcase.rjust(4, '0')
     map = mapping[:full].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
     case map.length
     when 1
-      rs.puts "        '\\u{#{char}}' => Mapping::Single(0x#{map[0]}),"
+      rs.puts "            '\\u{#{char}}' => Mapping::Single(0x#{map[0]}),"
     when 2
-      rs.puts "        '\\u{#{char}}' => Mapping::Double(0x#{map[0]}, 0x#{map[1]}),"
+      rs.puts "            '\\u{#{char}}' => Mapping::Double(0x#{map[0]}, 0x#{map[1]}),"
     when 3
-      rs.puts "        '\\u{#{char}}' => Mapping::Triple(0x#{map[0]}, 0x#{map[1]}, 0x#{map[2]}),"
+      rs.puts "            '\\u{#{char}}' => Mapping::Triple(0x#{map[0]}, 0x#{map[1]}, 0x#{map[2]}),"
     else
       raise "Unsupported mapping length: #{map.inspect} for code #{code}"
     end
@@ -143,8 +170,145 @@ ranges.each do |range|
   end
 end
 
-rs.puts '        _ => Mapping::Single(c as u32),'
+rs.puts '            _ => Mapping::Single(c.into()),'
+rs.puts '        },'
+rs.puts '        _ => Mapping::Single(c.into()),'
 
 rs.puts '    }'
 rs.puts '}'
-# rubocop:enable Metrics/LineLength
+rs.close
+
+rs = File.open('tests/full_fold_exhaustive.rs', 'w')
+
+rs.puts(<<~AUTOGEN)
+  use core::char;
+  use core::cmp::Ordering;
+  use focaccia::{unicode_full_case_eq, unicode_full_casecmp};
+
+  #[must_use]
+  #[allow(clippy::too_many_lines)]
+  fn lookup_naive(c: char, buf: &mut [u8; 4]) -> &str {
+      match c {
+AUTOGEN
+
+char_mappings.keys.sort.each do |from|
+  mapping = char_mappings[from]
+
+  char = from.to_s(16).upcase.rjust(4, '0')
+  full = mapping[:full].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
+
+  case full.length
+  when 1
+    rs.puts "        '\\u{#{char}}' => \"\\u{#{full[0]}}\","
+  when 2
+    rs.puts "        '\\u{#{char}}' => \"\\u{#{full[0]}}\\u{#{full[1]}}\","
+  when 3
+    rs.puts "        '\\u{#{char}}' => \"\\u{#{full[0]}}\\u{#{full[1]}}\\u{#{full[2]}}\","
+  else
+    raise "Unsupported mapping length: #{map.inspect} for code #{code}"
+  end
+end
+
+rs.puts '        _ => c.encode_utf8(buf),'
+rs.puts '    }'
+rs.puts '}'
+rs.puts
+
+rs.puts(<<~TEST)
+  #[test]
+  fn full_fold_exhaustive() {
+      let mut enc = [0; 4];
+      let mut buf = [0; 4];
+      for codepoint in 0..=0x10FFFF {
+          if let Some(ch) = char::from_u32(codepoint) {
+              let left = ch.encode_utf8(&mut enc);
+              let right = lookup_naive(ch, &mut buf);
+              assert!(
+                  unicode_full_case_eq(left, right),
+                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                  ch,
+                  left,
+                  right
+              );
+              assert!(
+                  matches!(unicode_full_casecmp(left, right), Ordering::Equal),
+                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                  ch,
+                  left,
+                  right
+              );
+          }
+      }
+  }
+TEST
+rs.close
+
+rs = File.open('tests/full_turkic_fold_exhaustive.rs', 'w')
+
+rs.puts(<<~AUTOGEN)
+  use core::char;
+  use core::cmp::Ordering;
+  use focaccia::{unicode_full_turkic_case_eq, unicode_full_turkic_casecmp};
+
+  #[must_use]
+  #[allow(clippy::too_many_lines)]
+  fn lookup_naive(c: char, buf: &mut [u8; 4]) -> &str {
+      match c {
+AUTOGEN
+
+char_mappings.keys.sort.each do |from|
+  mapping = char_mappings[from]
+
+  char = from.to_s(16).upcase.rjust(4, '0')
+  full =
+    if mapping[:turkic]
+      mapping[:turkic].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
+    else
+      mapping[:full].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
+    end
+
+  case full.length
+  when 1
+    rs.puts "        '\\u{#{char}}' => \"\\u{#{full[0]}}\","
+  when 2
+    rs.puts "        '\\u{#{char}}' => \"\\u{#{full[0]}}\\u{#{full[1]}}\","
+  when 3
+    rs.puts "        '\\u{#{char}}' => \"\\u{#{full[0]}}\\u{#{full[1]}}\\u{#{full[2]}}\","
+  else
+    raise "Unsupported mapping length: #{map.inspect} for code #{code}"
+  end
+end
+
+rs.puts '        _ => c.encode_utf8(buf),'
+rs.puts '    }'
+rs.puts '}'
+rs.puts
+
+rs.puts(<<~TEST)
+  #[test]
+  fn full_turkic_fold_exhaustive() {
+      let mut enc = [0; 4];
+      let mut buf = [0; 4];
+      for codepoint in 0..=0x10FFFF {
+          if let Some(ch) = char::from_u32(codepoint) {
+              let left = ch.encode_utf8(&mut enc);
+              let right = lookup_naive(ch, &mut buf);
+              assert!(
+                  unicode_full_turkic_case_eq(left, right),
+                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                  ch,
+                  left,
+                  right
+              );
+              assert!(
+                  matches!(unicode_full_turkic_casecmp(left, right), Ordering::Equal),
+                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                  ch,
+                  left,
+                  right
+              );
+          }
+      }
+  }
+TEST
+rs.close
