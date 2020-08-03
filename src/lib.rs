@@ -223,6 +223,25 @@ impl Default for CaseFold {
 }
 
 impl CaseFold {
+    /// Construct a new full Unicode case folding.
+    ///
+    /// See [`CaseFold::Full`].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use focaccia::CaseFold;
+    /// assert_eq!(CaseFold::new(), CaseFold::Full);
+    ///
+    /// assert!(CaseFold::new().case_eq("MASSE", "Maße"));
+    /// assert!(!CaseFold::new().case_eq("São Paulo", "Sao Paulo"));
+    /// ```
+    #[inline]
+    #[must_use]
+    pub const fn new() -> Self {
+        Self::Full
+    }
+
     /// Make a case-insensitive string comparison based on the dispatching
     /// folding strategy.
     ///
@@ -354,8 +373,8 @@ impl NoSuchCaseFoldingScheme {
     /// ```
     #[inline]
     #[must_use]
-    pub fn new() -> Self {
-        Self::default()
+    pub const fn new() -> Self {
+        Self { _private: () }
     }
 }
 
