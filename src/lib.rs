@@ -133,7 +133,52 @@ pub use folding::{
 /// The `CaseFold` enum intends to support the [folding strategies available in
 /// Ruby].
 ///
+/// # Examples
+///
+/// For Unicode text, the default folding schem is [`Full`](CaseFold::Full). To
+/// make an equality comparison:
+///
+/// ```
+/// # use core::cmp::Ordering;
+/// # use focaccia::CaseFold;
+/// let fold = CaseFold::Full;
+/// assert_eq!(fold.casecmp("MASSE", "Maße"), Ordering::Equal);
+/// assert_eq!(fold.casecmp("São Paulo", "Sao Paulo"), Ordering::Greater);
+///
+/// assert!(fold.case_eq("MASSE", "Maße"));
+/// assert!(!fold.case_eq("São Paulo", "Sao Paulo"));
+/// ```
+///
+/// For text known to be ASCII, Focaccia can make a more performant comparison
+/// check:
+///
+/// ```
+/// # use core::cmp::Ordering;
+/// # use focaccia::CaseFold;
+/// let fold = CaseFold::Ascii;
+/// assert_eq!(fold.casecmp("Crate: focaccia", "Crate: FOCACCIA"), Ordering::Equal);
+/// assert_eq!(fold.casecmp("Fabled", "failed"), Ordering::Less);
+///
+/// assert!(fold.case_eq("Crate: focaccia", "Crate: FOCACCIA"));
+/// assert!(!fold.case_eq("Fabled", "failed"));
+/// ```
+///
+/// Turkic case folding is similar to full case folding with additional mappings
+/// for [dotted and dotless I]:
+///
+/// ```
+/// # use core::cmp::Ordering;
+/// # use focaccia::CaseFold;
+/// let fold = CaseFold::Turkic;
+/// assert!(matches!(fold.casecmp("İstanbul", "istanbul"), Ordering::Equal));
+/// assert!(!matches!(fold.casecmp("İstanbul", "Istanbul"), Ordering::Equal));
+///
+/// assert!(fold.case_eq("İstanbul", "istanbul"));
+/// assert!(!fold.case_eq("İstanbul", "Istanbul"));
+/// ```
+///
 /// [folding strategies available in Ruby]: https://ruby-doc.org/core-2.6.3/String.html#method-i-downcase
+/// [dotted and dotless I]: https://en.wikipedia.org/wiki/Dotted_and_dotless_I
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub enum CaseFold {
     /// Full Unicode case mapping, suitable for most languages (see [`Turkic`]
@@ -161,6 +206,16 @@ impl Default for CaseFold {
     /// Default to full Unicode case folding.
     ///
     /// See [`CaseFold::Full`].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use focaccia::CaseFold;
+    /// assert_eq!(CaseFold::default(), CaseFold::Full);
+    ///
+    /// assert!(CaseFold::default().case_eq("MASSE", "Maße"));
+    /// assert!(!CaseFold::default().case_eq("São Paulo", "Sao Paulo"));
+    /// ```
     #[inline]
     fn default() -> Self {
         Self::Full
@@ -178,6 +233,36 @@ impl CaseFold {
     ///
     /// This function is a wrapper around the underlying scheme-specific
     /// functions.
+    ///
+    /// # Examples – Full case folding
+    ///
+    /// ```
+    /// # use core::cmp::Ordering;
+    /// # use focaccia::CaseFold;
+    /// let fold = CaseFold::Full;
+    /// assert_eq!(fold.casecmp("MASSE", "Maße"), Ordering::Equal);
+    /// assert_eq!(fold.casecmp("São Paulo", "Sao Paulo"), Ordering::Greater);
+    /// ```
+    ///
+    /// # Examples – ASCII case folding
+    ///
+    /// ```
+    /// # use core::cmp::Ordering;
+    /// # use focaccia::CaseFold;
+    /// let fold = CaseFold::Ascii;
+    /// assert_eq!(fold.casecmp("Crate: focaccia", "Crate: FOCACCIA"), Ordering::Equal);
+    /// assert_eq!(fold.casecmp("Fabled", "failed"), Ordering::Less);
+    /// ```
+    ///
+    /// # Examples – Turkic case folding
+    ///
+    /// ```
+    /// # use core::cmp::Ordering;
+    /// # use focaccia::CaseFold;
+    /// let fold = CaseFold::Turkic;
+    /// assert!(matches!(fold.casecmp("İstanbul", "istanbul"), Ordering::Equal));
+    /// assert!(!matches!(fold.casecmp("İstanbul", "Istanbul"), Ordering::Equal));
+    /// ```
     #[inline]
     #[must_use]
     pub fn casecmp(self, left: &str, right: &str) -> Ordering {
@@ -198,6 +283,33 @@ impl CaseFold {
     ///
     /// This function is a wrapper around the underlying scheme-specific
     /// functions.
+    ///
+    /// # Examples – Full case folding
+    ///
+    /// ```
+    /// # use focaccia::CaseFold;
+    /// let fold = CaseFold::Full;
+    /// assert!(fold.case_eq("MASSE", "Maße"));
+    /// assert!(!fold.case_eq("São Paulo", "Sao Paulo"));
+    /// ```
+    ///
+    /// # Examples – ASCII case folding
+    ///
+    /// ```
+    /// # use focaccia::CaseFold;
+    /// let fold = CaseFold::Ascii;
+    /// assert!(fold.case_eq("Crate: focaccia", "Crate: FOCACCIA"));
+    /// assert!(!fold.case_eq("Fabled", "failed"));
+    /// ```
+    ///
+    /// # Examples – Turkic case folding
+    ///
+    /// ```
+    /// # use focaccia::CaseFold;
+    /// let fold = CaseFold::Turkic;
+    /// assert!(fold.case_eq("İstanbul", "istanbul"));
+    /// assert!(!fold.case_eq("İstanbul", "Istanbul"));
+    /// ```
     #[inline]
     #[must_use]
     pub fn case_eq(self, left: &str, right: &str) -> bool {
@@ -211,6 +323,21 @@ impl CaseFold {
 
 /// Error type for returned when a folding scheme could not be resolved in a
 /// [`TryFrom`] implementation.
+///
+/// When this crate's `std` feature is enabled, `NoSuchCaseFoldingScheme`
+/// implements [`std::error::Error`].
+///
+/// # Examples
+///
+/// ```
+/// # use core::convert::TryFrom;
+/// # use focaccia::{CaseFold, NoSuchCaseFoldingScheme};
+/// assert_eq!(CaseFold::try_from(None::<&str>), Ok(CaseFold::Full));
+/// assert_eq!(CaseFold::try_from(Some("turkic")), Ok(CaseFold::Turkic));
+/// assert_eq!(CaseFold::try_from(Some("xxx")), Err(NoSuchCaseFoldingScheme::new()));
+/// ```
+///
+/// [`std::error::Error`]: https://doc.rust-lang.org/stable/std/error/trait.Error.html
 #[derive(Default, Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub struct NoSuchCaseFoldingScheme {
     _private: (),
@@ -218,6 +345,13 @@ pub struct NoSuchCaseFoldingScheme {
 
 impl NoSuchCaseFoldingScheme {
     /// Construct a new [`NoSuchCaseFoldingScheme`] error.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use focaccia::NoSuchCaseFoldingScheme;
+    /// let err = NoSuchCaseFoldingScheme::new();
+    /// ```
     #[inline]
     #[must_use]
     pub fn new() -> Self {

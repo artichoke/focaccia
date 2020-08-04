@@ -6,6 +6,26 @@ use crate::folding::mapping::{lookup, Mode};
 ///
 /// This function is implemented with a lookup table generated from Unicode case
 /// folding tables.
+///
+/// # Examples
+///
+/// ```
+/// # use core::cmp::Ordering;
+/// # use focaccia::unicode_full_turkic_casecmp;
+/// assert!(matches!(unicode_full_turkic_casecmp("İstanbul", "istanbul"), Ordering::Equal));
+/// assert!(!matches!(unicode_full_turkic_casecmp("İstanbul", "Istanbul"), Ordering::Equal));
+/// ```
+///
+/// # Examples – Full
+///
+/// Turkic case folding is largely compatible with full Unicode case folding.
+///
+/// ```
+/// # use core::cmp::Ordering;
+/// # use focaccia::unicode_full_turkic_casecmp;
+/// assert_eq!(unicode_full_turkic_casecmp("MASSE", "Maße"), Ordering::Equal);
+/// assert_eq!(unicode_full_turkic_casecmp("São Paulo", "Sao Paulo"), Ordering::Greater);
+/// ```
 #[inline]
 #[must_use]
 pub fn casecmp(left: &str, right: &str) -> Ordering {
@@ -19,6 +39,24 @@ pub fn casecmp(left: &str, right: &str) -> Ordering {
 ///
 /// This function is implemented with a lookup table generated from Unicode case
 /// folding tables.
+///
+/// # Examples
+///
+/// ```
+/// # use focaccia::unicode_full_turkic_case_eq;
+/// assert!(unicode_full_turkic_case_eq("İstanbul", "istanbul"));
+/// assert!(!unicode_full_turkic_case_eq("İstanbul", "Istanbul"));
+/// ```
+///
+/// # Examples – Full
+///
+/// Turkic case folding is largely compatible with full Unicode case folding.
+///
+/// ```
+/// # use focaccia::unicode_full_turkic_case_eq;
+/// assert!(unicode_full_turkic_case_eq("MASSE", "Maße"));
+/// assert!(!unicode_full_turkic_case_eq("São Paulo", "Sao Paulo"));
+/// ```
 #[inline]
 #[must_use]
 pub fn eq(left: &str, right: &str) -> bool {

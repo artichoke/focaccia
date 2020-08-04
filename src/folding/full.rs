@@ -6,6 +6,15 @@ use crate::folding::mapping::{lookup, Mode};
 ///
 /// This function is implemented with a lookup table generated from Unicode case
 /// folding tables.
+///
+/// # Examples
+///
+/// ```
+/// # use core::cmp::Ordering;
+/// # use focaccia::unicode_full_casecmp;
+/// assert_eq!(unicode_full_casecmp("MASSE", "Maße"), Ordering::Equal);
+/// assert_eq!(unicode_full_casecmp("São Paulo", "Sao Paulo"), Ordering::Greater);
+/// ```
 #[inline]
 #[must_use]
 pub fn casecmp(left: &str, right: &str) -> Ordering {
@@ -18,6 +27,14 @@ pub fn casecmp(left: &str, right: &str) -> Ordering {
 ///
 /// This function is implemented with a lookup table generated from Unicode case
 /// folding tables.
+///
+/// # Examples
+///
+/// ```
+/// # use focaccia::unicode_full_case_eq;
+/// assert!(unicode_full_case_eq("MASSE", "Maße"));
+/// assert!(!unicode_full_case_eq("São Paulo", "Sao Paulo"));
+/// ```
 #[inline]
 #[must_use]
 pub fn eq(left: &str, right: &str) -> bool {

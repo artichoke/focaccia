@@ -3,6 +3,15 @@ use core::cmp::Ordering;
 /// Compare two bytestrings with ASCII case folding.
 ///
 /// This function is implemented with ASCII folding functions in Rust `core`.
+///
+/// # Examples
+///
+/// ```
+/// # use core::cmp::Ordering;
+/// # use focaccia::{ascii_casecmp, ascii_case_eq};
+/// assert_eq!(ascii_casecmp(b"Artichoke Ruby", b"artichoke ruby"), Ordering::Equal);
+/// assert_eq!(ascii_casecmp(b"artichoke ruby", b"Artichoke"), Ordering::Greater);
+/// ```
 #[inline]
 #[must_use]
 pub fn casecmp(left: &[u8], right: &[u8]) -> Ordering {
@@ -22,6 +31,14 @@ pub fn casecmp(left: &[u8], right: &[u8]) -> Ordering {
 /// Check two bytestrings for equality with ASCII case folding.
 ///
 /// This function is implemented with ASCII folding functions in Rust `core`.
+///
+/// # Examples
+///
+/// ```
+/// # use focaccia::{ascii_casecmp, ascii_case_eq};
+/// assert!(ascii_case_eq(b"Artichoke Ruby", b"artichoke ruby"));
+/// assert!(!ascii_case_eq(b"artichoke ruby", b"Artichoke"));
+/// ```
 #[inline]
 #[must_use]
 pub fn eq(left: &[u8], right: &[u8]) -> bool {
