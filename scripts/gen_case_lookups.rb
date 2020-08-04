@@ -219,39 +219,37 @@ rs.puts(<<~TEST)
   fn full_fold_exhaustive() {
       let mut enc = [0; 4];
       let mut buf = [0; 4];
-      for codepoint in 0..=0x10FFFF {
-          if let Some(ch) = char::from_u32(codepoint) {
-              let left = ch.encode_utf8(&mut enc);
-              let right = lookup_naive(ch, &mut buf);
-              assert!(
-                  unicode_full_case_eq(left, right),
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  left,
-                  right,
-              );
-              assert!(
-                  unicode_full_case_eq(right, left),
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  right,
-                  left,
-              );
-              assert!(
-                  matches!(unicode_full_casecmp(left, right), Ordering::Equal),
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  left,
-                  right,
-              );
-              assert!(
-                  matches!(unicode_full_casecmp(right, left), Ordering::Equal),
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  right,
-                  left,
-              );
-          }
+      for ch in '0'..=char::MAX {
+          let left = ch.encode_utf8(&mut enc);
+          let right = lookup_naive(ch, &mut buf);
+          assert!(
+              unicode_full_case_eq(left, right),
+              "Correctness check failed for: {}. Expected: {}. Got: {}.",
+              ch,
+              left,
+              right,
+          );
+          assert!(
+              unicode_full_case_eq(right, left),
+              "Correctness check failed for: {}. Expected: {}. Got: {}.",
+              ch,
+              right,
+              left,
+          );
+          assert!(
+              matches!(unicode_full_casecmp(left, right), Ordering::Equal),
+              "Correctness check failed for: {}. Expected: {}. Got: {}.",
+              ch,
+              left,
+              right,
+          );
+          assert!(
+              matches!(unicode_full_casecmp(right, left), Ordering::Equal),
+              "Correctness check failed for: {}. Expected: {}. Got: {}.",
+              ch,
+              right,
+              left,
+          );
       }
   }
 TEST
@@ -303,39 +301,37 @@ rs.puts(<<~TEST)
   fn full_turkic_fold_exhaustive() {
       let mut enc = [0; 4];
       let mut buf = [0; 4];
-      for codepoint in 0..=0x10FFFF {
-          if let Some(ch) = char::from_u32(codepoint) {
-              let left = ch.encode_utf8(&mut enc);
-              let right = lookup_naive(ch, &mut buf);
-              assert!(
-                  unicode_full_turkic_case_eq(left, right),
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  left,
-                  right,
-              );
-              assert!(
-                  unicode_full_turkic_case_eq(right, left),
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  right,
-                  left,
-              );
-              assert!(
-                  matches!(unicode_full_turkic_casecmp(left, right), Ordering::Equal),
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  left,
-                  right,
-              );
-              assert!(
-                  matches!(unicode_full_turkic_casecmp(right, left), Ordering::Equal),
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  right,
-                  left,
-              );
-          }
+      for ch in '0'..=char::MAX {
+          let left = ch.encode_utf8(&mut enc);
+          let right = lookup_naive(ch, &mut buf);
+          assert!(
+              unicode_full_turkic_case_eq(left, right),
+              "Correctness check failed for: {}. Expected: {}. Got: {}.",
+              ch,
+              left,
+              right,
+          );
+          assert!(
+              unicode_full_turkic_case_eq(right, left),
+              "Correctness check failed for: {}. Expected: {}. Got: {}.",
+              ch,
+              right,
+              left,
+          );
+          assert!(
+              matches!(unicode_full_turkic_casecmp(left, right), Ordering::Equal),
+              "Correctness check failed for: {}. Expected: {}. Got: {}.",
+              ch,
+              left,
+              right,
+          );
+          assert!(
+              matches!(unicode_full_turkic_casecmp(right, left), Ordering::Equal),
+              "Correctness check failed for: {}. Expected: {}. Got: {}.",
+              ch,
+              right,
+              left,
+          );
       }
   }
 TEST
