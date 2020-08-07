@@ -16,8 +16,7 @@
 //! Unicode case folding methods for case-insensitive string comparisons.
 //!
 //! Focaccia supports full, ASCII, and Turkic [Unicode case folding] equality
-//! comparisons. ASCII folding supports determining case-insensitive
-//! [`Ordering`].
+//! and [`Ordering`] comparisons.
 //!
 //! The primary entrypoint to Focaccia is the [`CaseFold`] enum. Focaccia also
 //! provides free functions for each case folding scheme.
@@ -25,7 +24,7 @@
 //! # Examples
 //!
 //! For Unicode text, Focaccia recommends the [`Full`](CaseFold::Full) folding
-//! scheme. To make an equality comparison:
+//! scheme. To make a comparison:
 //!
 //! ```
 //! # use core::cmp::Ordering;
@@ -131,13 +130,12 @@ pub use folding::{
 /// they can be supported, the full case foldings are superior: for example,
 /// they allow "MASSE" and "Maße" to match.
 ///
-/// The `CaseFold` enum intends to support the [folding strategies available in
-/// Ruby].
+/// The `CaseFold` enum supports the [folding strategies available in Ruby].
 ///
 /// # Examples
 ///
 /// For Unicode text, the default folding schem is [`Full`](CaseFold::Full). To
-/// make an equality comparison:
+/// make a comparison:
 ///
 /// ```
 /// # use core::cmp::Ordering;
@@ -232,6 +230,8 @@ impl CaseFold {
     ///
     /// ```
     /// # use focaccia::CaseFold;
+    /// const FOLD: CaseFold = CaseFold::new();
+    ///
     /// assert_eq!(CaseFold::new(), CaseFold::Full);
     ///
     /// assert!(CaseFold::new().case_eq("MASSE", "Maße"));
@@ -353,7 +353,9 @@ impl CaseFold {
 /// # use core::convert::TryFrom;
 /// # use focaccia::{CaseFold, NoSuchCaseFoldingScheme};
 /// assert_eq!(CaseFold::try_from(None::<&str>), Ok(CaseFold::Full));
+/// assert_eq!(CaseFold::try_from(Some("ascii")), Ok(CaseFold::Ascii));
 /// assert_eq!(CaseFold::try_from(Some("turkic")), Ok(CaseFold::Turkic));
+/// assert_eq!(CaseFold::try_from(Some("lithuanian")), Ok(CaseFold::Lithuanian));
 /// assert_eq!(CaseFold::try_from(Some("xxx")), Err(NoSuchCaseFoldingScheme::new()));
 /// ```
 ///
@@ -370,7 +372,7 @@ impl NoSuchCaseFoldingScheme {
     ///
     /// ```
     /// # use focaccia::NoSuchCaseFoldingScheme;
-    /// let err = NoSuchCaseFoldingScheme::new();
+    /// const ERR: NoSuchCaseFoldingScheme = NoSuchCaseFoldingScheme::new();
     /// ```
     #[inline]
     #[must_use]
@@ -391,20 +393,16 @@ impl std::error::Error for NoSuchCaseFoldingScheme {}
 impl TryFrom<Option<&str>> for CaseFold {
     type Error = NoSuchCaseFoldingScheme;
 
+    #[inline]
     fn try_from(value: Option<&str>) -> Result<Self, Self::Error> {
-        match value {
-            None => Ok(Self::Full),
-            Some("ascii") => Ok(Self::Ascii),
-            Some("turkic") => Ok(Self::Turkic),
-            Some("lithuanian") => Ok(Self::Lithuanian),
-            Some(_) => Err(NoSuchCaseFoldingScheme::new()),
-        }
+        Self::try_from(value.map(str::as_bytes))
     }
 }
 
 impl TryFrom<Option<&[u8]>> for CaseFold {
     type Error = NoSuchCaseFoldingScheme;
 
+    #[inline]
     fn try_from(value: Option<&[u8]>) -> Result<Self, Self::Error> {
         match value {
             None => Ok(Self::Full),
