@@ -12,9 +12,23 @@ pub enum Mode {
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Mapping {
+    Empty,
     Single(u32),
     Double(u32, u32),
     Triple(u32, u32, u32),
+}
+
+impl Mapping {
+    #[inline]
+    #[must_use]
+    pub fn len(self) -> usize {
+        match self {
+            Self::Empty => 0,
+            Self::Single(_) => 1,
+            Self::Double(_, _) => 2,
+            Self::Triple(_, _, _) => 3,
+        }
+    }
 }
 
 impl IntoIterator for Mapping {
@@ -23,56 +37,66 @@ impl IntoIterator for Mapping {
 
     #[inline]
     fn into_iter(self) -> Self::IntoIter {
-        Iter {
-            mapping: self,
-            index: 0,
-        }
+        Iter(self)
     }
 }
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, PartialOrd, Ord)]
-pub struct Iter {
-    mapping: Mapping,
-    index: u8,
-}
+pub struct Iter(Mapping);
 
 impl Iterator for Iter {
     type Item = u32;
 
     #[inline]
     fn next(&mut self) -> Option<Self::Item> {
-        let next = match self.mapping {
-            Mapping::Single(ch) if self.index == 0 => ch,
-            Mapping::Double(ch, _) if self.index == 0 => ch,
-            Mapping::Double(_, ch) if self.index == 1 => ch,
-            Mapping::Triple(ch, _, _) if self.index == 0 => ch,
-            Mapping::Triple(_, ch, _) if self.index == 1 => ch,
-            Mapping::Triple(_, _, ch) if self.index == 2 => ch,
-            _ => return None,
+        let next = match self.0 {
+            Mapping::Empty => return None,
+            Mapping::Single(ch) => {
+                self.0 = Mapping::Empty;
+                ch
+            }
+            Mapping::Double(ch, next) => {
+                self.0 = Mapping::Single(next);
+                ch
+            }
+            Mapping::Triple(ch, next, after) => {
+                self.0 = Mapping::Double(next, after);
+                ch
+            }
         };
-        self.index += 1;
         Some(next)
     }
 
     #[inline]
     fn size_hint(&self) -> (usize, Option<usize>) {
-        let remaining = match self.mapping {
-            Mapping::Single(_) => 1_u8.checked_sub(self.index),
-            Mapping::Double(_, _) => 2_u8.checked_sub(self.index),
-            Mapping::Triple(_, _, _) => 3_u8.checked_sub(self.index),
-        };
-        let remaining = remaining.unwrap_or_default();
-        (remaining.into(), Some(remaining.into()))
+        let len = self.0.len();
+        (len, Some(len))
     }
 
     #[inline]
     fn count(self) -> usize {
-        let remaining = match self.mapping {
-            Mapping::Single(_) => 1_u8.checked_sub(self.index),
-            Mapping::Double(_, _) => 2_u8.checked_sub(self.index),
-            Mapping::Triple(_, _, _) => 3_u8.checked_sub(self.index),
+        self.0.len()
+    }
+}
+
+impl DoubleEndedIterator for Iter {
+    fn next_back(&mut self) -> Option<Self::Item> {
+        let next_back = match self.0 {
+            Mapping::Empty => return None,
+            Mapping::Single(ch) => {
+                self.0 = Mapping::Empty;
+                ch
+            }
+            Mapping::Double(next, ch) => {
+                self.0 = Mapping::Single(next);
+                ch
+            }
+            Mapping::Triple(after, next, ch) => {
+                self.0 = Mapping::Double(after, next);
+                ch
+            }
         };
-        remaining.unwrap_or_default().into()
+        Some(next_back)
     }
 }
 
@@ -94,6 +118,18 @@ mod tests {
         assert_eq!(iter.next(), None);
         assert_eq!(iter.next(), None);
         assert_eq!(iter.next(), None);
+    }
+
+    #[test]
+    fn mapping_single_iter_back() {
+        let mapping = Mapping::Single(20);
+        let mut iter = mapping.into_iter();
+        assert_eq!(iter.next_back(), Some(20_u32));
+        assert_eq!(iter.next_back(), None);
+        assert_eq!(iter.next_back(), None);
+        assert_eq!(iter.next_back(), None);
+        assert_eq!(iter.next_back(), None);
+        assert_eq!(iter.next_back(), None);
     }
 
     #[test]
@@ -139,6 +175,18 @@ mod tests {
     }
 
     #[test]
+    fn mapping_double_iter_back() {
+        let mapping = Mapping::Double(20, 30);
+        let mut iter = mapping.into_iter();
+        assert_eq!(iter.next_back(), Some(30_u32));
+        assert_eq!(iter.next_back(), Some(20_u32));
+        assert_eq!(iter.next_back(), None);
+        assert_eq!(iter.next_back(), None);
+        assert_eq!(iter.next_back(), None);
+        assert_eq!(iter.next_back(), None);
+    }
+
+    #[test]
     fn mapping_double_count() {
         let mapping = Mapping::Double(20, 30);
         let iter = mapping.into_iter();
@@ -178,6 +226,18 @@ mod tests {
         assert_eq!(iter.next(), None);
         assert_eq!(iter.next(), None);
         assert_eq!(iter.next(), None);
+    }
+
+    #[test]
+    fn mapping_triple_iter_back() {
+        let mapping = Mapping::Triple(20, 30, 40);
+        let mut iter = mapping.into_iter();
+        assert_eq!(iter.next_back(), Some(40_u32));
+        assert_eq!(iter.next_back(), Some(30_u32));
+        assert_eq!(iter.next_back(), Some(20_u32));
+        assert_eq!(iter.next_back(), None);
+        assert_eq!(iter.next_back(), None);
+        assert_eq!(iter.next_back(), None);
     }
 
     #[test]
