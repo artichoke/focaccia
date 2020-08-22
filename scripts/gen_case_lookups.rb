@@ -3,6 +3,8 @@
 
 mappings = File.readlines('CaseFolding.txt')
 
+casefolding_version = mappings[0..2].map { |line| "// #{line.delete_prefix('# ')}" }.join.chomp
+
 char_mappings = Hash.new { |hash, key| hash[key] = {} }
 
 mappings.each do |line|
@@ -64,6 +66,9 @@ rs.puts(<<~AUTOGEN)
   // To make modfications to this code, see `scripts/gen_case_lookups.rb`.
   //
   // Last generated on #{Time.now.utc}.
+  //
+  // Unicode version:
+  #{casefolding_version}
 
   use super::{Mapping, Mode};
 
@@ -190,6 +195,9 @@ rs.puts(<<~AUTOGEN)
   // To make modfications to this code, see `scripts/gen_case_lookups.rb`.
   //
   // Last generated on #{Time.now.utc}.
+  //
+  // Unicode version:
+  #{casefolding_version}
 
   use core::char;
   use core::cmp::Ordering;
@@ -272,6 +280,9 @@ rs.puts(<<~AUTOGEN)
   // To make modfications to this code, see `scripts/gen_case_lookups.rb`.
   //
   // Last generated on #{Time.now.utc}.
+  //
+  // Unicode version:
+  #{casefolding_version}
 
   use core::char;
   use core::cmp::Ordering;
