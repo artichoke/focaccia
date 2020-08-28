@@ -75,16 +75,16 @@ rs.puts(<<~AUTOGEN)
   #[must_use]
   #[allow(clippy::match_same_arms)]
   #[allow(clippy::too_many_lines)]
-  pub fn lookup(c: char, mode: Mode) -> Mapping {
-      let char_bytes = u32::from(c).to_be_bytes();
+  pub const fn lookup(c: char, mode: Mode) -> Mapping {
+      let char_bytes = (c as u32).to_be_bytes();
       let mid_byte = char_bytes[2];
       let high_bytes = u16::from_be_bytes([char_bytes[0], char_bytes[1]]);
       match (high_bytes, mid_byte) {
           (0x0000, 0x00) => match c {
               // Turkic mapping in ASCII range
               // 0049; T; 0131; # LATIN CAPITAL LETTER I
-              '\\u{0049}' if mode == Mode::Turkic => Mapping::Single(0x0131),
-              c if c.is_ascii() => Mapping::Single(c.to_ascii_lowercase().into()),
+              '\\u{0049}' if matches!(mode, Mode::Turkic) => Mapping::Single(0x0131),
+              c if c.is_ascii() => Mapping::Single(c.to_ascii_lowercase() as u32),
 AUTOGEN
 
 last_high_bytes = 0x00
@@ -102,7 +102,7 @@ ranges.each do |range|
   high_bytes = ((start >> 16) & 0xFFFF)
 
   if high_bytes != last_high_bytes || mid_byte != last_mid_byte
-    rs.puts '            _ => Mapping::Single(c.into()),'
+    rs.puts '            _ => Mapping::Single(c as u32),'
     rs.puts '        },'
     rs.puts "        (0x#{high_bytes.to_s(16).upcase.rjust(4, '0')}, 0x#{mid_byte.to_s(16).upcase.rjust(2, '0')}) => match c {"
     last_high_bytes = high_bytes
@@ -116,22 +116,22 @@ ranges.each do |range|
     full = mapping[:full].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
     case full.length
     when 1
-      rs.puts "            '\\u{#{char}}' if mode == Mode::Full => Mapping::Single(0x#{full[0]}),"
+      rs.puts "            '\\u{#{char}}' if matches!(mode, Mode::Full) => Mapping::Single(0x#{full[0]}),"
     when 2
-      rs.puts "            '\\u{#{char}}' if mode == Mode::Full => Mapping::Double(0x#{full[0]}, 0x#{full[1]}),"
+      rs.puts "            '\\u{#{char}}' if matches!(mode, Mode::Full) => Mapping::Double(0x#{full[0]}, 0x#{full[1]}),"
     when 3
-      rs.puts "            '\\u{#{char}}' if mode == Mode::Full => Mapping::Triple(0x#{full[0]}, 0x#{full[1]}}, 0x#{full[2]}),"
+      rs.puts "            '\\u{#{char}}' if matches!(mode, Mode::Full) => Mapping::Triple(0x#{full[0]}, 0x#{full[1]}}, 0x#{full[2]}),"
     else
       raise "Unsupported mapping length: #{map.inspect} for code #{code}"
     end
     turkic = mapping[:turkic].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
     case turkic.length
     when 1
-      rs.puts "            '\\u{#{char}}' if mode == Mode::Turkic => Mapping::Single(0x#{turkic[0]}),"
+      rs.puts "            '\\u{#{char}}' if matches!(mode, Mode::Turkic) => Mapping::Single(0x#{turkic[0]}),"
     when 2
-      rs.puts "            '\\u{#{char}}' if mode == Mode::Turkic => Mapping::Double(0x#{turkic[0]}, 0x#{turkic[1]}),"
+      rs.puts "            '\\u{#{char}}' if matches!(mode, Mode::Turkic) => Mapping::Double(0x#{turkic[0]}, 0x#{turkic[1]}),"
     when 3
-      rs.puts "            '\\u{#{char}}' if mode == Mode::Turkic => Mapping::Triple(0x#{turkic[0]}, 0x#{turkic[1]}, 0x#{turkic[2]}),"
+      rs.puts "            '\\u{#{char}}' if matches!(mode, Mode::Turkic) => Mapping::Triple(0x#{turkic[0]}, 0x#{turkic[1]}, 0x#{turkic[2]}),"
     else
       raise "Unsupported mapping length: #{map.inspect} for code #{code}"
     end
@@ -180,9 +180,9 @@ ranges.each do |range|
   end
 end
 
-rs.puts '            _ => Mapping::Single(c.into()),'
+rs.puts '            _ => Mapping::Single(c as u32),'
 rs.puts '        },'
-rs.puts '        _ => Mapping::Single(c.into()),'
+rs.puts '        _ => Mapping::Single(c as u32),'
 
 rs.puts '    }'
 rs.puts '}'
