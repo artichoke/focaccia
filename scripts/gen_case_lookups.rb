@@ -53,9 +53,7 @@ ranges.each do |range|
     raise "unequal offset in char range: #{range.inspect}" unless char_offset == start_offset
   end
   range[:offset] = start_offset
-end
 
-ranges.each do |range|
   puts range.inspect
 end
 
