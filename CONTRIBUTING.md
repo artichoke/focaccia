@@ -84,15 +84,24 @@ tasks by running:
 
 ```console
 $ bundle exec rake --tasks
-rake doc             # Generate Rust API documentation
-rake doc:open        # Generate Rust API documentation and open it in a web browser
-rake lint            # Lint and format
-rake lint:clippy     # Run Clippy
-rake lint:format     # Format sources
-rake lint:rubocop    # Run RuboCop
-rake test            # Run Artichoke unit tests
-rake unicode:build   # Rebuild Rust generated Rust sources from Unicode data
-rake unicode:update  # Update Unicode data
+rake build                        # Build Rust workspace
+rake doc                          # Generate Rust API documentation
+rake doc:open                     # Generate Rust API documentation and open it in a web browser
+rake fmt                          # Format sources
+rake fmt:rust                     # Format Rust sources with rustfmt
+rake fmt:text                     # Format text, YAML, and Markdown sources with prettier
+rake format                       # Format sources
+rake format:rust                  # Format Rust sources with rustfmt
+rake format:text                  # Format text, YAML, and Markdown sources with prettier
+rake lint                         # Lint sources
+rake lint:clippy                  # Lint Rust sources with Clippy
+rake lint:clippy:restriction      # Lint Rust sources with Clippy restriction pass (unenforced lints)
+rake lint:rubocop                 # Run RuboCop
+rake lint:rubocop:auto_correct    # Auto-correct RuboCop offenses
+rake release:markdown_link_check  # Check for broken links in markdown files
+rake test                         # Run Focaccia unit tests
+rake unicode:build                # Rebuild Rust generated Rust sources from Unicode data
+rake unicode:update               # Update Unicode data
 ```
 
 To lint Ruby sources, Focaccia uses
