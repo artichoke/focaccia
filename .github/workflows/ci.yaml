@@ -81,7 +81,7 @@ jobs:
         run: bundle install
 
       - name: Lint and check formatting with Rubocop
-        run: bundle exec rubocop
+        run: bundle exec rubocop --format github
 
   text:
     name: Lint and format text
