@@ -17,7 +17,7 @@ mappings.each do |line|
   next unless %w[C F T].include?(status)
 
   code = code.to_i(16)
-  map_to = map_to.split(' ').map { |char| char.to_i(16) }
+  map_to = map_to.split.map { |char| char.to_i(16) }
 
   mode = :full
   mode = :turkic if status == 'T'
