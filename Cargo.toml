@@ -1,6 +1,6 @@
 [package]
 name = "focaccia"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["Ryan Lopopolo <rjl@hyperbo.la>"]
 edition = "2018"
 description = "no_std implementation of Unicode case folding comparisons"
