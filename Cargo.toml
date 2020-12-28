@@ -9,12 +9,7 @@ readme = "README.md"
 license = "MIT"
 keywords = ["case-folding", "case-insensitive", "case", "no_std", "unicode"]
 categories = ["internationalization", "no-std", "text-processing"]
-include = [
-  "src/**/*.rs",
-  "tests/**/*.rs",
-  "LICENSE",
-  "README.md"
-]
+include = ["src/**/*", "tests/**/*", "CaseFolding.txt", "LICENSE", "README.md"]
 
 [features]
 default = ["std"]
