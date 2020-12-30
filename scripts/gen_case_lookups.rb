@@ -76,15 +76,16 @@ rs.puts(<<~AUTOGEN)
   #[allow(clippy::match_same_arms)]
   #[allow(clippy::too_many_lines)]
   pub fn lookup(c: char, mode: Mode) -> Mapping {
-      let char_bytes = u32::from(c).to_be_bytes();
+      let codepoint = c as u32;
+      let char_bytes = codepoint.to_be_bytes();
       let mid_byte = char_bytes[2];
       let high_bytes = u16::from_be_bytes([char_bytes[0], char_bytes[1]]);
       match (high_bytes, mid_byte) {
           (0x0000, 0x00) => match c {
               // Turkic mapping in ASCII range
               // 0049; T; 0131; # LATIN CAPITAL LETTER I
-              '\\u{0049}' if mode == Mode::Turkic => Mapping::Single(0x0131),
-              c if c.is_ascii() => Mapping::Single(c.to_ascii_lowercase().into()),
+              '\\u{0049}' if matches!(mode, Mode::Turkic) => Mapping::Single(0x0131),
+              c if c.is_ascii() => Mapping::Single(c.to_ascii_lowercase() as u32),
 AUTOGEN
 
 last_high_bytes = 0x00
@@ -102,7 +103,7 @@ ranges.each do |range|
   high_bytes = ((start >> 16) & 0xFFFF)
 
   if high_bytes != last_high_bytes || mid_byte != last_mid_byte
-    rs.puts '            _ => Mapping::Single(c.into()),'
+    rs.puts '            _ => Mapping::Single(codepoint),'
     rs.puts '        },'
     rs.puts "        (0x#{high_bytes.to_s(16).upcase.rjust(4, '0')}, 0x#{mid_byte.to_s(16).upcase.rjust(2, '0')}) => match c {"
     last_high_bytes = high_bytes
@@ -116,22 +117,22 @@ ranges.each do |range|
     full = mapping[:full].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
     case full.length
     when 1
-      rs.puts "            '\\u{#{char}}' if mode == Mode::Full => Mapping::Single(0x#{full[0]}),"
+      rs.puts "            '\\u{#{char}}' if matches!(mode, Mode::Full) => Mapping::Single(0x#{full[0]}),"
     when 2
-      rs.puts "            '\\u{#{char}}' if mode == Mode::Full => Mapping::Double(0x#{full[0]}, 0x#{full[1]}),"
+      rs.puts "            '\\u{#{char}}' if matches!(mode, Mode::Full) => Mapping::Double(0x#{full[0]}, 0x#{full[1]}),"
     when 3
-      rs.puts "            '\\u{#{char}}' if mode == Mode::Full => Mapping::Triple(0x#{full[0]}, 0x#{full[1]}}, 0x#{full[2]}),"
+      rs.puts "            '\\u{#{char}}' if matches!(mode, Mode::Full) => Mapping::Triple(0x#{full[0]}, 0x#{full[1]}}, 0x#{full[2]}),"
     else
       raise "Unsupported mapping length: #{map.inspect} for code #{code}"
     end
     turkic = mapping[:turkic].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
     case turkic.length
     when 1
-      rs.puts "            '\\u{#{char}}' if mode == Mode::Turkic => Mapping::Single(0x#{turkic[0]}),"
+      rs.puts "            '\\u{#{char}}' if matches!(mode, Mode::Turkic) => Mapping::Single(0x#{turkic[0]}),"
     when 2
-      rs.puts "            '\\u{#{char}}' if mode == Mode::Turkic => Mapping::Double(0x#{turkic[0]}, 0x#{turkic[1]}),"
+      rs.puts "            '\\u{#{char}}' if matches!(mode, Mode::Turkic) => Mapping::Double(0x#{turkic[0]}, 0x#{turkic[1]}),"
     when 3
-      rs.puts "            '\\u{#{char}}' if mode == Mode::Turkic => Mapping::Triple(0x#{turkic[0]}, 0x#{turkic[1]}, 0x#{turkic[2]}),"
+      rs.puts "            '\\u{#{char}}' if matches!(mode, Mode::Turkic) => Mapping::Triple(0x#{turkic[0]}, 0x#{turkic[1]}, 0x#{turkic[2]}),"
     else
       raise "Unsupported mapping length: #{map.inspect} for code #{code}"
     end
@@ -150,17 +151,17 @@ ranges.each do |range|
       rs.puts "            '\\u{#{base}}' => Mapping::Single(0x#{full[0]}),"
     elsif full.length == 1
       finish = last.to_s(16).upcase.rjust(4, '0')
-      rs.puts "            '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Single(u32::from(c).wrapping_#{op}(0x#{op_offset})),"
+      rs.puts "            '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Single(codepoint.wrapping_#{op}(0x#{op_offset})),"
     elsif (last - start).zero? && full.length == 2
       rs.puts "            '\\u{#{base}}' => Mapping::Double(0x#{full[0]}, 0x#{full[1]}),"
     elsif full.length == 2
       finish = last.to_s(16).upcase.rjust(4, '0')
-      rs.puts "            '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Double(u32::from(c).wrapping_#{op}(0x#{op_offset}), 0x#{full[1]}),"
+      rs.puts "            '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Double(codepoint.wrapping_#{op}(0x#{op_offset}), 0x#{full[1]}),"
     elsif (last - start).zero? && full.length == 3
       rs.puts "            '\\u{#{base}}' => Mapping::Triple(0x#{full[0]}, 0x#{full[1]}, 0x#{full[2]}),"
     elsif full.length == 3
       finish = last.to_s(16).upcase.rjust(4, '0')
-      rs.puts "            '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Triple(u32::from(c).wrapping_#{op}(0x#{op_offset}), 0x#{full[1]}, 0x#{full[2]}),"
+      rs.puts "            '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Triple(codepoint.wrapping_#{op}(0x#{op_offset}), 0x#{full[1]}, 0x#{full[2]}),"
     end
   elsif mapping.key?(:full)
     char = start.to_s(16).upcase.rjust(4, '0')
@@ -180,9 +181,9 @@ ranges.each do |range|
   end
 end
 
-rs.puts '            _ => Mapping::Single(c.into()),'
+rs.puts '            _ => Mapping::Single(codepoint),'
 rs.puts '        },'
-rs.puts '        _ => Mapping::Single(c.into()),'
+rs.puts '        _ => Mapping::Single(codepoint),'
 
 rs.puts '    }'
 rs.puts '}'
