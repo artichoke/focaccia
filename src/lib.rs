@@ -94,7 +94,7 @@
 //! [Rust Standard Library]: https://doc.rust-lang.org/stable/std/index.html
 //! [`Error`]: https://doc.rust-lang.org/stable/std/error/trait.Error.html
 
-#![cfg_attr(not(feature = "std"), no_std)]
+#![no_std]
 #![doc(html_root_url = "https://docs.rs/focaccia/1.0.1")]
 
 // Ensure code blocks in README.md compile
@@ -110,6 +110,9 @@ macro_rules! readme {
 }
 #[cfg(doctest)]
 readme!();
+
+#[cfg(feature = "std")]
+extern crate std;
 
 use core::cmp::Ordering;
 use core::convert::TryFrom;
