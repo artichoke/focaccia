@@ -1,3 +1,3 @@
 (function() {var implementors = {};
-implementors["focaccia"] = [{"text":"impl Freeze for CaseFold","synthetic":true,"types":[]},{"text":"impl Freeze for NoSuchCaseFoldingScheme","synthetic":true,"types":[]}];
+implementors["focaccia"] = [{"text":"impl Freeze for <a class=\"enum\" href=\"focaccia/enum.CaseFold.html\" title=\"enum focaccia::CaseFold\">CaseFold</a>","synthetic":true,"types":["focaccia::CaseFold"]},{"text":"impl Freeze for <a class=\"struct\" href=\"focaccia/struct.NoSuchCaseFoldingScheme.html\" title=\"struct focaccia::NoSuchCaseFoldingScheme\">NoSuchCaseFoldingScheme</a>","synthetic":true,"types":["focaccia::NoSuchCaseFoldingScheme"]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

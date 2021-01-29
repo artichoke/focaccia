@@ -1,3 +1,3 @@
 (function() {var implementors = {};
-implementors["focaccia"] = [{"text":"impl Display for NoSuchCaseFoldingScheme","synthetic":false,"types":[]}];
+implementors["focaccia"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html\" title=\"trait core::fmt::Display\">Display</a> for <a class=\"struct\" href=\"focaccia/struct.NoSuchCaseFoldingScheme.html\" title=\"struct focaccia::NoSuchCaseFoldingScheme\">NoSuchCaseFoldingScheme</a>","synthetic":false,"types":["focaccia::NoSuchCaseFoldingScheme"]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
