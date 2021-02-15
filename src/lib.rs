@@ -18,7 +18,7 @@
 //! Focaccia supports full, ASCII, and Turkic [Unicode case folding] equality
 //! and [`Ordering`] comparisons.
 //!
-//! The primary entrypoint to Focaccia is the [`CaseFold`] enum. Focaccia also
+//! The primary entry point to Focaccia is the [`CaseFold`] enum. Focaccia also
 //! provides free functions for each case folding scheme.
 //!
 //! # Examples
