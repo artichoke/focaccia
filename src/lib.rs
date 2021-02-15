@@ -95,7 +95,7 @@
 //! [`Error`]: https://doc.rust-lang.org/stable/std/error/trait.Error.html
 
 #![no_std]
-#![doc(html_root_url = "https://docs.rs/focaccia/1.0.1")]
+#![doc(html_root_url = "https://docs.rs/focaccia/1.0.2")]
 
 // Ensure code blocks in README.md compile
 #[cfg(doctest)]
