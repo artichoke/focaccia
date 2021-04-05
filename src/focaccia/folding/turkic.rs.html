@@ -318,21 +318,21 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">compares_symbols_without_regard_to_case</span>() {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcde&quot;</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">eq</span>(<span class="string">&quot;aBcDeF&quot;</span>, <span class="string">&quot;abcdef&quot;</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcdefg&quot;</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">eq</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;ABCDEF&quot;</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcde&quot;</span>));
+        <span class="macro">assert!</span>(<span class="ident">eq</span>(<span class="string">&quot;aBcDeF&quot;</span>, <span class="string">&quot;abcdef&quot;</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcdefg&quot;</span>));
+        <span class="macro">assert!</span>(<span class="ident">eq</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;ABCDEF&quot;</span>));
 
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcde&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Greater</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;aBcDeF&quot;</span>, <span class="string">&quot;abcdef&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Equal</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcdefg&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Less</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;ABCDEF&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Equal</span>));
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcde&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Greater</span>));
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;aBcDeF&quot;</span>, <span class="string">&quot;abcdef&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Equal</span>));
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcdefg&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Less</span>));
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;ABCDEF&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Equal</span>));
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcde&quot;</span>) <span class="kw">as</span> <span class="ident">i32</span>, <span class="number">1</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;aBcDeF&quot;</span>, <span class="string">&quot;abcdef&quot;</span>) <span class="kw">as</span> <span class="ident">i32</span>, <span class="number">0</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcdefg&quot;</span>) <span class="kw">as</span> <span class="ident">i32</span>, <span class="op">-</span><span class="number">1</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;ABCDEF&quot;</span>) <span class="kw">as</span> <span class="ident">i32</span>, <span class="number">0</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcde&quot;</span>) <span class="kw">as</span> <span class="ident">i32</span>, <span class="number">1</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcde&quot;</span>) <span class="kw">as</span> <span class="ident">i32</span>, <span class="number">1</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;aBcDeF&quot;</span>, <span class="string">&quot;abcdef&quot;</span>) <span class="kw">as</span> <span class="ident">i32</span>, <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcdefg&quot;</span>) <span class="kw">as</span> <span class="ident">i32</span>, <span class="op">-</span><span class="number">1</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;ABCDEF&quot;</span>) <span class="kw">as</span> <span class="ident">i32</span>, <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcde&quot;</span>) <span class="kw">as</span> <span class="ident">i32</span>, <span class="number">1</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -351,24 +351,24 @@
         <span class="comment">// upper_a_tilde.casecmp?(upper_a_umlaut).should_not == true</span>
         <span class="comment">// upper_a_umlaut.casecmp?(upper_a_tilde).should_not == true</span>
         <span class="comment">// ```</span>
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">lower_a_tilde</span>, <span class="ident">lower_a_umlaut</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">lower_a_umlaut</span>, <span class="ident">lower_a_tilde</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">upper_a_tilde</span>, <span class="ident">upper_a_umlaut</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">upper_a_umlaut</span>, <span class="ident">upper_a_tilde</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">lower_a_tilde</span>, <span class="ident">lower_a_umlaut</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">lower_a_umlaut</span>, <span class="ident">lower_a_tilde</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">upper_a_tilde</span>, <span class="ident">upper_a_umlaut</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">upper_a_umlaut</span>, <span class="ident">upper_a_tilde</span>));
 
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">lower_a_tilde</span>, <span class="ident">lower_a_umlaut</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">lower_a_umlaut</span>, <span class="ident">lower_a_tilde</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">upper_a_tilde</span>, <span class="ident">upper_a_umlaut</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">upper_a_umlaut</span>, <span class="ident">upper_a_tilde</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
@@ -390,24 +390,24 @@
         <span class="comment">// lower_a_tilde.casecmp?(upper_a_tilde).should == true</span>
         <span class="comment">// lower_a_umlaut.casecmp?(upper_a_umlaut).should == true</span>
         <span class="comment">// ```</span>
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">eq</span>(<span class="ident">upper_a_tilde</span>, <span class="ident">lower_a_tilde</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">eq</span>(<span class="ident">upper_a_umlaut</span>, <span class="ident">lower_a_umlaut</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">eq</span>(<span class="ident">lower_a_tilde</span>, <span class="ident">upper_a_tilde</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">eq</span>(<span class="ident">lower_a_umlaut</span>, <span class="ident">upper_a_umlaut</span>));
+        <span class="macro">assert!</span>(<span class="ident">eq</span>(<span class="ident">upper_a_tilde</span>, <span class="ident">lower_a_tilde</span>));
+        <span class="macro">assert!</span>(<span class="ident">eq</span>(<span class="ident">upper_a_umlaut</span>, <span class="ident">lower_a_umlaut</span>));
+        <span class="macro">assert!</span>(<span class="ident">eq</span>(<span class="ident">lower_a_tilde</span>, <span class="ident">upper_a_tilde</span>));
+        <span class="macro">assert!</span>(<span class="ident">eq</span>(<span class="ident">lower_a_umlaut</span>, <span class="ident">upper_a_umlaut</span>));
 
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">upper_a_tilde</span>, <span class="ident">lower_a_tilde</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">upper_a_umlaut</span>, <span class="ident">lower_a_umlaut</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">lower_a_tilde</span>, <span class="ident">upper_a_tilde</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">lower_a_umlaut</span>, <span class="ident">upper_a_umlaut</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
@@ -421,66 +421,66 @@
         <span class="kw">let</span> <span class="ident">upper_dotted_i</span> <span class="op">=</span> <span class="string">&quot;İ&quot;</span>;
         <span class="kw">let</span> <span class="ident">lower_dotted_i</span> <span class="op">=</span> <span class="string">&quot;i&quot;</span>;
 
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">eq</span>(<span class="ident">upper_dotless_i</span>, <span class="ident">lower_dotless_i</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">eq</span>(<span class="ident">upper_dotted_i</span>, <span class="ident">lower_dotted_i</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">eq</span>(<span class="ident">lower_dotless_i</span>, <span class="ident">upper_dotless_i</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">eq</span>(<span class="ident">lower_dotted_i</span>, <span class="ident">upper_dotted_i</span>));
+        <span class="macro">assert!</span>(<span class="ident">eq</span>(<span class="ident">upper_dotless_i</span>, <span class="ident">lower_dotless_i</span>));
+        <span class="macro">assert!</span>(<span class="ident">eq</span>(<span class="ident">upper_dotted_i</span>, <span class="ident">lower_dotted_i</span>));
+        <span class="macro">assert!</span>(<span class="ident">eq</span>(<span class="ident">lower_dotless_i</span>, <span class="ident">upper_dotless_i</span>));
+        <span class="macro">assert!</span>(<span class="ident">eq</span>(<span class="ident">lower_dotted_i</span>, <span class="ident">upper_dotted_i</span>));
 
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">upper_dotless_i</span>, <span class="ident">lower_dotless_i</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">upper_dotted_i</span>, <span class="ident">lower_dotted_i</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">lower_dotless_i</span>, <span class="ident">upper_dotless_i</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">lower_dotted_i</span>, <span class="ident">upper_dotted_i</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
 
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">upper_dotless_i</span>, <span class="ident">upper_dotted_i</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">upper_dotless_i</span>, <span class="ident">lower_dotted_i</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">lower_dotless_i</span>, <span class="ident">upper_dotted_i</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">lower_dotless_i</span>, <span class="ident">lower_dotted_i</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">upper_dotted_i</span>, <span class="ident">upper_dotless_i</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">upper_dotted_i</span>, <span class="ident">lower_dotless_i</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">lower_dotted_i</span>, <span class="ident">upper_dotless_i</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">lower_dotted_i</span>, <span class="ident">lower_dotless_i</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">upper_dotless_i</span>, <span class="ident">upper_dotted_i</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">upper_dotless_i</span>, <span class="ident">lower_dotted_i</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">lower_dotless_i</span>, <span class="ident">upper_dotted_i</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">lower_dotless_i</span>, <span class="ident">lower_dotted_i</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">upper_dotted_i</span>, <span class="ident">upper_dotless_i</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">upper_dotted_i</span>, <span class="ident">lower_dotless_i</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">lower_dotted_i</span>, <span class="ident">upper_dotless_i</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="ident">lower_dotted_i</span>, <span class="ident">lower_dotless_i</span>));
 
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">upper_dotless_i</span>, <span class="ident">upper_dotted_i</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">upper_dotless_i</span>, <span class="ident">lower_dotted_i</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">lower_dotless_i</span>, <span class="ident">upper_dotted_i</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">lower_dotless_i</span>, <span class="ident">lower_dotted_i</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">upper_dotted_i</span>, <span class="ident">upper_dotless_i</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">upper_dotted_i</span>, <span class="ident">lower_dotless_i</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">lower_dotted_i</span>, <span class="ident">upper_dotless_i</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">lower_dotted_i</span>, <span class="ident">lower_dotless_i</span>),
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         ));

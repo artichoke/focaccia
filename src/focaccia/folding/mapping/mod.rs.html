@@ -388,162 +388,162 @@
     <span class="kw">fn</span> <span class="ident">mapping_single_iter</span>() {
         <span class="kw">let</span> <span class="ident">mapping</span> <span class="op">=</span> <span class="ident">Mapping</span>::<span class="ident">Single</span>(<span class="number">20</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">Some</span>(<span class="number">20_u32</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">Some</span>(<span class="number">20_u32</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">mapping_single_iter_back</span>() {
         <span class="kw">let</span> <span class="ident">mapping</span> <span class="op">=</span> <span class="ident">Mapping</span>::<span class="ident">Single</span>(<span class="number">20</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">Some</span>(<span class="number">20_u32</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">Some</span>(<span class="number">20_u32</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">mapping_single_count</span>() {
         <span class="kw">let</span> <span class="ident">mapping</span> <span class="op">=</span> <span class="ident">Mapping</span>::<span class="ident">Single</span>(<span class="number">20</span>);
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">1_usize</span>, <span class="prelude-val">Some</span>(<span class="number">1_usize</span>)));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">1</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">1_usize</span>, <span class="prelude-val">Some</span>(<span class="number">1_usize</span>)));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">1</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
-        <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
+        <span class="ident">iter</span>.<span class="ident">next</span>();
+        <span class="ident">iter</span>.<span class="ident">next</span>();
+        <span class="ident">iter</span>.<span class="ident">next</span>();
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">mapping_double_iter</span>() {
         <span class="kw">let</span> <span class="ident">mapping</span> <span class="op">=</span> <span class="ident">Mapping</span>::<span class="ident">Double</span>(<span class="number">20</span>, <span class="number">30</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">Some</span>(<span class="number">20_u32</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">Some</span>(<span class="number">30_u32</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">Some</span>(<span class="number">20_u32</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">Some</span>(<span class="number">30_u32</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">mapping_double_iter_back</span>() {
         <span class="kw">let</span> <span class="ident">mapping</span> <span class="op">=</span> <span class="ident">Mapping</span>::<span class="ident">Double</span>(<span class="number">20</span>, <span class="number">30</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">Some</span>(<span class="number">30_u32</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">Some</span>(<span class="number">20_u32</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">Some</span>(<span class="number">30_u32</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">Some</span>(<span class="number">20_u32</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">mapping_double_count</span>() {
         <span class="kw">let</span> <span class="ident">mapping</span> <span class="op">=</span> <span class="ident">Mapping</span>::<span class="ident">Double</span>(<span class="number">20</span>, <span class="number">30</span>);
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">2_usize</span>, <span class="prelude-val">Some</span>(<span class="number">2_usize</span>)));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">2</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">2_usize</span>, <span class="prelude-val">Some</span>(<span class="number">2_usize</span>)));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">2</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">1_usize</span>, <span class="prelude-val">Some</span>(<span class="number">1_usize</span>)));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">1</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
-        <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">1_usize</span>, <span class="prelude-val">Some</span>(<span class="number">1_usize</span>)));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">1</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
+        <span class="ident">iter</span>.<span class="ident">next</span>();
+        <span class="ident">iter</span>.<span class="ident">next</span>();
+        <span class="ident">iter</span>.<span class="ident">next</span>();
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">mapping_triple_iter</span>() {
         <span class="kw">let</span> <span class="ident">mapping</span> <span class="op">=</span> <span class="ident">Mapping</span>::<span class="ident">Triple</span>(<span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">Some</span>(<span class="number">20_u32</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">Some</span>(<span class="number">30_u32</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">Some</span>(<span class="number">40_u32</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">Some</span>(<span class="number">20_u32</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">Some</span>(<span class="number">30_u32</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">Some</span>(<span class="number">40_u32</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">mapping_triple_iter_back</span>() {
         <span class="kw">let</span> <span class="ident">mapping</span> <span class="op">=</span> <span class="ident">Mapping</span>::<span class="ident">Triple</span>(<span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">Some</span>(<span class="number">40_u32</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">Some</span>(<span class="number">30_u32</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">Some</span>(<span class="number">20_u32</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">Some</span>(<span class="number">40_u32</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">Some</span>(<span class="number">30_u32</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">Some</span>(<span class="number">20_u32</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>(), <span class="prelude-val">None</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">mapping_triple_count</span>() {
         <span class="kw">let</span> <span class="ident">mapping</span> <span class="op">=</span> <span class="ident">Mapping</span>::<span class="ident">Triple</span>(<span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>);
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">3_usize</span>, <span class="prelude-val">Some</span>(<span class="number">3_usize</span>)));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">3</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">3_usize</span>, <span class="prelude-val">Some</span>(<span class="number">3_usize</span>)));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">3</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">2_usize</span>, <span class="prelude-val">Some</span>(<span class="number">2_usize</span>)));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">2</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
-        <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">1_usize</span>, <span class="prelude-val">Some</span>(<span class="number">1_usize</span>)));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">1</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">2_usize</span>, <span class="prelude-val">Some</span>(<span class="number">2_usize</span>)));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">2</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">1_usize</span>, <span class="prelude-val">Some</span>(<span class="number">1_usize</span>)));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">1</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">into_iter</span>();
         <span class="ident">iter</span>.<span class="ident">next</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
+        <span class="ident">iter</span>.<span class="ident">next</span>();
+        <span class="ident">iter</span>.<span class="ident">next</span>();
+        <span class="ident">iter</span>.<span class="ident">next</span>();
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>(), (<span class="number">0_usize</span>, <span class="prelude-val">Some</span>(<span class="number">0_usize</span>)));
+        <span class="macro">assert_eq!</span>(<span class="ident">iter</span>.<span class="ident">count</span>(), <span class="number">0</span>);
     }
 }
 </pre></div>
