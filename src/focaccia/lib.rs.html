@@ -501,11 +501,11 @@
 <span id="498">498</span>
 <span id="499">499</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">cargo</span>)]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">non_ascii_literal</span>))]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">shadow_unrelated</span>))]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy::all</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy::pedantic</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy::cargo</span>)]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">allow</span>(<span class="ident">clippy::non_ascii_literal</span>))]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">allow</span>(<span class="ident">clippy::shadow_unrelated</span>))]</span>
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">unknown_lints</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_copy_implementations</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_debug_implementations</span>)]</span>
@@ -617,9 +617,9 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">std</span>;
 
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">core::cmp::Ordering</span>;
+<span class="kw">use</span> <span class="ident">core::convert::TryFrom</span>;
+<span class="kw">use</span> <span class="ident">core::fmt</span>;
 
 <span class="kw">mod</span> <span class="ident">folding</span>;
 
@@ -723,7 +723,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">Full</span>
+        <span class="self">Self</span><span class="ident">::Full</span>
     }
 }
 
@@ -746,7 +746,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">Full</span>
+        <span class="self">Self</span><span class="ident">::Full</span>
     }
 
     <span class="doccomment">/// Make a case-insensitive string comparison based on the dispatching</span>
@@ -793,9 +793,9 @@
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">casecmp</span>(<span class="self">self</span>, <span class="ident">left</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">right</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="self">Self</span>::<span class="ident">Full</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">Lithuanian</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">unicode_full_casecmp</span>(<span class="ident">left</span>, <span class="ident">right</span>),
-            <span class="self">Self</span>::<span class="ident">Ascii</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ascii_casecmp</span>(<span class="ident">left</span>.<span class="ident">as_bytes</span>(), <span class="ident">right</span>.<span class="ident">as_bytes</span>()),
-            <span class="self">Self</span>::<span class="ident">Turkic</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">unicode_full_turkic_casecmp</span>(<span class="ident">left</span>, <span class="ident">right</span>),
+            <span class="self">Self</span><span class="ident">::Full</span> <span class="op">|</span> <span class="self">Self</span><span class="ident">::Lithuanian</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">unicode_full_casecmp</span>(<span class="ident">left</span>, <span class="ident">right</span>),
+            <span class="self">Self</span><span class="ident">::Ascii</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ascii_casecmp</span>(<span class="ident">left</span>.<span class="ident">as_bytes</span>(), <span class="ident">right</span>.<span class="ident">as_bytes</span>()),
+            <span class="self">Self</span><span class="ident">::Turkic</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">unicode_full_turkic_casecmp</span>(<span class="ident">left</span>, <span class="ident">right</span>),
         }
     }
 
@@ -840,9 +840,9 @@
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">case_eq</span>(<span class="self">self</span>, <span class="ident">left</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">right</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="self">Self</span>::<span class="ident">Full</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">Lithuanian</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">unicode_full_case_eq</span>(<span class="ident">left</span>, <span class="ident">right</span>),
-            <span class="self">Self</span>::<span class="ident">Ascii</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ascii_case_eq</span>(<span class="ident">left</span>.<span class="ident">as_bytes</span>(), <span class="ident">right</span>.<span class="ident">as_bytes</span>()),
-            <span class="self">Self</span>::<span class="ident">Turkic</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">unicode_full_turkic_case_eq</span>(<span class="ident">left</span>, <span class="ident">right</span>),
+            <span class="self">Self</span><span class="ident">::Full</span> <span class="op">|</span> <span class="self">Self</span><span class="ident">::Lithuanian</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">unicode_full_case_eq</span>(<span class="ident">left</span>, <span class="ident">right</span>),
+            <span class="self">Self</span><span class="ident">::Ascii</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ascii_case_eq</span>(<span class="ident">left</span>.<span class="ident">as_bytes</span>(), <span class="ident">right</span>.<span class="ident">as_bytes</span>()),
+            <span class="self">Self</span><span class="ident">::Turkic</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">unicode_full_turkic_case_eq</span>(<span class="ident">left</span>, <span class="ident">right</span>),
         }
     }
 }
@@ -887,21 +887,21 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">NoSuchCaseFoldingScheme</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">NoSuchCaseFoldingScheme</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;No such Unicode case folding scheme exists&quot;</span>)
     }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-<span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">NoSuchCaseFoldingScheme</span> {}
+<span class="kw">impl</span> <span class="ident">std::error::Error</span> <span class="kw">for</span> <span class="ident">NoSuchCaseFoldingScheme</span> {}
 
 <span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">CaseFold</span> {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">NoSuchCaseFoldingScheme</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="self">Self</span>::<span class="ident">try_from</span>(<span class="ident">value</span>.<span class="ident">map</span>(<span class="ident">str</span>::<span class="ident">as_bytes</span>))
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="self">Self</span><span class="ident">::Error</span><span class="op">&gt;</span> {
+        <span class="self">Self</span><span class="ident">::try_from</span>(<span class="ident">value</span>.<span class="ident">map</span>(<span class="ident">str::as_bytes</span>))
     }
 }
 
@@ -909,13 +909,13 @@
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">NoSuchCaseFoldingScheme</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="self">Self</span><span class="ident">::Error</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">value</span> {
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="self">Self</span>::<span class="ident">Full</span>),
-            <span class="prelude-val">Some</span>(<span class="ident">scheme</span>) <span class="kw">if</span> <span class="ident">scheme</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;ascii&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="self">Self</span>::<span class="ident">Ascii</span>),
-            <span class="prelude-val">Some</span>(<span class="ident">scheme</span>) <span class="kw">if</span> <span class="ident">scheme</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;turkic&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="self">Self</span>::<span class="ident">Turkic</span>),
-            <span class="prelude-val">Some</span>(<span class="ident">scheme</span>) <span class="kw">if</span> <span class="ident">scheme</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;lithuanian&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="self">Self</span>::<span class="ident">Lithuanian</span>),
-            <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">NoSuchCaseFoldingScheme</span>::<span class="ident">new</span>()),
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="self">Self</span><span class="ident">::Full</span>),
+            <span class="prelude-val">Some</span>(<span class="ident">scheme</span>) <span class="kw">if</span> <span class="ident">scheme</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;ascii&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="self">Self</span><span class="ident">::Ascii</span>),
+            <span class="prelude-val">Some</span>(<span class="ident">scheme</span>) <span class="kw">if</span> <span class="ident">scheme</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;turkic&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="self">Self</span><span class="ident">::Turkic</span>),
+            <span class="prelude-val">Some</span>(<span class="ident">scheme</span>) <span class="kw">if</span> <span class="ident">scheme</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;lithuanian&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="self">Self</span><span class="ident">::Lithuanian</span>),
+            <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">NoSuchCaseFoldingScheme::new</span>()),
         }
     }
 }
@@ -923,21 +923,21 @@
 <span class="comment">// Tests using IDN case folding test vectors:</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">CaseFold</span>;
+    <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::CaseFold</span>;
 
     <span class="comment">// https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.2</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">case_folding_ascii</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;CAFE&quot;</span>;
         <span class="kw">let</span> <span class="ident">output</span> <span class="op">=</span> <span class="string">&quot;cafe&quot;</span>;
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Full</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Full</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Full</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Full</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
     }
 
     <span class="comment">// https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.3</span>
@@ -945,14 +945,14 @@
     <span class="kw">fn</span> <span class="ident">case_folding_8bit</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;ß&quot;</span>;
         <span class="kw">let</span> <span class="ident">output</span> <span class="op">=</span> <span class="string">&quot;ss&quot;</span>;
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Full</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Full</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
-        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">CaseFold</span>::<span class="ident">Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">CaseFold</span>::<span class="ident">Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Full</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Full</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">CaseFold::Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">CaseFold::Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
     }
 
     <span class="comment">// https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.4</span>
@@ -960,8 +960,8 @@
     <span class="kw">fn</span> <span class="ident">case_folding_turkic_capital_i_with_dot</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;İ&quot;</span>;
         <span class="kw">let</span> <span class="ident">output</span> <span class="op">=</span> <span class="string">&quot;i&quot;</span>;
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
     }
 
     <span class="comment">// https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.5</span>
@@ -972,14 +972,14 @@
     <span class="kw">fn</span> <span class="ident">case_folding_multibyte</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;Ńͺ&quot;</span>;
         <span class="kw">let</span> <span class="ident">output</span> <span class="op">=</span> <span class="string">&quot;ń ι&quot;</span>;
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Full</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Full</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
-        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">CaseFold</span>::<span class="ident">Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">CaseFold</span>::<span class="ident">Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Full</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Full</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">CaseFold::Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">CaseFold::Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
     }
 
     <span class="comment">// https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.6</span>
@@ -990,14 +990,14 @@
     <span class="kw">fn</span> <span class="ident">case_folding</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;℡㏆𝞻&quot;</span>;
         <span class="kw">let</span> <span class="ident">output</span> <span class="op">=</span> <span class="string">&quot;telc∕kgσ&quot;</span>;
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Full</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Full</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
-        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">CaseFold</span>::<span class="ident">Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">CaseFold</span>::<span class="ident">Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
-        <span class="macro">assert!</span>(<span class="ident">CaseFold</span>::<span class="ident">Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Full</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Full</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">CaseFold::Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">CaseFold::Ascii</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Turkic</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">input</span>, <span class="ident">output</span>));
+        <span class="macro">assert!</span>(<span class="ident">CaseFold::Lithuanian</span>.<span class="ident">case_eq</span>(<span class="ident">output</span>, <span class="ident">input</span>));
     }
 }
 </pre></div>

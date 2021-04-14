@@ -6,13 +6,13 @@
 folding tables.</p>
 <h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">unicode_full_turkic_casecmp</span>(<span class="string">&quot;İstanbul&quot;</span>, <span class="string">&quot;istanbul&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Equal</span>));
-<span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(<span class="ident">unicode_full_turkic_casecmp</span>(<span class="string">&quot;İstanbul&quot;</span>, <span class="string">&quot;Istanbul&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Equal</span>));</pre></div>
+<span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">unicode_full_turkic_casecmp</span>(<span class="string">&quot;İstanbul&quot;</span>, <span class="string">&quot;istanbul&quot;</span>), <span class="ident">Ordering::Equal</span>));
+<span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(<span class="ident">unicode_full_turkic_casecmp</span>(<span class="string">&quot;İstanbul&quot;</span>, <span class="string">&quot;Istanbul&quot;</span>), <span class="ident">Ordering::Equal</span>));</pre></div>
 <h1 id="examples--full" class="section-header"><a href="#examples--full">Examples – Full</a></h1>
 <p>Turkic case folding is largely compatible with full Unicode case folding.</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="macro">assert_eq!</span>(<span class="ident">unicode_full_turkic_casecmp</span>(<span class="string">&quot;MASSE&quot;</span>, <span class="string">&quot;Maße&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Equal</span>);
-<span class="macro">assert_eq!</span>(<span class="ident">unicode_full_turkic_casecmp</span>(<span class="string">&quot;São Paulo&quot;</span>, <span class="string">&quot;Sao Paulo&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Greater</span>);</pre></div>
+<span class="macro">assert_eq!</span>(<span class="ident">unicode_full_turkic_casecmp</span>(<span class="string">&quot;MASSE&quot;</span>, <span class="string">&quot;Maße&quot;</span>), <span class="ident">Ordering::Equal</span>);
+<span class="macro">assert_eq!</span>(<span class="ident">unicode_full_turkic_casecmp</span>(<span class="string">&quot;São Paulo&quot;</span>, <span class="string">&quot;Sao Paulo&quot;</span>), <span class="ident">Ordering::Greater</span>);</pre></div>
 </div></section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="focaccia" data-search-js="../search-index.js"></div>
     <script src="../main.js"></script></body></html>

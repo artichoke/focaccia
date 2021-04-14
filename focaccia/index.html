@@ -11,9 +11,9 @@ provides free functions for each case folding scheme.</p>
 scheme. To make a comparison:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="ident">fold</span> <span class="op">=</span> <span class="ident">CaseFold</span>::<span class="ident">Full</span>;
-<span class="macro">assert_eq!</span>(<span class="ident">fold</span>.<span class="ident">casecmp</span>(<span class="string">&quot;MASSE&quot;</span>, <span class="string">&quot;Maße&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Equal</span>);
-<span class="macro">assert_eq!</span>(<span class="ident">fold</span>.<span class="ident">casecmp</span>(<span class="string">&quot;São Paulo&quot;</span>, <span class="string">&quot;Sao Paulo&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Greater</span>);
+<span class="kw">let</span> <span class="ident">fold</span> <span class="op">=</span> <span class="ident">CaseFold::Full</span>;
+<span class="macro">assert_eq!</span>(<span class="ident">fold</span>.<span class="ident">casecmp</span>(<span class="string">&quot;MASSE&quot;</span>, <span class="string">&quot;Maße&quot;</span>), <span class="ident">Ordering::Equal</span>);
+<span class="macro">assert_eq!</span>(<span class="ident">fold</span>.<span class="ident">casecmp</span>(<span class="string">&quot;São Paulo&quot;</span>, <span class="string">&quot;Sao Paulo&quot;</span>), <span class="ident">Ordering::Greater</span>);
 
 <span class="macro">assert!</span>(<span class="ident">fold</span>.<span class="ident">case_eq</span>(<span class="string">&quot;MASSE&quot;</span>, <span class="string">&quot;Maße&quot;</span>));
 <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">fold</span>.<span class="ident">case_eq</span>(<span class="string">&quot;São Paulo&quot;</span>, <span class="string">&quot;Sao Paulo&quot;</span>));</pre></div>
@@ -21,24 +21,24 @@ scheme. To make a comparison:</p>
 check:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="ident">fold</span> <span class="op">=</span> <span class="ident">CaseFold</span>::<span class="ident">Ascii</span>;
-<span class="macro">assert_eq!</span>(<span class="ident">fold</span>.<span class="ident">casecmp</span>(<span class="string">&quot;Crate: focaccia&quot;</span>, <span class="string">&quot;Crate: FOCACCIA&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Equal</span>);
-<span class="macro">assert_eq!</span>(<span class="ident">fold</span>.<span class="ident">casecmp</span>(<span class="string">&quot;Fabled&quot;</span>, <span class="string">&quot;failed&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Less</span>);
+<span class="kw">let</span> <span class="ident">fold</span> <span class="op">=</span> <span class="ident">CaseFold::Ascii</span>;
+<span class="macro">assert_eq!</span>(<span class="ident">fold</span>.<span class="ident">casecmp</span>(<span class="string">&quot;Crate: focaccia&quot;</span>, <span class="string">&quot;Crate: FOCACCIA&quot;</span>), <span class="ident">Ordering::Equal</span>);
+<span class="macro">assert_eq!</span>(<span class="ident">fold</span>.<span class="ident">casecmp</span>(<span class="string">&quot;Fabled&quot;</span>, <span class="string">&quot;failed&quot;</span>), <span class="ident">Ordering::Less</span>);
 
 <span class="macro">assert!</span>(<span class="ident">fold</span>.<span class="ident">case_eq</span>(<span class="string">&quot;Crate: focaccia&quot;</span>, <span class="string">&quot;Crate: FOCACCIA&quot;</span>));
 <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">fold</span>.<span class="ident">case_eq</span>(<span class="string">&quot;Fabled&quot;</span>, <span class="string">&quot;failed&quot;</span>));</pre></div>
 <p>ASCII case comparison can be checked on a byte slice:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="macro">assert_eq!</span>(<span class="ident">ascii_casecmp</span>(<span class="string">b&quot;Artichoke Ruby&quot;</span>, <span class="string">b&quot;artichoke ruby&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Equal</span>);
+<span class="macro">assert_eq!</span>(<span class="ident">ascii_casecmp</span>(<span class="string">b&quot;Artichoke Ruby&quot;</span>, <span class="string">b&quot;artichoke ruby&quot;</span>), <span class="ident">Ordering::Equal</span>);
 <span class="macro">assert!</span>(<span class="ident">ascii_case_eq</span>(<span class="string">b&quot;Artichoke Ruby&quot;</span>, <span class="string">b&quot;artichoke ruby&quot;</span>));</pre></div>
 <p>Turkic case folding is similar to full case folding with additional mappings
 for <a href="https://en.wikipedia.org/wiki/Dotted_and_dotless_I">dotted and dotless I</a>:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">let</span> <span class="ident">fold</span> <span class="op">=</span> <span class="ident">CaseFold</span>::<span class="ident">Turkic</span>;
-<span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">fold</span>.<span class="ident">casecmp</span>(<span class="string">&quot;İstanbul&quot;</span>, <span class="string">&quot;istanbul&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Equal</span>));
-<span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(<span class="ident">fold</span>.<span class="ident">casecmp</span>(<span class="string">&quot;İstanbul&quot;</span>, <span class="string">&quot;Istanbul&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Equal</span>));
+<span class="kw">let</span> <span class="ident">fold</span> <span class="op">=</span> <span class="ident">CaseFold::Turkic</span>;
+<span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">fold</span>.<span class="ident">casecmp</span>(<span class="string">&quot;İstanbul&quot;</span>, <span class="string">&quot;istanbul&quot;</span>), <span class="ident">Ordering::Equal</span>));
+<span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(<span class="ident">fold</span>.<span class="ident">casecmp</span>(<span class="string">&quot;İstanbul&quot;</span>, <span class="string">&quot;Istanbul&quot;</span>), <span class="ident">Ordering::Equal</span>));
 
 <span class="macro">assert!</span>(<span class="ident">fold</span>.<span class="ident">case_eq</span>(<span class="string">&quot;İstanbul&quot;</span>, <span class="string">&quot;istanbul&quot;</span>));
 <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">fold</span>.<span class="ident">case_eq</span>(<span class="string">&quot;İstanbul&quot;</span>, <span class="string">&quot;Istanbul&quot;</span>));</pre></div>

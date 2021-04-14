@@ -149,9 +149,9 @@
 <span id="146">146</span>
 <span id="147">147</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
+<span class="kw">use</span> <span class="ident">core::cmp::Ordering</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">folding</span>::<span class="ident">mapping</span>::{<span class="ident">lookup</span>, <span class="ident">Mode</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::folding::mapping</span>::{<span class="ident">lookup</span>, <span class="ident">Mode</span>};
 
 <span class="doccomment">/// Compare two strings with Full Unicode case folding.</span>
 <span class="doccomment">///</span>
@@ -169,8 +169,8 @@
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">casecmp</span>(<span class="ident">left</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">right</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
-    <span class="kw">let</span> <span class="ident">left</span> <span class="op">=</span> <span class="ident">left</span>.<span class="ident">chars</span>().<span class="ident">flat_map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">lookup</span>(<span class="ident">c</span>, <span class="ident">Mode</span>::<span class="ident">Full</span>));
-    <span class="kw">let</span> <span class="ident">right</span> <span class="op">=</span> <span class="ident">right</span>.<span class="ident">chars</span>().<span class="ident">flat_map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">lookup</span>(<span class="ident">c</span>, <span class="ident">Mode</span>::<span class="ident">Full</span>));
+    <span class="kw">let</span> <span class="ident">left</span> <span class="op">=</span> <span class="ident">left</span>.<span class="ident">chars</span>().<span class="ident">flat_map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">lookup</span>(<span class="ident">c</span>, <span class="ident">Mode::Full</span>));
+    <span class="kw">let</span> <span class="ident">right</span> <span class="op">=</span> <span class="ident">right</span>.<span class="ident">chars</span>().<span class="ident">flat_map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">lookup</span>(<span class="ident">c</span>, <span class="ident">Mode::Full</span>));
     <span class="ident">left</span>.<span class="ident">cmp</span>(<span class="ident">right</span>)
 }
 
@@ -189,15 +189,15 @@
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">eq</span>(<span class="ident">left</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">right</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-    <span class="kw">let</span> <span class="ident">left</span> <span class="op">=</span> <span class="ident">left</span>.<span class="ident">chars</span>().<span class="ident">flat_map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">lookup</span>(<span class="ident">c</span>, <span class="ident">Mode</span>::<span class="ident">Full</span>));
-    <span class="kw">let</span> <span class="ident">right</span> <span class="op">=</span> <span class="ident">right</span>.<span class="ident">chars</span>().<span class="ident">flat_map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">lookup</span>(<span class="ident">c</span>, <span class="ident">Mode</span>::<span class="ident">Full</span>));
+    <span class="kw">let</span> <span class="ident">left</span> <span class="op">=</span> <span class="ident">left</span>.<span class="ident">chars</span>().<span class="ident">flat_map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">lookup</span>(<span class="ident">c</span>, <span class="ident">Mode::Full</span>));
+    <span class="kw">let</span> <span class="ident">right</span> <span class="op">=</span> <span class="ident">right</span>.<span class="ident">chars</span>().<span class="ident">flat_map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">lookup</span>(<span class="ident">c</span>, <span class="ident">Mode::Full</span>));
     <span class="ident">left</span>.<span class="ident">eq</span>(<span class="ident">right</span>)
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">casecmp</span>, <span class="ident">eq</span>};
-    <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
+    <span class="kw">use</span> <span class="ident">core::cmp::Ordering</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">compares_symbols_without_regard_to_case</span>() {
@@ -206,10 +206,10 @@
         <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">eq</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcdefg&quot;</span>));
         <span class="macro">assert!</span>(<span class="ident">eq</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;ABCDEF&quot;</span>));
 
-        <span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcde&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Greater</span>));
-        <span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;aBcDeF&quot;</span>, <span class="string">&quot;abcdef&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Equal</span>));
-        <span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcdefg&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Less</span>));
-        <span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;ABCDEF&quot;</span>), <span class="ident">Ordering</span>::<span class="ident">Equal</span>));
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcde&quot;</span>), <span class="ident">Ordering::Greater</span>));
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;aBcDeF&quot;</span>, <span class="string">&quot;abcdef&quot;</span>), <span class="ident">Ordering::Equal</span>));
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcdefg&quot;</span>), <span class="ident">Ordering::Less</span>));
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;ABCDEF&quot;</span>), <span class="ident">Ordering::Equal</span>));
 
         <span class="macro">assert_eq!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;abcdef&quot;</span>, <span class="string">&quot;abcde&quot;</span>) <span class="kw">as</span> <span class="ident">i32</span>, <span class="number">1</span>);
         <span class="macro">assert_eq!</span>(<span class="ident">casecmp</span>(<span class="string">&quot;aBcDeF&quot;</span>, <span class="string">&quot;abcdef&quot;</span>) <span class="kw">as</span> <span class="ident">i32</span>, <span class="number">0</span>);
@@ -241,19 +241,19 @@
 
         <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">lower_a_tilde</span>, <span class="ident">lower_a_umlaut</span>),
-            <span class="ident">Ordering</span>::<span class="ident">Equal</span>
+            <span class="ident">Ordering::Equal</span>
         ));
         <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">lower_a_umlaut</span>, <span class="ident">lower_a_tilde</span>),
-            <span class="ident">Ordering</span>::<span class="ident">Equal</span>
+            <span class="ident">Ordering::Equal</span>
         ));
         <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">upper_a_tilde</span>, <span class="ident">upper_a_umlaut</span>),
-            <span class="ident">Ordering</span>::<span class="ident">Equal</span>
+            <span class="ident">Ordering::Equal</span>
         ));
         <span class="macro">assert!</span>(<span class="op">!</span><span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">upper_a_umlaut</span>, <span class="ident">upper_a_tilde</span>),
-            <span class="ident">Ordering</span>::<span class="ident">Equal</span>
+            <span class="ident">Ordering::Equal</span>
         ));
     }
 
@@ -280,19 +280,19 @@
 
         <span class="macro">assert!</span>(<span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">upper_a_tilde</span>, <span class="ident">lower_a_tilde</span>),
-            <span class="ident">Ordering</span>::<span class="ident">Equal</span>
+            <span class="ident">Ordering::Equal</span>
         ));
         <span class="macro">assert!</span>(<span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">upper_a_umlaut</span>, <span class="ident">lower_a_umlaut</span>),
-            <span class="ident">Ordering</span>::<span class="ident">Equal</span>
+            <span class="ident">Ordering::Equal</span>
         ));
         <span class="macro">assert!</span>(<span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">lower_a_tilde</span>, <span class="ident">upper_a_tilde</span>),
-            <span class="ident">Ordering</span>::<span class="ident">Equal</span>
+            <span class="ident">Ordering::Equal</span>
         ));
         <span class="macro">assert!</span>(<span class="macro">matches!</span>(
             <span class="ident">casecmp</span>(<span class="ident">lower_a_umlaut</span>, <span class="ident">upper_a_umlaut</span>),
-            <span class="ident">Ordering</span>::<span class="ident">Equal</span>
+            <span class="ident">Ordering::Equal</span>
         ));
     }
 }
