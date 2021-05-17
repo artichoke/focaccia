@@ -189,7 +189,7 @@ rs.puts '    }'
 rs.puts '}'
 rs.close
 
-rs = File.open('tests/full_fold_exhaustive.rs', 'w')
+rs = File.open('tests/integration/full_fold_exhaustive.rs', 'w')
 
 rs.puts(<<~AUTOGEN)
   // @generated
@@ -275,7 +275,7 @@ rs.puts(<<~TEST)
 TEST
 rs.close
 
-rs = File.open('tests/full_turkic_fold_exhaustive.rs', 'w')
+rs = File.open('tests/integration/full_turkic_fold_exhaustive.rs', 'w')
 
 rs.puts(<<~AUTOGEN)
   // @generated
