@@ -108,6 +108,11 @@ All features are enabled by default.
 - **std** - Enable linking to the [Rust Standard Library]. Enabling this feature
   adds [`Error`] implementations to error types in this crate.
 
+### Minimum Supported Rust Version
+
+This crate requires at least Rust 1.52.0. This version can be bumped in minor
+releases.
+
 ## License
 
 `focaccia` is licensed under the [MIT License](LICENSE) (c) Ryan Lopopolo.
