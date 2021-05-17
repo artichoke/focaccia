@@ -75,7 +75,7 @@ rs.puts(<<~AUTOGEN)
   #[must_use]
   #[allow(clippy::match_same_arms)]
   #[allow(clippy::too_many_lines)]
-  pub fn lookup(c: char, mode: Mode) -> Mapping {
+  pub const fn lookup(c: char, mode: Mode) -> Mapping {
       let codepoint = c as u32;
       let char_bytes = codepoint.to_be_bytes();
       let mid_byte = char_bytes[2];
