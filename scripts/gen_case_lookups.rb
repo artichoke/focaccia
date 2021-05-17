@@ -202,7 +202,6 @@ rs.puts(<<~AUTOGEN)
   // Unicode version:
   #{casefolding_version}
 
-  use core::char;
   use core::cmp::Ordering;
   use focaccia::{unicode_full_case_eq, unicode_full_casecmp};
 
@@ -289,7 +288,6 @@ rs.puts(<<~AUTOGEN)
   // Unicode version:
   #{casefolding_version}
 
-  use core::char;
   use core::cmp::Ordering;
   use focaccia::{unicode_full_turkic_case_eq, unicode_full_turkic_casecmp};
 
