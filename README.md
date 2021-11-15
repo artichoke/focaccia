@@ -8,9 +8,9 @@
 [![API](https://docs.rs/focaccia/badge.svg)](https://docs.rs/focaccia)
 [![API trunk](https://img.shields.io/badge/docs-trunk-blue.svg)](https://artichoke.github.io/focaccia/focaccia/)
 
-Unicode case folding methods for case-insensitive string comparisons. Used to
-implement case folding operations on the [`Symbol`] and [`String`] classes in
-the Ruby Core implementation in [Artichoke Ruby][artichoke].
+Unicode 14.0.0 case folding methods for case-insensitive string comparisons.
+Used to implement case folding operations on the [`Symbol`] and [`String`]
+classes in the Ruby Core implementation in [Artichoke Ruby][artichoke].
 
 Focaccia supports full, ASCII, and Turkic [Unicode case folding] equality
 comparisons. ASCII folding supports determining case-insensitive ordering.
@@ -32,7 +32,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-focaccia = "1.0"
+focaccia = "1.1"
 ```
 
 Then make case insensitive string comparisons like:
@@ -112,6 +112,12 @@ All features are enabled by default.
 
 This crate requires at least Rust 1.52.0. This version can be bumped in minor
 releases.
+
+### Unicode Version Updates
+
+Each new release of Unicode may bring updates to the `CaseFolding.txt` which is
+the source for the folding mappings in this crate. Updates to the case folding
+rules will be accompanied with a minor version bump.
 
 ## License
 
