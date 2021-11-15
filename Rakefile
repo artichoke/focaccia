@@ -97,7 +97,7 @@ namespace :unicode do
 
   desc 'Update Unicode data'
   task :update do
-    open('https://www.unicode.org/Public/UCD/latest/ucd/CaseFolding.txt') do |data|
+    URI.parse('https://www.unicode.org/Public/UCD/latest/ucd/CaseFolding.txt').open do |data|
       File.open('CaseFolding.txt', 'w') do |file|
         data.each_line do |line|
           file.write(line)
