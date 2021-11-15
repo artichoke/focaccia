@@ -113,7 +113,10 @@ All features are enabled by default.
 This crate requires at least Rust 1.52.0. This version can be bumped in minor
 releases.
 
-### Unicode Version Updates
+## Unicode Version
+
+Focaccia implements Unicode case folding with the Unicode 14.0.0 case folding
+ruleset.
 
 Each new release of Unicode may bring updates to the `CaseFolding.txt` which is
 the source for the folding mappings in this crate. Updates to the case folding

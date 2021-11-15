@@ -88,6 +88,15 @@
 //! - **std** - Enable linking to the [Rust Standard Library]. Enabling this
 //!   feature adds [`Error`] implementations to error types in this crate.
 //!
+//! # Unicode Version
+//!
+//! Focaccia implements Unicode case folding with the Unicode 14.0.0 case folding
+//! ruleset.
+//!
+//! Each new release of Unicode may bring updates to the `CaseFolding.txt` which is
+//! the source for the folding mappings in this crate. Updates to the case folding
+//! rules will be accompanied with a minor version bump.
+//!
 //! [Unicode case folding]: https://www.w3.org/International/wiki/Case_folding
 //! [`Ordering`]: core::cmp::Ordering
 //! [dotted and dotless I]: https://en.wikipedia.org/wiki/Dotted_and_dotless_I
