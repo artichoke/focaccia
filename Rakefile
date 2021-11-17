@@ -98,11 +98,7 @@ namespace :unicode do
   desc 'Update Unicode data'
   task :update do
     URI.parse('https://www.unicode.org/Public/UCD/latest/ucd/CaseFolding.txt').open do |data|
-      File.open('CaseFolding.txt', 'w') do |file|
-        data.each_line do |line|
-          file.write(line)
-        end
-      end
+      IO.copy_stream(data, 'CaseFolding.txt')
     end
   end
 end
