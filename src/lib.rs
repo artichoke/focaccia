@@ -67,8 +67,8 @@
 //! # use core::cmp::Ordering;
 //! # use focaccia::CaseFold;
 //! let fold = CaseFold::Turkic;
-//! assert!(matches!(fold.casecmp("İstanbul", "istanbul"), Ordering::Equal));
-//! assert!(!matches!(fold.casecmp("İstanbul", "Istanbul"), Ordering::Equal));
+//! assert_eq!(fold.casecmp("İstanbul", "istanbul"), Ordering::Equal);
+//! assert_ne!(fold.casecmp("İstanbul", "Istanbul"), Ordering::Equal);
 //!
 //! assert!(fold.case_eq("İstanbul", "istanbul"));
 //! assert!(!fold.case_eq("İstanbul", "Istanbul"));
@@ -104,7 +104,7 @@
 //! [`Error`]: https://doc.rust-lang.org/stable/std/error/trait.Error.html
 
 #![no_std]
-#![doc(html_root_url = "https://docs.rs/focaccia/1.1.0")]
+#![doc(html_root_url = "https://docs.rs/focaccia/1.1.1")]
 
 // Ensure code blocks in README.md compile
 #[cfg(doctest)]
