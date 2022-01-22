@@ -15,17 +15,9 @@ use core::cmp::Ordering;
 #[inline]
 #[must_use]
 pub fn casecmp(left: &[u8], right: &[u8]) -> Ordering {
-    let mut left = left.iter().copied();
-    let mut right = right.iter().copied();
-    loop {
-        match (left.next(), right.next()) {
-            (None, None) => return Ordering::Equal,
-            (None, Some(_)) => return Ordering::Less,
-            (Some(_), None) => return Ordering::Greater,
-            (Some(a), Some(b)) if a.to_ascii_lowercase() == b.to_ascii_lowercase() => continue,
-            (Some(a), Some(b)) => return a.to_ascii_lowercase().cmp(&b.to_ascii_lowercase()),
-        }
-    }
+    let left = left.iter().map(u8::to_ascii_lowercase);
+    let right = right.iter().map(u8::to_ascii_lowercase);
+    left.cmp(right)
 }
 
 /// Check two bytestrings for equality with ASCII case folding.
