@@ -12,8 +12,14 @@ Unicode 14.0.0 case folding methods for case-insensitive string comparisons.
 Used to implement case folding operations on the [`Symbol`] and [`String`]
 classes in the Ruby Core implementation in [Artichoke Ruby][artichoke].
 
-Focaccia supports full, ASCII, and Turkic [Unicode case folding] equality
-comparisons. ASCII folding supports determining case-insensitive ordering.
+[`symbol`]: https://ruby-doc.org/core-2.6.3/Symbol.html
+[`string`]: https://ruby-doc.org/core-2.6.3/String.html
+[artichoke]: https://github.com/artichoke/artichoke
+
+Focaccia supports full, ASCII, and Turkic [Unicode case folding] equality and
+ordering comparisons.
+
+[unicode case folding]: https://www.w3.org/International/wiki/Case_folding
 
 > One of the most common things that software developers do is "normalize" text
 > for the purposes of comparison. And one of the most basic ways that developers
@@ -77,6 +83,8 @@ assert!(ascii_case_eq(b"Artichoke Ruby", b"artichoke ruby"));
 Turkic case folding is similar to full case folding with additional mappings for
 [dotted and dotless I]:
 
+[dotted and dotless i]: https://en.wikipedia.org/wiki/Dotted_and_dotless_I
+
 ```rust
 use core::cmp::Ordering;
 use focaccia::CaseFold;
@@ -92,14 +100,17 @@ assert!(!fold.case_eq("İstanbul", "Istanbul"));
 ## Implementation
 
 Focaccia generates conversion tables from Unicode data files. Focaccia
-implements case folding as defined in Unicode 13 (see
-[`CaseFolding.txt`](CaseFolding.txt)).
+implements case folding as defined in the [Unicode standard][casemap] (see
+[`CaseFolding.txt`]).
+
+[casemap]: https://unicode.org/faq/casemap_charprop.html#casemap
+[`casefolding.txt`]: CaseFolding.txt
 
 ## `no_std`
 
 Focaccia is `no_std` compatible with an optional and enabled by default
-dependency on `std`. Unlike [`unicase`], Focaccia does not link to `alloc` in
-its `no_std` configuration.
+dependency on `std`. Focaccia does not link to `alloc` in its `no_std`
+configuration.
 
 ## Crate features
 
@@ -107,6 +118,9 @@ All features are enabled by default.
 
 - **std** - Enable linking to the [Rust Standard Library]. Enabling this feature
   adds [`Error`] implementations to error types in this crate.
+
+[rust standard library]: https://doc.rust-lang.org/stable/std/index.html
+[`error`]: https://doc.rust-lang.org/stable/std/error/trait.Error.html
 
 ### Minimum Supported Rust Version
 
@@ -125,12 +139,3 @@ rules will be accompanied with a minor version bump.
 ## License
 
 `focaccia` is licensed under the [MIT License](LICENSE) (c) Ryan Lopopolo.
-
-[`symbol`]: https://ruby-doc.org/core-2.6.3/Symbol.html
-[`string`]: https://ruby-doc.org/core-2.6.3/String.html
-[artichoke]: https://github.com/artichoke/artichoke
-[unicode case folding]: https://www.w3.org/International/wiki/Case_folding
-[dotted and dotless i]: https://en.wikipedia.org/wiki/Dotted_and_dotless_I
-[`unicase`]: https://crates.io/crates/unicase
-[rust standard library]: https://doc.rust-lang.org/stable/std/index.html
-[`error`]: https://doc.rust-lang.org/stable/std/error/trait.Error.html
