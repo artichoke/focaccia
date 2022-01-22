@@ -90,8 +90,8 @@ use core::cmp::Ordering;
 use focaccia::CaseFold;
 
 let fold = CaseFold::Turkic;
-assert!(matches!(fold.casecmp("İstanbul", "istanbul"), Ordering::Equal));
-assert!(!matches!(fold.casecmp("İstanbul", "Istanbul"), Ordering::Equal));
+assert_eq!(fold.casecmp("İstanbul", "istanbul"), Ordering::Equal);
+assert_ne!(fold.casecmp("İstanbul", "Istanbul"), Ordering::Equal);
 
 assert!(fold.case_eq("İstanbul", "istanbul"));
 assert!(!fold.case_eq("İstanbul", "Istanbul"));
