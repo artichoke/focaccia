@@ -8,9 +8,9 @@
 [![API](https://docs.rs/focaccia/badge.svg)](https://docs.rs/focaccia)
 [![API trunk](https://img.shields.io/badge/docs-trunk-blue.svg)](https://artichoke.github.io/focaccia/focaccia/)
 
-Unicode 14.0.0 case folding methods for case-insensitive string comparisons.
-Used to implement case folding operations on the [`Symbol`] and [`String`]
-classes in the Ruby Core implementation in [Artichoke Ruby][artichoke].
+Unicode case folding methods for case-insensitive string comparisons. Used to
+implement case folding operations on the [`Symbol`] and [`String`] classes in
+the Ruby Core implementation in [Artichoke Ruby][artichoke].
 
 [`symbol`]: https://ruby-doc.org/core-2.6.3/Symbol.html
 [`string`]: https://ruby-doc.org/core-2.6.3/String.html
