@@ -68,6 +68,15 @@ mod tests {
     }
 
     #[test]
+    fn unicode_replacement_character() {
+        assert!(case_eq("\u{FFFD}", "\u{FFFD}"));
+        assert_eq!(casecmp("\u{FFFD}", "\u{FFFD}"), Ordering::Equal);
+
+        assert_eq!(casecmp("\u{FFFD}", "\u{FFFD}yam"), Ordering::Less);
+        assert_eq!(casecmp("\u{FFFD}yam", "\u{FFFD}"), Ordering::Greater);
+    }
+
+    #[test]
     fn compares_symbols_without_regard_to_case() {
         assert!(!case_eq("abcdef", "abcde"));
         assert!(case_eq("aBcDeF", "abcdef"));

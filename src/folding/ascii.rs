@@ -56,6 +56,24 @@ mod tests {
     }
 
     #[test]
+    fn unicode_replacement_character() {
+        assert!(case_eq("\u{FFFD}".as_bytes(), "\u{FFFD}".as_bytes()));
+        assert_eq!(
+            casecmp("\u{FFFD}".as_bytes(), "\u{FFFD}".as_bytes()),
+            Ordering::Equal
+        );
+
+        assert_eq!(
+            casecmp("\u{FFFD}".as_bytes(), "\u{FFFD}yam".as_bytes()),
+            Ordering::Less
+        );
+        assert_eq!(
+            casecmp("\u{FFFD}yam".as_bytes(), "\u{FFFD}".as_bytes()),
+            Ordering::Greater
+        );
+    }
+
+    #[test]
     fn compares_symbols_without_regard_to_case() {
         assert!(!case_eq(b"abcdef", b"abcde"));
         assert!(case_eq(b"aBcDeF", b"abcdef"));
