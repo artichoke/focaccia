@@ -39,8 +39,39 @@ pub fn case_eq(left: &[u8], right: &[u8]) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::{case_eq, casecmp};
     use core::cmp::Ordering;
+
+    use super::{case_eq, casecmp};
+
+    #[test]
+    fn empty_string() {
+        assert!(case_eq(b"", b""));
+        assert_eq!(casecmp(b"", b""), Ordering::Equal);
+
+        assert!(!case_eq(b"", b"rake"));
+        assert_eq!(casecmp(b"", b"rake"), Ordering::Less);
+
+        assert!(!case_eq(b"rake", b""));
+        assert_eq!(casecmp(b"rake", b""), Ordering::Greater);
+    }
+
+    #[test]
+    fn unicode_replacement_character() {
+        assert!(case_eq("\u{FFFD}".as_bytes(), "\u{FFFD}".as_bytes()));
+        assert_eq!(
+            casecmp("\u{FFFD}".as_bytes(), "\u{FFFD}".as_bytes()),
+            Ordering::Equal
+        );
+
+        assert_eq!(
+            casecmp("\u{FFFD}".as_bytes(), "\u{FFFD}yam".as_bytes()),
+            Ordering::Less
+        );
+        assert_eq!(
+            casecmp("\u{FFFD}yam".as_bytes(), "\u{FFFD}".as_bytes()),
+            Ordering::Greater
+        );
+    }
 
     #[test]
     fn compares_symbols_without_regard_to_case() {
