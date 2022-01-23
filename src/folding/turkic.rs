@@ -59,7 +59,7 @@ pub fn casecmp(left: &str, right: &str) -> Ordering {
 /// ```
 #[inline]
 #[must_use]
-pub fn eq(left: &str, right: &str) -> bool {
+pub fn case_eq(left: &str, right: &str) -> bool {
     let left = left.chars().flat_map(|c| lookup(c, Mode::Turkic));
     let right = right.chars().flat_map(|c| lookup(c, Mode::Turkic));
     left.eq(right)
@@ -67,15 +67,15 @@ pub fn eq(left: &str, right: &str) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::{casecmp, eq};
+    use super::{casecmp, case_eq};
     use core::cmp::Ordering;
 
     #[test]
     fn compares_symbols_without_regard_to_case() {
-        assert!(!eq("abcdef", "abcde"));
-        assert!(eq("aBcDeF", "abcdef"));
-        assert!(!eq("abcdef", "abcdefg"));
-        assert!(eq("abcdef", "ABCDEF"));
+        assert!(!case_eq("abcdef", "abcde"));
+        assert!(case_eq("aBcDeF", "abcdef"));
+        assert!(!case_eq("abcdef", "abcdefg"));
+        assert!(case_eq("abcdef", "ABCDEF"));
 
         assert!(matches!(casecmp("abcdef", "abcde"), Ordering::Greater));
         assert!(matches!(casecmp("aBcDeF", "abcdef"), Ordering::Equal));
@@ -105,10 +105,10 @@ mod tests {
         // upper_a_tilde.casecmp?(upper_a_umlaut).should_not == true
         // upper_a_umlaut.casecmp?(upper_a_tilde).should_not == true
         // ```
-        assert!(!eq(lower_a_tilde, lower_a_umlaut));
-        assert!(!eq(lower_a_umlaut, lower_a_tilde));
-        assert!(!eq(upper_a_tilde, upper_a_umlaut));
-        assert!(!eq(upper_a_umlaut, upper_a_tilde));
+        assert!(!case_eq(lower_a_tilde, lower_a_umlaut));
+        assert!(!case_eq(lower_a_umlaut, lower_a_tilde));
+        assert!(!case_eq(upper_a_tilde, upper_a_umlaut));
+        assert!(!case_eq(upper_a_umlaut, upper_a_tilde));
 
         assert!(!matches!(
             casecmp(lower_a_tilde, lower_a_umlaut),
@@ -144,10 +144,10 @@ mod tests {
         // lower_a_tilde.casecmp?(upper_a_tilde).should == true
         // lower_a_umlaut.casecmp?(upper_a_umlaut).should == true
         // ```
-        assert!(eq(upper_a_tilde, lower_a_tilde));
-        assert!(eq(upper_a_umlaut, lower_a_umlaut));
-        assert!(eq(lower_a_tilde, upper_a_tilde));
-        assert!(eq(lower_a_umlaut, upper_a_umlaut));
+        assert!(case_eq(upper_a_tilde, lower_a_tilde));
+        assert!(case_eq(upper_a_umlaut, lower_a_umlaut));
+        assert!(case_eq(lower_a_tilde, upper_a_tilde));
+        assert!(case_eq(lower_a_umlaut, upper_a_umlaut));
 
         assert!(matches!(
             casecmp(upper_a_tilde, lower_a_tilde),
@@ -175,10 +175,10 @@ mod tests {
         let upper_dotted_i = "İ";
         let lower_dotted_i = "i";
 
-        assert!(eq(upper_dotless_i, lower_dotless_i));
-        assert!(eq(upper_dotted_i, lower_dotted_i));
-        assert!(eq(lower_dotless_i, upper_dotless_i));
-        assert!(eq(lower_dotted_i, upper_dotted_i));
+        assert!(case_eq(upper_dotless_i, lower_dotless_i));
+        assert!(case_eq(upper_dotted_i, lower_dotted_i));
+        assert!(case_eq(lower_dotless_i, upper_dotless_i));
+        assert!(case_eq(lower_dotted_i, upper_dotted_i));
 
         assert!(matches!(
             casecmp(upper_dotless_i, lower_dotless_i),
@@ -197,14 +197,14 @@ mod tests {
             Ordering::Equal
         ));
 
-        assert!(!eq(upper_dotless_i, upper_dotted_i));
-        assert!(!eq(upper_dotless_i, lower_dotted_i));
-        assert!(!eq(lower_dotless_i, upper_dotted_i));
-        assert!(!eq(lower_dotless_i, lower_dotted_i));
-        assert!(!eq(upper_dotted_i, upper_dotless_i));
-        assert!(!eq(upper_dotted_i, lower_dotless_i));
-        assert!(!eq(lower_dotted_i, upper_dotless_i));
-        assert!(!eq(lower_dotted_i, lower_dotless_i));
+        assert!(!case_eq(upper_dotless_i, upper_dotted_i));
+        assert!(!case_eq(upper_dotless_i, lower_dotted_i));
+        assert!(!case_eq(lower_dotless_i, upper_dotted_i));
+        assert!(!case_eq(lower_dotless_i, lower_dotted_i));
+        assert!(!case_eq(upper_dotted_i, upper_dotless_i));
+        assert!(!case_eq(upper_dotted_i, lower_dotless_i));
+        assert!(!case_eq(lower_dotted_i, upper_dotless_i));
+        assert!(!case_eq(lower_dotted_i, lower_dotless_i));
 
         assert!(!matches!(
             casecmp(upper_dotless_i, upper_dotted_i),
