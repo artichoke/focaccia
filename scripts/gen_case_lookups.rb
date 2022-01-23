@@ -140,10 +140,10 @@ ranges.each do |range|
     full = mapping[:full].map { |ch| ch.to_s(16).upcase.rjust(4, '0') }
 
     base = start.to_s(16).upcase.rjust(4, '0')
-    op = 'add'
+    op = '+'
     op_offset = offset
     if offset.negative?
-      op = 'sub'
+      op = '-'
       op_offset = -offset
     end
     op_offset = op_offset.to_s(16).rjust(4, '0')
@@ -151,17 +151,17 @@ ranges.each do |range|
       rs.puts "            '\\u{#{base}}' => Mapping::Single(0x#{full[0]}),"
     elsif full.length == 1
       finish = last.to_s(16).upcase.rjust(4, '0')
-      rs.puts "            '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Single(codepoint.wrapping_#{op}(0x#{op_offset})),"
+      rs.puts "            '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Single(codepoint #{op} 0x#{op_offset}),"
     elsif (last - start).zero? && full.length == 2
       rs.puts "            '\\u{#{base}}' => Mapping::Double(0x#{full[0]}, 0x#{full[1]}),"
     elsif full.length == 2
       finish = last.to_s(16).upcase.rjust(4, '0')
-      rs.puts "            '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Double(codepoint.wrapping_#{op}(0x#{op_offset}), 0x#{full[1]}),"
+      rs.puts "            '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Double(codepoint #{op} 0x#{op_offset}, 0x#{full[1]}),"
     elsif (last - start).zero? && full.length == 3
       rs.puts "            '\\u{#{base}}' => Mapping::Triple(0x#{full[0]}, 0x#{full[1]}, 0x#{full[2]}),"
     elsif full.length == 3
       finish = last.to_s(16).upcase.rjust(4, '0')
-      rs.puts "            '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Triple(codepoint.wrapping_#{op}(0x#{op_offset}), 0x#{full[1]}, 0x#{full[2]}),"
+      rs.puts "            '\\u{#{base}}'..='\\u{#{finish}}' => Mapping::Triple(codepoint #{op} 0x#{op_offset}, 0x#{full[1]}, 0x#{full[2]}),"
     end
   elsif mapping.key?(:full)
     char = start.to_s(16).upcase.rjust(4, '0')
