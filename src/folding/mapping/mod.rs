@@ -4,7 +4,7 @@ mod lookup;
 
 pub use lookup::lookup;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum Mode {
     Full,
     Turkic,
@@ -125,7 +125,7 @@ mod tests {
         assert_eq!(iter.size_hint(), (0_usize, Some(0_usize)));
         assert_eq!(iter.count(), 0);
 
-        let mut iter = mapping.clone().into_iter();
+        let mut iter = mapping.into_iter();
         iter.next();
         iter.next();
         iter.next();
@@ -172,7 +172,7 @@ mod tests {
         assert_eq!(iter.size_hint(), (0_usize, Some(0_usize)));
         assert_eq!(iter.count(), 0);
 
-        let mut iter = mapping.clone().into_iter();
+        let mut iter = mapping.into_iter();
         iter.next();
         iter.next();
         iter.next();
@@ -219,7 +219,7 @@ mod tests {
         assert_eq!(iter.size_hint(), (0_usize, Some(0_usize)));
         assert_eq!(iter.count(), 0);
 
-        let mut iter = mapping.clone().into_iter();
+        let mut iter = mapping.into_iter();
         iter.next();
         iter.next();
         iter.next();
