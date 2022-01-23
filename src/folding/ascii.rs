@@ -33,21 +33,21 @@ pub fn casecmp(left: &[u8], right: &[u8]) -> Ordering {
 /// ```
 #[inline]
 #[must_use]
-pub fn eq(left: &[u8], right: &[u8]) -> bool {
+pub fn case_eq(left: &[u8], right: &[u8]) -> bool {
     left.eq_ignore_ascii_case(right)
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{casecmp, eq};
+    use super::{case_eq, casecmp};
     use core::cmp::Ordering;
 
     #[test]
     fn compares_symbols_without_regard_to_case() {
-        assert!(!eq(b"abcdef", b"abcde"));
-        assert!(eq(b"aBcDeF", b"abcdef"));
-        assert!(!eq(b"abcdef", b"abcdefg"));
-        assert!(eq(b"abcdef", b"ABCDEF"));
+        assert!(!case_eq(b"abcdef", b"abcde"));
+        assert!(case_eq(b"aBcDeF", b"abcdef"));
+        assert!(!case_eq(b"abcdef", b"abcdefg"));
+        assert!(case_eq(b"abcdef", b"ABCDEF"));
 
         assert!(matches!(casecmp(b"abcdef", b"abcde"), Ordering::Greater));
         assert!(matches!(casecmp(b"aBcDeF", b"abcdef"), Ordering::Equal));
@@ -77,10 +77,10 @@ mod tests {
         // upper_a_tilde.casecmp(upper_a_umlaut).should_not == 0
         // upper_a_umlaut.casecmp(upper_a_tilde).should_not == 0
         // ```
-        assert!(!eq(lower_a_tilde, lower_a_umlaut));
-        assert!(!eq(lower_a_umlaut, lower_a_tilde));
-        assert!(!eq(upper_a_tilde, upper_a_umlaut));
-        assert!(!eq(upper_a_umlaut, upper_a_tilde));
+        assert!(!case_eq(lower_a_tilde, lower_a_umlaut));
+        assert!(!case_eq(lower_a_umlaut, lower_a_tilde));
+        assert!(!case_eq(upper_a_tilde, upper_a_umlaut));
+        assert!(!case_eq(upper_a_umlaut, upper_a_tilde));
 
         assert!(!matches!(
             casecmp(lower_a_tilde, lower_a_umlaut),
@@ -113,10 +113,10 @@ mod tests {
         // upper_a_tilde.casecmp(upper_a_umlaut).should_not == 0
         // upper_a_umlaut.casecmp(upper_a_tilde).should_not == 0
         // ```
-        assert!(!eq(lower_a_tilde, lower_a_umlaut));
-        assert!(!eq(lower_a_umlaut, lower_a_tilde));
-        assert!(!eq(upper_a_tilde, upper_a_umlaut));
-        assert!(!eq(upper_a_umlaut, upper_a_tilde));
+        assert!(!case_eq(lower_a_tilde, lower_a_umlaut));
+        assert!(!case_eq(lower_a_umlaut, lower_a_tilde));
+        assert!(!case_eq(upper_a_tilde, upper_a_umlaut));
+        assert!(!case_eq(upper_a_umlaut, upper_a_tilde));
 
         assert!(!matches!(
             casecmp(lower_a_tilde, lower_a_umlaut),
@@ -152,10 +152,10 @@ mod tests {
         // lower_a_tilde.casecmp(upper_a_tilde).should == 1
         // lower_a_umlaut.casecmp(upper_a_umlaut).should == 1
         // ```
-        assert!(!eq(upper_a_tilde, lower_a_tilde));
-        assert!(!eq(upper_a_umlaut, lower_a_umlaut));
-        assert!(!eq(lower_a_tilde, upper_a_tilde));
-        assert!(!eq(lower_a_umlaut, upper_a_umlaut));
+        assert!(!case_eq(upper_a_tilde, lower_a_tilde));
+        assert!(!case_eq(upper_a_umlaut, lower_a_umlaut));
+        assert!(!case_eq(lower_a_tilde, upper_a_tilde));
+        assert!(!case_eq(lower_a_umlaut, upper_a_umlaut));
 
         assert!(matches!(
             casecmp(upper_a_tilde, lower_a_tilde),
@@ -193,10 +193,10 @@ mod tests {
         // lower_a_tilde.casecmp(upper_a_tilde).should == 1
         // lower_a_umlaut.casecmp(upper_a_umlaut).should == 1
         // ```
-        assert!(!eq(upper_a_tilde, lower_a_tilde));
-        assert!(!eq(upper_a_umlaut, lower_a_umlaut));
-        assert!(!eq(lower_a_tilde, upper_a_tilde));
-        assert!(!eq(lower_a_umlaut, upper_a_umlaut));
+        assert!(!case_eq(upper_a_tilde, lower_a_tilde));
+        assert!(!case_eq(upper_a_umlaut, lower_a_umlaut));
+        assert!(!case_eq(lower_a_tilde, upper_a_tilde));
+        assert!(!case_eq(lower_a_umlaut, upper_a_umlaut));
 
         assert!(matches!(
             casecmp(upper_a_tilde, lower_a_tilde),
