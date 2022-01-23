@@ -429,36 +429,84 @@ impl TryFrom<Option<&[u8]>> for CaseFold {
 // Tests using IDN case folding test vectors:
 #[cfg(test)]
 mod tests {
+    use core::cmp::Ordering;
+
     use crate::CaseFold;
 
     // https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.2
     #[test]
-    fn case_folding_ascii() {
+    fn case_folding_ascii_case_eq() {
         let input = "CAFE";
         let output = "cafe";
+
         assert!(CaseFold::Full.case_eq(input, output));
         assert!(CaseFold::Full.case_eq(output, input));
+
         assert!(CaseFold::Ascii.case_eq(input, output));
         assert!(CaseFold::Ascii.case_eq(output, input));
+
         assert!(CaseFold::Turkic.case_eq(input, output));
         assert!(CaseFold::Turkic.case_eq(output, input));
+
+        assert!(CaseFold::Lithuanian.case_eq(input, output));
+        assert!(CaseFold::Lithuanian.case_eq(output, input));
+    }
+
+    // https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.2
+    #[test]
+    fn case_folding_ascii_casecmp() {
+        let input = "CAFE";
+        let output = "cafe";
+
+        assert_eq!(CaseFold::Full.casecmp(input, output), Ordering::Equal);
+        assert_eq!(CaseFold::Full.casecmp(output, input), Ordering::Equal);
+
+        assert_eq!(CaseFold::Ascii.casecmp(input, output), Ordering::Equal);
+        assert_eq!(CaseFold::Ascii.casecmp(output, input), Ordering::Equal);
+
+        assert_eq!(CaseFold::Turkic.casecmp(input, output), Ordering::Equal);
+        assert_eq!(CaseFold::Turkic.casecmp(output, input), Ordering::Equal);
+
+        assert_eq!(CaseFold::Lithuanian.casecmp(input, output), Ordering::Equal);
+        assert_eq!(CaseFold::Lithuanian.casecmp(output, input), Ordering::Equal);
+    }
+
+    // https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.3
+    #[test]
+    fn case_folding_8bit_case_eq() {
+        let input = "ß";
+        let output = "ss";
+
+        assert!(CaseFold::Full.case_eq(input, output));
+        assert!(CaseFold::Full.case_eq(output, input));
+
+        assert!(!CaseFold::Ascii.case_eq(input, output));
+        assert!(!CaseFold::Ascii.case_eq(output, input));
+
+        assert!(CaseFold::Turkic.case_eq(input, output));
+        assert!(CaseFold::Turkic.case_eq(output, input));
+
         assert!(CaseFold::Lithuanian.case_eq(input, output));
         assert!(CaseFold::Lithuanian.case_eq(output, input));
     }
 
     // https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.3
     #[test]
-    fn case_folding_8bit() {
+    fn case_folding_8bit_casecmp() {
         let input = "ß";
         let output = "ss";
-        assert!(CaseFold::Full.case_eq(input, output));
-        assert!(CaseFold::Full.case_eq(output, input));
-        assert!(!CaseFold::Ascii.case_eq(input, output));
-        assert!(!CaseFold::Ascii.case_eq(output, input));
-        assert!(CaseFold::Turkic.case_eq(input, output));
-        assert!(CaseFold::Turkic.case_eq(output, input));
-        assert!(CaseFold::Lithuanian.case_eq(input, output));
-        assert!(CaseFold::Lithuanian.case_eq(output, input));
+
+        assert_eq!(CaseFold::Full.casecmp(input, output), Ordering::Equal);
+        assert_eq!(CaseFold::Full.casecmp(output, input), Ordering::Equal);
+
+        assert_ne!(CaseFold::Ascii.casecmp(input, output), Ordering::Equal);
+        assert_ne!(CaseFold::Ascii.casecmp(output, input), Ordering::Equal);
+
+        assert_eq!(CaseFold::Turkic.casecmp(input, output), Ordering::Equal);
+        assert_eq!(CaseFold::Turkic.casecmp(output, input), Ordering::Equal);
+
+        assert_eq!(CaseFold::Lithuanian.casecmp(input, output), Ordering::Equal);
+        assert_eq!(CaseFold::Lithuanian.casecmp(output, input), Ordering::Equal);
     }
 
     // https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.4
@@ -466,43 +514,95 @@ mod tests {
     fn case_folding_turkic_capital_i_with_dot() {
         let input = "İ";
         let output = "i";
+
         assert!(CaseFold::Turkic.case_eq(input, output));
         assert!(CaseFold::Turkic.case_eq(output, input));
+
+        assert_eq!(CaseFold::Turkic.casecmp(input, output), Ordering::Equal);
+        assert_eq!(CaseFold::Turkic.casecmp(output, input), Ordering::Equal);
     }
 
     // https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.5
     //
     // Multibyte folding is not supported.
     #[test]
-    #[should_panic]
-    fn case_folding_multibyte() {
+    fn case_folding_multibyte_case_eq() {
         let input = "Ńͺ";
         let output = "ń ι";
-        assert!(CaseFold::Full.case_eq(input, output));
-        assert!(CaseFold::Full.case_eq(output, input));
+
+        assert!(!CaseFold::Full.case_eq(input, output));
+        assert!(!CaseFold::Full.case_eq(output, input));
+
         assert!(!CaseFold::Ascii.case_eq(input, output));
         assert!(!CaseFold::Ascii.case_eq(output, input));
-        assert!(CaseFold::Turkic.case_eq(input, output));
-        assert!(CaseFold::Turkic.case_eq(output, input));
-        assert!(CaseFold::Lithuanian.case_eq(input, output));
-        assert!(CaseFold::Lithuanian.case_eq(output, input));
+
+        assert!(!CaseFold::Turkic.case_eq(input, output));
+        assert!(!CaseFold::Turkic.case_eq(output, input));
+
+        assert!(!CaseFold::Lithuanian.case_eq(input, output));
+        assert!(!CaseFold::Lithuanian.case_eq(output, input));
+    }
+
+    // https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.5
+    //
+    // Multibyte folding is not supported.
+    #[test]
+    fn case_folding_multibyte_casecmp() {
+        let input = "Ńͺ";
+        let output = "ń ι";
+
+        assert_ne!(CaseFold::Full.casecmp(input, output), Ordering::Equal);
+        assert_ne!(CaseFold::Full.casecmp(output, input), Ordering::Equal);
+
+        assert_ne!(CaseFold::Ascii.casecmp(input, output), Ordering::Equal);
+        assert_ne!(CaseFold::Ascii.casecmp(output, input), Ordering::Equal);
+
+        assert_ne!(CaseFold::Turkic.casecmp(input, output), Ordering::Equal);
+        assert_ne!(CaseFold::Turkic.casecmp(output, input), Ordering::Equal);
+
+        assert_ne!(CaseFold::Lithuanian.casecmp(input, output), Ordering::Equal);
+        assert_ne!(CaseFold::Lithuanian.casecmp(output, input), Ordering::Equal);
     }
 
     // https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.6
     //
     // These folding operations are not supported.
     #[test]
-    #[should_panic]
-    fn case_folding() {
+    fn case_folding_4_6_case_eq() {
         let input = "℡㏆𝞻";
         let output = "telc∕kgσ";
-        assert!(CaseFold::Full.case_eq(input, output));
-        assert!(CaseFold::Full.case_eq(output, input));
+
+        assert!(!CaseFold::Full.case_eq(input, output));
+        assert!(!CaseFold::Full.case_eq(output, input));
+
         assert!(!CaseFold::Ascii.case_eq(input, output));
         assert!(!CaseFold::Ascii.case_eq(output, input));
-        assert!(CaseFold::Turkic.case_eq(input, output));
-        assert!(CaseFold::Turkic.case_eq(output, input));
-        assert!(CaseFold::Lithuanian.case_eq(input, output));
-        assert!(CaseFold::Lithuanian.case_eq(output, input));
+
+        assert!(!CaseFold::Turkic.case_eq(input, output));
+        assert!(!CaseFold::Turkic.case_eq(output, input));
+
+        assert!(!CaseFold::Lithuanian.case_eq(input, output));
+        assert!(!CaseFold::Lithuanian.case_eq(output, input));
+    }
+
+    // https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.6
+    //
+    // These folding operations are not supported.
+    #[test]
+    fn case_folding_4_6_casecmp() {
+        let input = "℡㏆𝞻";
+        let output = "telc∕kgσ";
+
+        assert_ne!(CaseFold::Full.casecmp(input, output), Ordering::Equal);
+        assert_ne!(CaseFold::Full.casecmp(output, input), Ordering::Equal);
+
+        assert_ne!(CaseFold::Ascii.casecmp(input, output), Ordering::Equal);
+        assert_ne!(CaseFold::Ascii.casecmp(output, input), Ordering::Equal);
+
+        assert_ne!(CaseFold::Turkic.casecmp(input, output), Ordering::Equal);
+        assert_ne!(CaseFold::Turkic.casecmp(output, input), Ordering::Equal);
+
+        assert_ne!(CaseFold::Lithuanian.casecmp(input, output), Ordering::Equal);
+        assert_ne!(CaseFold::Lithuanian.casecmp(output, input), Ordering::Equal);
     }
 }
