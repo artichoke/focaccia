@@ -256,15 +256,17 @@ rs.puts(<<~TEST)
               right,
               left,
           );
-          assert!(
-              matches!(unicode_full_casecmp(left, right), Ordering::Equal),
+          assert_eq!(
+              unicode_full_casecmp(left, right),
+              Ordering::Equal,
               "Correctness check failed for: {}. Expected: {}. Got: {}.",
               ch,
               left,
               right,
           );
-          assert!(
-              matches!(unicode_full_casecmp(right, left), Ordering::Equal),
+          assert_eq!(
+              unicode_full_casecmp(right, left),
+              Ordering::Equal,
               "Correctness check failed for: {}. Expected: {}. Got: {}.",
               ch,
               right,
@@ -347,15 +349,17 @@ rs.puts(<<~TEST)
               right,
               left,
           );
-          assert!(
-              matches!(unicode_full_turkic_casecmp(left, right), Ordering::Equal),
+          assert_eq!(
+              unicode_full_turkic_casecmp(left, right),
+              Ordering::Equal,
               "Correctness check failed for: {}. Expected: {}. Got: {}.",
               ch,
               left,
               right,
           );
-          assert!(
-              matches!(unicode_full_turkic_casecmp(right, left), Ordering::Equal),
+          assert_eq!(
+              unicode_full_turkic_casecmp(right, left),
+              Ordering::Equal,
               "Correctness check failed for: {}. Expected: {}. Got: {}.",
               ch,
               right,
