@@ -239,7 +239,7 @@ rs.puts(<<~TEST)
   fn full_fold_exhaustive() {
       let mut enc = [0; 4];
       let mut buf = [0; 4];
-      for ch in '0'..=char::MAX {
+      for ch in '\\0'..=char::MAX {
           let left = ch.encode_utf8(&mut enc);
           let right = lookup_naive(ch, &mut buf);
           assert!(
@@ -332,7 +332,7 @@ rs.puts(<<~TEST)
   fn full_turkic_fold_exhaustive() {
       let mut enc = [0; 4];
       let mut buf = [0; 4];
-      for ch in '0'..=char::MAX {
+      for ch in '\\0'..=char::MAX {
           let left = ch.encode_utf8(&mut enc);
           let right = lookup_naive(ch, &mut buf);
           assert!(
