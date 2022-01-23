@@ -67,8 +67,33 @@ pub fn case_eq(left: &str, right: &str) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::{case_eq, casecmp};
     use core::cmp::Ordering;
+
+    use super::{case_eq, casecmp};
+
+    #[test]
+    fn empty_string() {
+        assert!(case_eq("", ""));
+        assert_eq!(casecmp("", ""), Ordering::Equal);
+
+        assert!(!case_eq("", "rake"));
+        assert_eq!(casecmp("", "rake"), Ordering::Less);
+
+        assert!(!case_eq("rake", ""));
+        assert_eq!(casecmp("rake", ""), Ordering::Greater);
+
+        assert!(!case_eq("", "São Paulo"));
+        assert_eq!(casecmp("", "São Paulo"), Ordering::Less);
+
+        assert!(!case_eq("São Paulo", ""));
+        assert_eq!(casecmp("São Paulo", ""), Ordering::Greater);
+
+        assert!(!case_eq("", "İstanbul"));
+        assert_eq!(casecmp("", "İstanbul"), Ordering::Less);
+
+        assert!(!case_eq("İstanbul", ""));
+        assert_eq!(casecmp("İstanbul", ""), Ordering::Greater);
+    }
 
     #[test]
     fn compares_symbols_without_regard_to_case() {
