@@ -39,7 +39,7 @@ pub fn case_eq(left: &[u8], right: &[u8]) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::{casecmp, case_eq};
+    use super::{case_eq, casecmp};
     use core::cmp::Ordering;
 
     #[test]
