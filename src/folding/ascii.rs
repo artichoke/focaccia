@@ -93,7 +93,7 @@ mod tests {
     }
 
     #[test]
-    fn doesent_consider_non_ascii_chars_equal_that_arent() {
+    fn non_ascii_chars_that_are_not_fold_eq_are_not_eq() {
         // -- Latin-1 --
         let upper_a_tilde = b"\xC3";
         let upper_a_umlaut = b"\xC4";

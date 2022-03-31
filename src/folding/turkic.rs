@@ -124,7 +124,7 @@ mod tests {
     }
 
     #[test]
-    fn doesent_consider_non_ascii_chars_equal_that_arent() {
+    fn non_ascii_chars_that_are_not_fold_eq_are_not_eq() {
         // -- UTF-8 --
         let upper_a_tilde = "Ã";
         let lower_a_tilde = "ã";
