@@ -24,9 +24,9 @@ impl Mapping {
     pub fn len(&self) -> usize {
         match self {
             Self::Empty => 0,
-            Self::Single(_) => 1,
-            Self::Double(_, _) => 2,
-            Self::Triple(_, _, _) => 3,
+            Self::Single(..) => 1,
+            Self::Double(..) => 2,
+            Self::Triple(..) => 3,
         }
     }
 }
