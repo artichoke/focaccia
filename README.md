@@ -12,8 +12,8 @@ Unicode case folding methods for case-insensitive string comparisons. Used to
 implement case folding operations on the [`Symbol`] and [`String`] classes in
 the Ruby Core implementation in [Artichoke Ruby][artichoke].
 
-[`symbol`]: https://ruby-doc.org/core-2.6.3/Symbol.html
-[`string`]: https://ruby-doc.org/core-2.6.3/String.html
+[`symbol`]: https://ruby-doc.org/core-3.1.2/Symbol.html
+[`string`]: https://ruby-doc.org/core-3.1.2/String.html
 [artichoke]: https://github.com/artichoke/artichoke
 
 Focaccia supports full, ASCII, and Turkic [Unicode case folding] equality and

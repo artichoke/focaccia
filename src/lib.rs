@@ -194,7 +194,7 @@ pub use folding::{
 /// assert!(!fold.case_eq("İstanbul", "Istanbul"));
 /// ```
 ///
-/// [folding strategies available in Ruby]: https://ruby-doc.org/core-2.6.3/String.html#method-i-downcase
+/// [folding strategies available in Ruby]: https://ruby-doc.org/core-3.1.2/String.html#method-i-downcase
 /// [dotted and dotless I]: https://en.wikipedia.org/wiki/Dotted_and_dotless_I
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub enum CaseFold {
