@@ -438,6 +438,8 @@ mod tests {
     use core::cmp::Ordering;
 
     use crate::CaseFold;
+    #[cfg(feature = "std")]
+    use crate::NoSuchCaseFoldingScheme;
 
     // https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.2
     #[test]
@@ -610,5 +612,17 @@ mod tests {
 
         assert_ne!(CaseFold::Lithuanian.casecmp(input, output), Ordering::Equal);
         assert_ne!(CaseFold::Lithuanian.casecmp(output, input), Ordering::Equal);
+    }
+
+    #[test]
+    #[cfg(feature = "std")]
+    fn error_display_is_not_empty() {
+        use core::fmt::Write as _;
+        use std::string::String;
+
+        let tc = NoSuchCaseFoldingScheme::new();
+        let mut buf = String::new();
+        write!(&mut buf, "{}", tc).unwrap();
+        assert!(!buf.is_empty());
     }
 }
