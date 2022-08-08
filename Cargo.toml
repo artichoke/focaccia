@@ -2,7 +2,7 @@
 name = "focaccia"
 version = "1.1.2" # remember to set `html_root_url` in `src/lib.rs`.
 authors = ["Ryan Lopopolo <rjl@hyperbo.la>"]
-license = "MIT"
+license = "MIT AND Unicode-DFS-2016"
 edition = "2018"
 readme = "README.md"
 repository = "https://github.com/artichoke/focaccia"
@@ -11,7 +11,7 @@ homepage = "https://github.com/artichoke/focaccia"
 description = "no_std implementation of Unicode case folding comparisons"
 keywords = ["case-folding", "case-insensitive", "case", "no_std", "unicode"]
 categories = ["internationalization", "no-std", "text-processing"]
-include = ["src/**/*", "tests/**/*", "CaseFolding.txt", "LICENSE", "README.md"]
+include = ["src/**/*", "tests/**/*", "CaseFolding.txt", "LICENSE", "LICENSE-UNICODE", "README.md"]
 
 [features]
 default = ["std"]
