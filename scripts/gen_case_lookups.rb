@@ -1,6 +1,37 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+# Create lookup tables and tests for Unicode Case Folding transformations using
+# the `CaseFolding.txt` Unicode Data File, which is subject to these constraints:
+#
+# 1. Certain documents and files on this website contain a legend indicating
+#    that "Modification is permitted." Any person is hereby authorized,
+#    without fee, to modify such documents and files to create derivative
+#    works conforming to the Unicode® Standard, subject to Terms and
+#    Conditions herein.
+# 2. Any person is hereby authorized, without fee, to view, use, reproduce,
+#    and distribute all documents and files, subject to the Terms and
+#    Conditions herein.
+# 3. Further specifications of rights and restrictions pertaining to the use
+#    of the Unicode DATA FILES and SOFTWARE can be found in the Unicode Data
+#    Files and Software License.
+#
+# The Unicode Data Files and Software License, which can be found at
+# <https://www.unicode.org/license.txt> is included in this repository. The
+# license requires one of:
+#
+# (a) this copyright and permission notice appear with all copies of the
+#     Data Files or Software, or
+# (b) this copyright and permission notice appear in associated Documentation.
+#
+# `focaccia` distributes this license as `LICENSE-UNICODE` in crate bundles
+# and includes `AND Unicode-DFS-2016` in the `Cargo.toml` SPDX license
+# expression. See: https://spdx.org/licenses/Unicode-DFS-2016.html.
+#
+# The generated sources created by this script are subject to both the MIT
+# License contained in this repository, `LICENSE`, and the Unicode Data Files
+# and Software License, `LICENSE-UNICODE`.
+
 mappings = File.readlines('CaseFolding.txt')
 
 casefolding_version = mappings[0..2].map { |line| "// #{line.delete_prefix('# ')}" }.join.chomp
