@@ -206,8 +206,8 @@ mod tests {
 
     #[test]
     fn exhaustive() {
-        let lower = 'a'..'z';
-        let upper = 'A'..'Z';
+        let lower = 'a'..='z';
+        let upper = 'A'..='Z';
         let mut l_buf = [0; 4];
         let mut r_buf = [0; 4];
         for (left, right) in lower.zip(upper) {
