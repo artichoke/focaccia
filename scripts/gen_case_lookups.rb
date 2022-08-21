@@ -238,6 +238,7 @@ rs.puts(<<~AUTOGEN)
   #{casefolding_version}
 
   #[must_use]
+  #[allow(clippy::match_same_arms)]
   #[allow(clippy::too_many_lines)]
   fn lookup_naive(c: char, buf: &mut [u8; 4]) -> &str {
       match c {
@@ -331,6 +332,7 @@ rs.puts(<<~AUTOGEN)
   #{casefolding_version}
 
   #[must_use]
+  #[allow(clippy::match_same_arms)]
   #[allow(clippy::too_many_lines)]
   fn lookup_naive(c: char, buf: &mut [u8; 4]) -> &str {
       match c {
