@@ -112,20 +112,6 @@
 #![no_std]
 #![doc(html_root_url = "https://docs.rs/focaccia/1.2.0")]
 
-// Ensure code blocks in README.md compile
-#[cfg(doctest)]
-macro_rules! readme {
-    ($x:expr) => {
-        #[doc = $x]
-        mod readme {}
-    };
-    () => {
-        readme!(include_str!("../README.md"));
-    };
-}
-#[cfg(doctest)]
-readme!();
-
 #[cfg(feature = "std")]
 extern crate std;
 
@@ -626,3 +612,19 @@ mod tests {
         assert!(!buf.is_empty());
     }
 }
+// Ensure code blocks in README.md compile
+//
+// This module and macro declaration should be kept at the end of the file, in
+// order to not interfere with code coverage.
+#[cfg(doctest)]
+macro_rules! readme {
+    ($x:expr) => {
+        #[doc = $x]
+        mod readme {}
+    };
+    () => {
+        readme!(include_str!("../README.md"));
+    };
+}
+#[cfg(doctest)]
+readme!();
