@@ -32,6 +32,8 @@
 # License contained in this repository, `LICENSE`, and the Unicode Data Files
 # and Software License, `LICENSE-UNICODE`.
 
+require 'fileutils'
+
 mappings = File.readlines('CaseFolding.txt')
 
 casefolding_version = mappings[0..2].map { |line| "// #{line.delete_prefix('# ')}" }.join.chomp
@@ -220,7 +222,9 @@ rs.puts '    }'
 rs.puts '}'
 rs.close
 
-rs = File.open('tests/integration/full_fold_exhaustive.rs', 'w')
+FileUtils.mkdir_p('src/exhaustive')
+
+rs = File.open('src/exhaustive/full.rs', 'w')
 
 rs.puts(<<~AUTOGEN)
   // @generated
@@ -234,7 +238,8 @@ rs.puts(<<~AUTOGEN)
   #{casefolding_version}
 
   use core::cmp::Ordering;
-  use focaccia::{unicode_full_case_eq, unicode_full_casecmp};
+
+  use crate::{unicode_full_case_eq, unicode_full_casecmp};
 
   #[must_use]
   #[allow(clippy::too_many_lines)]
@@ -266,49 +271,52 @@ rs.puts '}'
 rs.puts
 
 rs.puts(<<~TEST)
-  #[test]
-  fn full_fold_exhaustive() {
-      let mut enc = [0; 4];
-      let mut buf = [0; 4];
-      for ch in '\\0'..=char::MAX {
-          let left = ch.encode_utf8(&mut enc);
-          let right = lookup_naive(ch, &mut buf);
-          assert!(
-              unicode_full_case_eq(left, right),
-              "Correctness check failed for: {}. Expected: {}. Got: {}.",
-              ch,
-              left,
-              right,
-          );
-          assert!(
-              unicode_full_case_eq(right, left),
-              "Correctness check failed for: {}. Expected: {}. Got: {}.",
-              ch,
-              right,
-              left,
-          );
-          assert_eq!(
-              unicode_full_casecmp(left, right),
-              Ordering::Equal,
-              "Correctness check failed for: {}. Expected: {}. Got: {}.",
-              ch,
-              left,
-              right,
-          );
-          assert_eq!(
-              unicode_full_casecmp(right, left),
-              Ordering::Equal,
-              "Correctness check failed for: {}. Expected: {}. Got: {}.",
-              ch,
-              right,
-              left,
-          );
+  #[cfg(test)]
+  mod tests {
+      #[test]
+      fn full_case_folding() {
+          let mut enc = [0; 4];
+          let mut buf = [0; 4];
+          for ch in '\\0'..=char::MAX {
+              let left = ch.encode_utf8(&mut enc);
+              let right = lookup_naive(ch, &mut buf);
+              assert!(
+                  unicode_full_case_eq(left, right),
+                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                  ch,
+                  left,
+                  right,
+              );
+              assert!(
+                  unicode_full_case_eq(right, left),
+                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                  ch,
+                  right,
+                  left,
+              );
+              assert_eq!(
+                  unicode_full_casecmp(left, right),
+                  Ordering::Equal,
+                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                  ch,
+                  left,
+                  right,
+              );
+              assert_eq!(
+                  unicode_full_casecmp(right, left),
+                  Ordering::Equal,
+                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                  ch,
+                  right,
+                  left,
+              );
+          }
       }
   }
 TEST
 rs.close
 
-rs = File.open('tests/integration/full_turkic_fold_exhaustive.rs', 'w')
+rs = File.open('src/exhaustive/turkic.rs', 'w')
 
 rs.puts(<<~AUTOGEN)
   // @generated
@@ -322,7 +330,8 @@ rs.puts(<<~AUTOGEN)
   #{casefolding_version}
 
   use core::cmp::Ordering;
-  use focaccia::{unicode_full_turkic_case_eq, unicode_full_turkic_casecmp};
+
+  use crate::{unicode_full_turkic_case_eq, unicode_full_turkic_casecmp};
 
   #[must_use]
   #[allow(clippy::too_many_lines)]
@@ -359,43 +368,46 @@ rs.puts '}'
 rs.puts
 
 rs.puts(<<~TEST)
-  #[test]
-  fn full_turkic_fold_exhaustive() {
-      let mut enc = [0; 4];
-      let mut buf = [0; 4];
-      for ch in '\\0'..=char::MAX {
-          let left = ch.encode_utf8(&mut enc);
-          let right = lookup_naive(ch, &mut buf);
-          assert!(
-              unicode_full_turkic_case_eq(left, right),
-              "Correctness check failed for: {}. Expected: {}. Got: {}.",
-              ch,
-              left,
-              right,
-          );
-          assert!(
-              unicode_full_turkic_case_eq(right, left),
-              "Correctness check failed for: {}. Expected: {}. Got: {}.",
-              ch,
-              right,
-              left,
-          );
-          assert_eq!(
-              unicode_full_turkic_casecmp(left, right),
-              Ordering::Equal,
-              "Correctness check failed for: {}. Expected: {}. Got: {}.",
-              ch,
-              left,
-              right,
-          );
-          assert_eq!(
-              unicode_full_turkic_casecmp(right, left),
-              Ordering::Equal,
-              "Correctness check failed for: {}. Expected: {}. Got: {}.",
-              ch,
-              right,
-              left,
-          );
+  #[cfg(test)]
+  mod tests {
+      #[test]
+      fn turkic_case_folding() {
+          let mut enc = [0; 4];
+          let mut buf = [0; 4];
+          for ch in '\\0'..=char::MAX {
+              let left = ch.encode_utf8(&mut enc);
+              let right = lookup_naive(ch, &mut buf);
+              assert!(
+                  unicode_full_turkic_case_eq(left, right),
+                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                  ch,
+                  left,
+                  right,
+              );
+              assert!(
+                  unicode_full_turkic_case_eq(right, left),
+                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                  ch,
+                  right,
+                  left,
+              );
+              assert_eq!(
+                  unicode_full_turkic_casecmp(left, right),
+                  Ordering::Equal,
+                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                  ch,
+                  left,
+                  right,
+              );
+              assert_eq!(
+                  unicode_full_turkic_casecmp(right, left),
+                  Ordering::Equal,
+                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
+                  ch,
+                  right,
+                  left,
+              );
+          }
       }
   }
 TEST
