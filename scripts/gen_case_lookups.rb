@@ -237,10 +237,6 @@ rs.puts(<<~AUTOGEN)
   // Unicode version:
   #{casefolding_version}
 
-  use core::cmp::Ordering;
-
-  use crate::{unicode_full_case_eq, unicode_full_casecmp};
-
   #[must_use]
   #[allow(clippy::too_many_lines)]
   fn lookup_naive(c: char, buf: &mut [u8; 4]) -> &str {
@@ -273,6 +269,11 @@ rs.puts
 rs.puts(<<~TEST)
   #[cfg(test)]
   mod tests {
+      use core::cmp::Ordering;
+
+      use super::lookup_naive;
+      use crate::{unicode_full_case_eq, unicode_full_casecmp};
+
       #[test]
       fn full_case_folding() {
           let mut enc = [0; 4];
@@ -329,10 +330,6 @@ rs.puts(<<~AUTOGEN)
   // Unicode version:
   #{casefolding_version}
 
-  use core::cmp::Ordering;
-
-  use crate::{unicode_full_turkic_case_eq, unicode_full_turkic_casecmp};
-
   #[must_use]
   #[allow(clippy::too_many_lines)]
   fn lookup_naive(c: char, buf: &mut [u8; 4]) -> &str {
@@ -370,6 +367,11 @@ rs.puts
 rs.puts(<<~TEST)
   #[cfg(test)]
   mod tests {
+      use core::cmp::Ordering;
+
+      use super::lookup_naive;
+      use crate::{unicode_full_turkic_case_eq, unicode_full_turkic_casecmp};
+
       #[test]
       fn turkic_case_folding() {
           let mut enc = [0; 4];
