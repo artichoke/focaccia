@@ -119,6 +119,8 @@ use core::cmp::Ordering;
 use core::convert::TryFrom;
 use core::fmt;
 
+#[cfg(test)]
+mod exhaustive;
 mod folding;
 
 pub use folding::{
