@@ -1,6 +1,6 @@
 [package]
 name = "focaccia"
-version = "1.2.0" # remember to set `html_root_url` in `src/lib.rs`.
+version = "1.3.0" # remember to set `html_root_url` in `src/lib.rs`.
 authors = ["Ryan Lopopolo <rjl@hyperbo.la>"]
 license = "MIT AND Unicode-DFS-2016"
 edition = "2018"
