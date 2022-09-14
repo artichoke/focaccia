@@ -140,7 +140,7 @@ pub use folding::{
 ///
 /// # Examples
 ///
-/// For Unicode text, the default folding schem is [`Full`](CaseFold::Full). To
+/// For Unicode text, the default folding scheme is [`Full`](CaseFold::Full). To
 /// make a comparison:
 ///
 /// ```
@@ -614,7 +614,7 @@ mod tests {
         assert!(!buf.is_empty());
     }
 }
-// Ensure code blocks in README.md compile
+// Ensure code blocks in `README.md` compile.
 //
 // This module and macro declaration should be kept at the end of the file, in
 // order to not interfere with code coverage.

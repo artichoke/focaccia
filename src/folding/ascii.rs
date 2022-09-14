@@ -1,6 +1,6 @@
 use core::cmp::Ordering;
 
-/// Compare two bytestrings with ASCII case folding.
+/// Compare two byte strings with ASCII case folding.
 ///
 /// This function is implemented with ASCII folding functions in Rust `core`.
 ///
@@ -20,7 +20,7 @@ pub fn casecmp(left: &[u8], right: &[u8]) -> Ordering {
     left.cmp(right)
 }
 
-/// Check two bytestrings for equality with ASCII case folding.
+/// Check two byte strings for equality with ASCII case folding.
 ///
 /// This function is implemented with ASCII folding functions in Rust `core`.
 ///
