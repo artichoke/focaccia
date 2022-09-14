@@ -96,7 +96,7 @@
 //!
 //! # Unicode Version
 //!
-//! Focaccia implements Unicode case folding with the Unicode 14.0.0 case folding
+//! Focaccia implements Unicode case folding with the Unicode 15.0.0 case folding
 //! ruleset.
 //!
 //! Each new release of Unicode may bring updates to the `CaseFolding.txt` which is
@@ -110,7 +110,7 @@
 //! [`Error`]: https://doc.rust-lang.org/stable/std/error/trait.Error.html
 
 #![no_std]
-#![doc(html_root_url = "https://docs.rs/focaccia/1.2.0")]
+#![doc(html_root_url = "https://docs.rs/focaccia/1.3.0")]
 
 #[cfg(feature = "std")]
 extern crate std;
