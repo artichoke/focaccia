@@ -129,7 +129,7 @@ releases.
 
 ## Unicode Version
 
-Focaccia implements Unicode case folding with the Unicode 14.0.0 case folding
+Focaccia implements Unicode case folding with the Unicode 15.0.0 case folding
 ruleset.
 
 Each new release of Unicode may bring updates to the `CaseFolding.txt` which is
