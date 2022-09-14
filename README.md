@@ -1,6 +1,7 @@
 # focaccia
 
 [![GitHub Actions](https://github.com/artichoke/focaccia/workflows/CI/badge.svg)](https://github.com/artichoke/focaccia/actions)
+[![Code Coverage](https://codecov.artichokeruby.org/focaccia/badges/flat.svg?nocache=2)](https://codecov.artichokeruby.org/focaccia/index.html)
 [![Discord](https://img.shields.io/discord/607683947496734760)](https://discord.gg/QCe2tp2)
 [![Twitter](https://img.shields.io/twitter/follow/artichokeruby?label=Follow&style=social)](https://twitter.com/artichokeruby)
 <br>

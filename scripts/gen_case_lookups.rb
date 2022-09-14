@@ -282,36 +282,14 @@ rs.puts(<<~TEST)
           for ch in '\\0'..=char::MAX {
               let left = ch.encode_utf8(&mut enc);
               let right = lookup_naive(ch, &mut buf);
-              assert!(
-                  unicode_full_case_eq(left, right),
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  left,
-                  right,
-              );
-              assert!(
-                  unicode_full_case_eq(right, left),
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  right,
-                  left,
-              );
-              assert_eq!(
-                  unicode_full_casecmp(left, right),
-                  Ordering::Equal,
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  left,
-                  right,
-              );
-              assert_eq!(
-                  unicode_full_casecmp(right, left),
-                  Ordering::Equal,
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  right,
-                  left,
-              );
+              #[rustfmt::skip]
+              assert!(unicode_full_case_eq(left, right), "For: {}, expected: {}, got: {}.", ch, left, right);
+              #[rustfmt::skip]
+              assert!( unicode_full_case_eq(right, left), "For: {}, expected: {}, got: {}.", ch, right, left);
+              #[rustfmt::skip]
+              assert_eq!( unicode_full_casecmp(left, right), Ordering::Equal, "For: {}, expected: {}, got: {}.", ch, left, right);
+              #[rustfmt::skip]
+              assert_eq!( unicode_full_casecmp(right, left), Ordering::Equal, "For: {}, expected: {}, got: {}.", ch, right, left);
           }
       }
   }
@@ -381,36 +359,14 @@ rs.puts(<<~TEST)
           for ch in '\\0'..=char::MAX {
               let left = ch.encode_utf8(&mut enc);
               let right = lookup_naive(ch, &mut buf);
-              assert!(
-                  unicode_full_turkic_case_eq(left, right),
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  left,
-                  right,
-              );
-              assert!(
-                  unicode_full_turkic_case_eq(right, left),
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  right,
-                  left,
-              );
-              assert_eq!(
-                  unicode_full_turkic_casecmp(left, right),
-                  Ordering::Equal,
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  left,
-                  right,
-              );
-              assert_eq!(
-                  unicode_full_turkic_casecmp(right, left),
-                  Ordering::Equal,
-                  "Correctness check failed for: {}. Expected: {}. Got: {}.",
-                  ch,
-                  right,
-                  left,
-              );
+              #[rustfmt::skip]
+              assert!(unicode_full_turkic_case_eq(left, right), "For: {}, expected: {}, got: {}.", ch, left, right);
+              #[rustfmt::skip]
+              assert!(unicode_full_turkic_case_eq(right, left), "For: {}, expected: {}, got: {}.", ch, right, left);
+              #[rustfmt::skip]
+              assert_eq!(unicode_full_turkic_casecmp(left, right), Ordering::Equal, "For: {}, expected: {}, got: {}.", ch, left, right);
+              #[rustfmt::skip]
+              assert_eq!(unicode_full_turkic_casecmp(right, left), Ordering::Equal, "For: {}, expected: {}, got: {}.", ch, right, left);
           }
       }
   }

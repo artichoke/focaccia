@@ -88,6 +88,69 @@ mod tests {
     use super::Mapping;
 
     #[test]
+    #[cfg(feature = "std")]
+    fn mode_debug_is_not_empty() {
+        use std::fmt::Write;
+        use std::string::String;
+
+        use super::Mode;
+
+        let mut buf = String::new();
+        write!(&mut buf, "{:?}", Mode::Full).unwrap();
+        assert!(!buf.is_empty());
+
+        let mut buf = String::new();
+        write!(&mut buf, "{:?}", Mode::Turkic).unwrap();
+        assert!(!buf.is_empty());
+    }
+
+    #[test]
+    #[cfg(feature = "std")]
+    fn mapping_debug_is_not_empty() {
+        use std::fmt::Write;
+        use std::string::String;
+
+        let mut buf = String::new();
+        write!(&mut buf, "{:?}", Mapping::Empty).unwrap();
+        assert!(!buf.is_empty());
+
+        let mut buf = String::new();
+        write!(&mut buf, "{:?}", Mapping::Single(0)).unwrap();
+        assert!(!buf.is_empty());
+
+        let mut buf = String::new();
+        write!(&mut buf, "{:?}", Mapping::Double(0, 0)).unwrap();
+        assert!(!buf.is_empty());
+
+        let mut buf = String::new();
+        write!(&mut buf, "{:?}", Mapping::Triple(0, 0, 0)).unwrap();
+        assert!(!buf.is_empty());
+    }
+
+    #[test]
+    #[cfg(feature = "std")]
+    fn mapping_iter_debug_is_not_empty() {
+        use std::fmt::Write;
+        use std::string::String;
+
+        let mut buf = String::new();
+        write!(&mut buf, "{:?}", Mapping::Empty.into_iter()).unwrap();
+        assert!(!buf.is_empty());
+
+        let mut buf = String::new();
+        write!(&mut buf, "{:?}", Mapping::Single(0).into_iter()).unwrap();
+        assert!(!buf.is_empty());
+
+        let mut buf = String::new();
+        write!(&mut buf, "{:?}", Mapping::Double(0, 0).into_iter()).unwrap();
+        assert!(!buf.is_empty());
+
+        let mut buf = String::new();
+        write!(&mut buf, "{:?}", Mapping::Triple(0, 0, 0).into_iter()).unwrap();
+        assert!(!buf.is_empty());
+    }
+
+    #[test]
     fn mapping_single_iter() {
         let mapping = Mapping::Single(20);
         let mut iter = mapping.into_iter();
