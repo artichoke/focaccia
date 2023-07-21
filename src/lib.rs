@@ -110,7 +110,7 @@
 //! [`Error`]: https://doc.rust-lang.org/stable/std/error/trait.Error.html
 
 #![no_std]
-#![doc(html_root_url = "https://docs.rs/focaccia/1.3.2")]
+#![doc(html_root_url = "https://docs.rs/focaccia/1.4.0")]
 
 #[cfg(feature = "std")]
 extern crate std;
