@@ -64,9 +64,9 @@ last = char_mappings.keys.min
 ranges = []
 
 char_mappings.keys.sort.drop(1).each do |key|
-  if key == last + 1 \
-    && char_mappings[key][:full].length == char_mappings[last][:full].length \
-    && char_mappings[key][:full].first == char_mappings[last][:full].first + 1
+  if key == last + 1 &&
+     char_mappings[key][:full].length == char_mappings[last][:full].length &&
+     char_mappings[key][:full].first == char_mappings[last][:full].first + 1
     last = key
     next
   end
