@@ -39,7 +39,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-focaccia = "1.4.0"
+focaccia = "1.5.0"
 ```
 
 Then make case insensitive string comparisons like:
@@ -125,12 +125,12 @@ All features are enabled by default.
 
 ### Minimum Supported Rust Version
 
-This crate requires at least Rust 1.56.0. This version can be bumped in minor
+This crate requires at least Rust 1.76.0. This version can be bumped in minor
 releases.
 
 ## Unicode Version
 
-Focaccia implements Unicode case folding with the Unicode 15.0.0 case folding
+Focaccia implements Unicode case folding with the Unicode 16.0.0 case folding
 ruleset.
 
 Each new release of Unicode may bring updates to the `CaseFolding.txt` which is
