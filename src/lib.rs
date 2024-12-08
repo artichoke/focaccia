@@ -123,6 +123,19 @@ use core::fmt;
 mod exhaustive;
 mod folding;
 
+/// Focaccia is derived from Unicode Data Files and is subject to Unicode License
+/// v3.
+///
+/// See <https://www.unicode.org/terms_of_use.html>.
+///
+/// # Unicode License v3
+///
+/// ```txt
+#[doc = include_str!("../LICENSE-UNICODE")]
+/// ```
+#[cfg(doc)]
+pub mod unicode_terms {}
+
 pub use folding::{
     ascii_case_eq, ascii_casecmp, unicode_full_case_eq, unicode_full_casecmp,
     unicode_full_turkic_case_eq, unicode_full_turkic_casecmp,
