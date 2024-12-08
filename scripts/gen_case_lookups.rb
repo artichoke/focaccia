@@ -1,36 +1,35 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-# Create lookup tables and tests for Unicode Case Folding transformations using
-# the `CaseFolding.txt` Unicode Data File, which is subject to these constraints:
+# - Except where otherwise more broadly permitted or licensed:
+#   - you may not make copies of or modifications to Unicode Products for
+#     public distribution, or incorporate Unicode Products in whole or in part
+#     into any product or publication, or otherwise publicly distribute them,
+#     without the express written permission of Unicode, and
+#   - you may not copy or extract fonts or font data from any Unicode Products,
+#     including but not limited to Unicode Code Charts.
+# - All Unicode Data Files and Unicode Software are subject to the terms and
+#   conditions of the free and open-source Unicode License v3, unless otherwise
+#   indicated by specific restriction, permission, or license identified at the
+#   point of release or in such software, data file, or other documentation.
 #
-# 1. Certain documents and files on this website contain a legend indicating
-#    that "Modification is permitted." Any person is hereby authorized,
-#    without fee, to modify such documents and files to create derivative
-#    works conforming to the Unicode® Standard, subject to Terms and
-#    Conditions herein.
-# 2. Any person is hereby authorized, without fee, to view, use, reproduce,
-#    and distribute all documents and files, subject to the Terms and
-#    Conditions herein.
-# 3. Further specifications of rights and restrictions pertaining to the use
-#    of the Unicode DATA FILES and SOFTWARE can be found in the Unicode Data
-#    Files and Software License.
+# The Unicode License v3, which can be found at <https://www.unicode.org/license.txt>
+# is included in this repository. The license requires one of:
 #
-# The Unicode Data Files and Software License, which can be found at
-# <https://www.unicode.org/license.txt> is included in this repository. The
-# license requires one of:
-#
-# (a) this copyright and permission notice appear with all copies of the
-#     Data Files or Software, or
-# (b) this copyright and permission notice appear in associated Documentation.
+# (a) this copyright and permission notice appear with all copies of the Data
+#     Files or Software
+# (b) this copyright and permission notice appear in associated Documentation
 #
 # `focaccia` distributes this license as `LICENSE-UNICODE` in crate bundles
-# and includes `AND Unicode-DFS-2016` in the `Cargo.toml` SPDX license
-# expression. See: https://spdx.org/licenses/Unicode-DFS-2016.html.
+# and includes `AND Unicode-3.0` in the `Cargo.toml` SPDX license expression.
+# See: https://spdx.org/licenses/Unicode-3.0.html.
+#
+# Updates to Unicode Data Files performed by this `rake` task also update the
+# embedded license.
 #
 # The generated sources created by this script are subject to both the MIT
-# License contained in this repository, `LICENSE`, and the Unicode Data Files
-# and Software License, `LICENSE-UNICODE`.
+# License contained in this repository, `LICENSE`, and the Unicode License v3,
+# `LICENSE-UNICODE`.
 
 require 'fileutils'
 
