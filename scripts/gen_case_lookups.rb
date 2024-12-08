@@ -283,13 +283,13 @@ rs.puts(<<~TEST)
               let left = ch.encode_utf8(&mut enc);
               let right = lookup_naive(ch, &mut buf);
               #[rustfmt::skip]
-              assert!(unicode_full_case_eq(left, right), "For: {}, expected: {}, got: {}.", ch, left, right);
+              assert!(unicode_full_case_eq(left, right), "For: {ch}, expected: {left}, got: {right}.");
               #[rustfmt::skip]
-              assert!( unicode_full_case_eq(right, left), "For: {}, expected: {}, got: {}.", ch, right, left);
+              assert!(unicode_full_case_eq(right, left), "For: {ch}, expected: {right}, got: {left}.");
               #[rustfmt::skip]
-              assert_eq!( unicode_full_casecmp(left, right), Ordering::Equal, "For: {}, expected: {}, got: {}.", ch, left, right);
+              assert_eq!(unicode_full_casecmp(left, right), Ordering::Equal, "For: {ch}, expected: {left}, got: {right}.");
               #[rustfmt::skip]
-              assert_eq!( unicode_full_casecmp(right, left), Ordering::Equal, "For: {}, expected: {}, got: {}.", ch, right, left);
+              assert_eq!(unicode_full_casecmp(right, left), Ordering::Equal, "For: {ch}, expected: {right}, got: {left}.");
           }
       }
   }
@@ -360,13 +360,13 @@ rs.puts(<<~TEST)
               let left = ch.encode_utf8(&mut enc);
               let right = lookup_naive(ch, &mut buf);
               #[rustfmt::skip]
-              assert!(unicode_full_turkic_case_eq(left, right), "For: {}, expected: {}, got: {}.", ch, left, right);
+              assert!(unicode_full_turkic_case_eq(left, right), "For: {ch}, expected: {left}, got: {right}.");
               #[rustfmt::skip]
-              assert!(unicode_full_turkic_case_eq(right, left), "For: {}, expected: {}, got: {}.", ch, right, left);
+              assert!(unicode_full_turkic_case_eq(right, left), "For: {ch}, expected: {right}, got: {left}.");
               #[rustfmt::skip]
-              assert_eq!(unicode_full_turkic_casecmp(left, right), Ordering::Equal, "For: {}, expected: {}, got: {}.", ch, left, right);
+              assert_eq!(unicode_full_turkic_casecmp(left, right), Ordering::Equal, "For: {ch}, expected: {left}, got: {right}.");
               #[rustfmt::skip]
-              assert_eq!(unicode_full_turkic_casecmp(right, left), Ordering::Equal, "For: {}, expected: {}, got: {}.", ch, right, left);
+              assert_eq!(unicode_full_turkic_casecmp(right, left), Ordering::Equal, "For: {ch}, expected: {right}, got: {left}.");
           }
       }
   }

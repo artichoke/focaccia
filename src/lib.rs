@@ -96,7 +96,7 @@
 //!
 //! # Unicode Version
 //!
-//! Focaccia implements Unicode case folding with the Unicode 15.0.0 case folding
+//! Focaccia implements Unicode case folding with the Unicode 16.0.0 case folding
 //! ruleset.
 //!
 //! Each new release of Unicode may bring updates to the `CaseFolding.txt` which is
@@ -110,7 +110,7 @@
 //! [`Error`]: https://doc.rust-lang.org/stable/std/error/trait.Error.html
 
 #![no_std]
-#![doc(html_root_url = "https://docs.rs/focaccia/1.4.0")]
+#![doc(html_root_url = "https://docs.rs/focaccia/1.5.0")]
 
 #[cfg(feature = "std")]
 extern crate std;
@@ -122,6 +122,20 @@ use core::fmt;
 #[cfg(test)]
 mod exhaustive;
 mod folding;
+
+/// Focaccia is derived from Unicode Data Files and is subject to Unicode License
+/// v3.
+///
+/// See <https://www.unicode.org/terms_of_use.html>.
+///
+/// # Unicode License v3
+///
+/// ```txt
+#[doc = include_str!("../LICENSE-UNICODE")]
+/// ```
+#[cfg(doc)]
+#[cfg_attr(docsrs, doc(cfg(doc)))]
+pub mod unicode_terms {}
 
 pub use folding::{
     ascii_case_eq, ascii_casecmp, unicode_full_case_eq, unicode_full_casecmp,
@@ -610,7 +624,7 @@ mod tests {
 
         let tc = NoSuchCaseFoldingScheme::new();
         let mut buf = String::new();
-        write!(&mut buf, "{}", tc).unwrap();
+        write!(&mut buf, "{tc}").unwrap();
         assert!(!buf.is_empty());
     }
 }
