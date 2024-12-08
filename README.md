@@ -100,7 +100,7 @@ assert!(!fold.case_eq("İstanbul", "Istanbul"));
 
 ## Implementation
 
-Focaccia generates conversion tables from Unicode data files. Focaccia
+Focaccia generates conversion tables from Unicode Data Files. Focaccia
 implements case folding as defined in the [Unicode standard][casemap] (see
 [`CaseFolding.txt`]).
 
@@ -151,6 +151,6 @@ the Unicode copyright. These generated files incorporate data derived from the
 Unicode Data Files. More details about the generation process can be found in
 [`scripts/gen_case_lookups.rb`]. The generated sources created by this script
 are subject to both the MIT License contained in this repository and the Unicode
-Data Files and Software License.
+License v3.
 
 [`scripts/gen_case_lookups.rb`]: scripts/gen_case_lookups.rb
