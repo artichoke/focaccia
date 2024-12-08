@@ -134,6 +134,7 @@ mod folding;
 #[doc = include_str!("../LICENSE-UNICODE")]
 /// ```
 #[cfg(doc)]
+#[cfg_attr(docsrs, doc(cfg(doc)))]
 pub mod unicode_terms {}
 
 pub use folding::{
