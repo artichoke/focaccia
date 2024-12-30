@@ -39,7 +39,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-focaccia = "1.5.0"
+focaccia = "1.6.0"
 ```
 
 Then make case insensitive string comparisons like:
@@ -125,7 +125,7 @@ All features are enabled by default.
 
 ### Minimum Supported Rust Version
 
-This crate requires at least Rust 1.76.0. This version can be bumped in minor
+This crate requires at least Rust 1.83.0. This version can be bumped in minor
 releases.
 
 ## Unicode Version
