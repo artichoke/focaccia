@@ -39,7 +39,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-focaccia = "1.6.0"
+focaccia = "2.0.0"
 ```
 
 Then make case insensitive string comparisons like:
@@ -109,19 +109,8 @@ implements case folding as defined in the [Unicode standard][casemap] (see
 
 ## `no_std`
 
-Focaccia is `no_std` compatible with an optional and enabled by default
-dependency on `std`. Focaccia does not link to `alloc` in its `no_std`
-configuration.
-
-## Crate features
-
-All features are enabled by default.
-
-- **std** - Enable linking to the [Rust Standard Library]. Enabling this feature
-  adds [`Error`] implementations to error types in this crate.
-
-[rust standard library]: https://doc.rust-lang.org/stable/std/index.html
-[`error`]: https://doc.rust-lang.org/stable/std/error/trait.Error.html
+Focaccia is `no_std` compatible and only depends on `core`. Focaccia does not
+link to `alloc` in its `no_std` configuration.
 
 ### Minimum Supported Rust Version
 
