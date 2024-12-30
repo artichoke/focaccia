@@ -82,17 +82,8 @@
 //!
 //! # `no_std`
 //!
-//! Focaccia is `no_std` compatible. By default, Focaccia builds with its
-//! **std** feature enabled to implement [`Error`].
-//!
-//! When built without the **std** feature, Focaccia does not link to `alloc`.
-//!
-//! # Crate features
-//!
-//! All features are enabled by default.
-//!
-//! - **std** - Enable linking to the [Rust Standard Library]. Enabling this
-//!   feature adds [`Error`] implementations to error types in this crate.
+//! Focaccia is `no_std` compatible and only depends on [`core`]. Focaccia does not
+//! link to `alloc` in its `no_std` configuration.
 //!
 //! # Unicode Version
 //!
@@ -106,13 +97,11 @@
 //! [Unicode case folding]: https://www.w3.org/International/wiki/Case_folding
 //! [`Ordering`]: core::cmp::Ordering
 //! [dotted and dotless I]: https://en.wikipedia.org/wiki/Dotted_and_dotless_I
-//! [Rust Standard Library]: https://doc.rust-lang.org/stable/std/index.html
-//! [`Error`]: https://doc.rust-lang.org/stable/std/error/trait.Error.html
 
 #![no_std]
-#![doc(html_root_url = "https://docs.rs/focaccia/1.6.0")]
+#![doc(html_root_url = "https://docs.rs/focaccia/2.0.0")]
 
-#[cfg(feature = "std")]
+#[cfg(any(test, doctest))]
 extern crate std;
 
 use core::cmp::Ordering;
@@ -364,8 +353,7 @@ impl CaseFold {
 /// Error type for returned when a folding scheme could not be resolved in a
 /// [`TryFrom`] implementation.
 ///
-/// When this crate's `std` feature is enabled, `NoSuchCaseFoldingScheme`
-/// implements [`std::error::Error`].
+/// `NoSuchCaseFoldingScheme` implements [`core::error::Error`].
 ///
 /// # Examples
 ///
@@ -378,8 +366,6 @@ impl CaseFold {
 /// assert_eq!(CaseFold::try_from(Some("lithuanian")), Ok(CaseFold::Lithuanian));
 /// assert_eq!(CaseFold::try_from(Some("xxx")), Err(NoSuchCaseFoldingScheme::new()));
 /// ```
-///
-/// [`std::error::Error`]: https://doc.rust-lang.org/stable/std/error/trait.Error.html
 #[derive(Default, Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub struct NoSuchCaseFoldingScheme {
     _private: (),
@@ -407,8 +393,7 @@ impl fmt::Display for NoSuchCaseFoldingScheme {
     }
 }
 
-#[cfg(feature = "std")]
-impl std::error::Error for NoSuchCaseFoldingScheme {}
+impl core::error::Error for NoSuchCaseFoldingScheme {}
 
 impl TryFrom<Option<&str>> for CaseFold {
     type Error = NoSuchCaseFoldingScheme;
@@ -439,9 +424,7 @@ impl TryFrom<Option<&[u8]>> for CaseFold {
 mod tests {
     use core::cmp::Ordering;
 
-    use crate::CaseFold;
-    #[cfg(feature = "std")]
-    use crate::NoSuchCaseFoldingScheme;
+    use crate::{CaseFold, NoSuchCaseFoldingScheme};
 
     // https://tools.ietf.org/html/draft-josefsson-idn-test-vectors-00#section-4.2
     #[test]
@@ -617,7 +600,6 @@ mod tests {
     }
 
     #[test]
-    #[cfg(feature = "std")]
     fn error_display_is_not_empty() {
         use core::fmt::Write as _;
         use std::string::String;
@@ -628,6 +610,7 @@ mod tests {
         assert!(!buf.is_empty());
     }
 }
+
 // Ensure code blocks in `README.md` compile.
 //
 // This module and macro declaration should be kept at the end of the file, in
