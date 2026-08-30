@@ -17,7 +17,6 @@
 //
 // This approach is borrowed from tokio.
 #![cfg_attr(docsrs, feature(doc_cfg))]
-#![cfg_attr(docsrs, feature(doc_alias))]
 
 //! Unicode case folding methods for case-insensitive string comparisons.
 //!
