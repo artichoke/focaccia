@@ -5,7 +5,6 @@
 <br>
 [![Crate](https://img.shields.io/crates/v/focaccia.svg)](https://crates.io/crates/focaccia)
 [![API](https://docs.rs/focaccia/badge.svg)](https://docs.rs/focaccia)
-[![API trunk](https://img.shields.io/badge/docs-trunk-blue.svg)](https://artichoke.github.io/focaccia/focaccia/)
 
 Unicode case folding methods for case-insensitive string comparisons. Used to
 implement case folding operations on the [`Symbol`] and [`String`] classes in
