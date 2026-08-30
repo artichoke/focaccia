@@ -24,8 +24,8 @@
 # and includes `AND Unicode-3.0` in the `Cargo.toml` SPDX license expression.
 # See: https://spdx.org/licenses/Unicode-3.0.html.
 #
-# Updates to Unicode Data Files performed by this `rake` task also update the
-# embedded license.
+# Updates to Unicode Data Files performed by `scripts/update_unicode.rb` also
+# update the embedded license.
 #
 # The generated sources created by this script are subject to both the MIT
 # License contained in this repository, `LICENSE`, and the Unicode License v3,
