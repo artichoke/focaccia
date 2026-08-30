@@ -48,7 +48,7 @@ namespace :format do
 
   desc 'Format text, YAML, and Markdown sources with prettier'
   task :text do
-    sh 'npm run fmt'
+    sh 'pnpm run fmt'
   end
 end
 
@@ -63,7 +63,7 @@ namespace :fmt do
 
   desc 'Format text, YAML, and Markdown sources with prettier'
   task :text do
-    sh 'npm run fmt'
+    sh 'pnpm run fmt'
   end
 end
 
