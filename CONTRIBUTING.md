@@ -137,13 +137,6 @@ that substring match. For example, to run all of the tests for ascii casecmp:
 cargo test ascii
 ```
 
-The larger pairwise case-folding test is ignored by default. Run it explicitly
-in release mode:
-
-```sh
-cargo test --release every_pair_of_mapping_sources_and_outputs -- --ignored
-```
-
 Tests are run for every PR. All builds must pass before merging a PR.
 
 ## Publishing

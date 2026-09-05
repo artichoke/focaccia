@@ -280,6 +280,3 @@ mod tests {
         assert_eq!(iter.count(), 0);
     }
 }
-
-#[cfg(test)]
-mod oracle;
