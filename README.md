@@ -14,8 +14,8 @@ the Ruby Core implementation in [Artichoke Ruby][artichoke].
 [`string`]: https://ruby-doc.org/core-3.1.2/String.html
 [artichoke]: https://github.com/artichoke/artichoke
 
-Focaccia supports full, ASCII, and Turkic [Unicode case folding] equality and
-ordering comparisons.
+Focaccia supports full, ASCII, Turkic, and Ruby-compatible Lithuanian [Unicode
+case folding] equality and ordering comparisons.
 
 [unicode case folding]: https://www.w3.org/International/wiki/Case_folding
 
@@ -93,6 +93,21 @@ assert_ne!(fold.casecmp("İstanbul", "Istanbul"), Ordering::Equal);
 
 assert!(fold.case_eq("İstanbul", "istanbul"));
 assert!(!fold.case_eq("İstanbul", "Istanbul"));
+```
+
+Lithuanian case folding matches Ruby's current behavior: it is equivalent to
+full Unicode case folding. Context-dependent Lithuanian mappings (such as
+inserting a dot above accented I or J) and Unicode normalization are not
+applied.
+
+```rust
+use core::cmp::Ordering;
+use focaccia::{CaseFold, unicode_full_lithuanian_case_eq};
+
+let fold = CaseFold::Lithuanian;
+assert_eq!(fold.casecmp("I\u{301}", "i\u{301}"), Ordering::Equal);
+assert!(!fold.case_eq("I\u{301}", "i\u{307}\u{301}"));
+assert!(unicode_full_lithuanian_case_eq("MASSE", "Maße"));
 ```
 
 ## Implementation

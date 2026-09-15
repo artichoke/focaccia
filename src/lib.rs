@@ -20,8 +20,8 @@
 
 //! Unicode case folding methods for case-insensitive string comparisons.
 //!
-//! Focaccia supports full, ASCII, and Turkic [Unicode case folding] equality
-//! and [`Ordering`] comparisons.
+//! Focaccia supports full, ASCII, Turkic, and Ruby-compatible Lithuanian
+//! [Unicode case folding] equality and [`Ordering`] comparisons.
 //!
 //! The primary entry point to Focaccia is the [`CaseFold`] enum. Focaccia also
 //! provides free functions for each case folding scheme.
@@ -127,7 +127,8 @@ pub mod unicode_terms {}
 
 pub use folding::{
     ascii_case_eq, ascii_casecmp, unicode_full_case_eq, unicode_full_casecmp,
-    unicode_full_turkic_case_eq, unicode_full_turkic_casecmp,
+    unicode_full_lithuanian_case_eq, unicode_full_lithuanian_casecmp, unicode_full_turkic_case_eq,
+    unicode_full_turkic_casecmp,
 };
 
 /// Unicode case folding strategies.
@@ -203,9 +204,11 @@ pub enum CaseFold {
     /// Azerbaijani, ...). This means that upper case I is mapped to lower case
     /// dotless i, and so on.
     Turkic,
-    /// Currently, just full Unicode case mapping. In the future, full Unicode
-    /// case mapping adapted for Lithuanian (keeping the dot on the lower case i
-    /// even if there is an accent on top).
+    /// Full Unicode case folding, matching Ruby's current Lithuanian behavior.
+    ///
+    /// This strategy is equivalent to [`Full`](Self::Full). Context-dependent
+    /// Lithuanian mappings, such as inserting a dot above accented I or J, are
+    /// not applied. No Unicode normalization is performed.
     Lithuanian,
 }
 
@@ -295,7 +298,8 @@ impl CaseFold {
     #[must_use]
     pub fn casecmp(self, left: &str, right: &str) -> Ordering {
         match self {
-            Self::Full | Self::Lithuanian => unicode_full_casecmp(left, right),
+            Self::Full => unicode_full_casecmp(left, right),
+            Self::Lithuanian => unicode_full_lithuanian_casecmp(left, right),
             Self::Ascii => ascii_casecmp(left.as_bytes(), right.as_bytes()),
             Self::Turkic => unicode_full_turkic_casecmp(left, right),
         }
@@ -342,7 +346,8 @@ impl CaseFold {
     #[must_use]
     pub fn case_eq(self, left: &str, right: &str) -> bool {
         match self {
-            Self::Full | Self::Lithuanian => unicode_full_case_eq(left, right),
+            Self::Full => unicode_full_case_eq(left, right),
+            Self::Lithuanian => unicode_full_lithuanian_case_eq(left, right),
             Self::Ascii => ascii_case_eq(left.as_bytes(), right.as_bytes()),
             Self::Turkic => unicode_full_turkic_case_eq(left, right),
         }
