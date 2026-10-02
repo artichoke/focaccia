@@ -606,7 +606,7 @@ mod tests {
         let tc = NoSuchCaseFoldingScheme::new();
         let mut buf = String::new();
         write!(&mut buf, "{tc}").unwrap();
-        assert!(!buf.is_empty());
+        assert_ne!(buf, "");
     }
 }
 
