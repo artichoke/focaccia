@@ -94,49 +94,49 @@ mod tests {
     fn mode_debug_is_not_empty() {
         let mut buf = String::new();
         write!(&mut buf, "{:?}", Mode::Full).unwrap();
-        assert!(!buf.is_empty());
+        assert_ne!(buf, "");
 
         let mut buf = String::new();
         write!(&mut buf, "{:?}", Mode::Turkic).unwrap();
-        assert!(!buf.is_empty());
+        assert_ne!(buf, "");
     }
 
     #[test]
     fn mapping_debug_is_not_empty() {
         let mut buf = String::new();
         write!(&mut buf, "{:?}", Mapping::Empty).unwrap();
-        assert!(!buf.is_empty());
+        assert_ne!(buf, "");
 
         let mut buf = String::new();
         write!(&mut buf, "{:?}", Mapping::Single(0)).unwrap();
-        assert!(!buf.is_empty());
+        assert_ne!(buf, "");
 
         let mut buf = String::new();
         write!(&mut buf, "{:?}", Mapping::Double(0, 0)).unwrap();
-        assert!(!buf.is_empty());
+        assert_ne!(buf, "");
 
         let mut buf = String::new();
         write!(&mut buf, "{:?}", Mapping::Triple(0, 0, 0)).unwrap();
-        assert!(!buf.is_empty());
+        assert_ne!(buf, "");
     }
 
     #[test]
     fn mapping_iter_debug_is_not_empty() {
         let mut buf = String::new();
         write!(&mut buf, "{:?}", Mapping::Empty.into_iter()).unwrap();
-        assert!(!buf.is_empty());
+        assert_ne!(buf, "");
 
         let mut buf = String::new();
         write!(&mut buf, "{:?}", Mapping::Single(0).into_iter()).unwrap();
-        assert!(!buf.is_empty());
+        assert_ne!(buf, "");
 
         let mut buf = String::new();
         write!(&mut buf, "{:?}", Mapping::Double(0, 0).into_iter()).unwrap();
-        assert!(!buf.is_empty());
+        assert_ne!(buf, "");
 
         let mut buf = String::new();
         write!(&mut buf, "{:?}", Mapping::Triple(0, 0, 0).into_iter()).unwrap();
-        assert!(!buf.is_empty());
+        assert_ne!(buf, "");
     }
 
     #[test]

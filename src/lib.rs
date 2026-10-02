@@ -86,7 +86,7 @@
 //!
 //! # Unicode Version
 //!
-//! Focaccia implements Unicode case folding with the Unicode 17.0.0 case folding
+//! Focaccia implements Unicode case folding with the Unicode 18.0.0 case folding
 //! ruleset.
 //!
 //! Each new release of Unicode may bring updates to the `CaseFolding.txt` which is
@@ -98,7 +98,7 @@
 //! [dotted and dotless I]: https://en.wikipedia.org/wiki/Dotted_and_dotless_I
 
 #![no_std]
-#![doc(html_root_url = "https://docs.rs/focaccia/2.1.0")]
+#![doc(html_root_url = "https://docs.rs/focaccia/2.2.0")]
 
 #[cfg(any(test, doctest))]
 extern crate std;
@@ -606,7 +606,7 @@ mod tests {
         let tc = NoSuchCaseFoldingScheme::new();
         let mut buf = String::new();
         write!(&mut buf, "{tc}").unwrap();
-        assert!(!buf.is_empty());
+        assert_ne!(buf, "");
     }
 }
 
