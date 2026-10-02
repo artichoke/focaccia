@@ -24,8 +24,8 @@
 #     Files or Software
 # (b) this copyright and permission notice appear in associated Documentation
 #
-# `focaccia` distributes this license as `LICENSE-UNICODE` in crate bundles
-# and includes `AND Unicode-3.0` in the `Cargo.toml` SPDX license expression.
+# `focaccia` distributes this license as `LICENSE-UNICODE` in crate bundles and
+# includes `AND Unicode-3.0` in the `Cargo.toml` SPDX license expression.
 # See: https://spdx.org/licenses/Unicode-3.0.html.
 #
 # Updates to Unicode Data Files performed by this script also update the
@@ -33,14 +33,44 @@
 
 require 'open-uri'
 
-repo = File.expand_path('..', __dir__)
-downloads = {
-  'https://www.unicode.org/license.txt' => 'LICENSE-UNICODE',
-  'https://www.unicode.org/Public/UCD/latest/ucd/CaseFolding.txt' => 'CaseFolding.txt'
-}.freeze
+class UnicodeUpdater
+  LATEST_README_URL = 'https://www.unicode.org/Public/UCD/latest/ucd/ReadMe.txt'
+  LICENSE_URL = 'https://www.unicode.org/license.txt'
+  UCD_FILES = %w[CaseFolding].freeze
 
-downloads.each_pair do |url, destination|
-  URI.open(url) do |data|
-    IO.copy_stream(data, File.join(repo, destination))
+  def initialize(repo:)
+    @repo = repo
+  end
+
+  def update
+    version = latest_final_version
+    downloads(version).each_pair { |url, destination| download(url, destination) }
+  end
+
+  private
+
+  def latest_final_version
+    # Resolve the latest final release once so all inputs use the same version.
+    readme = URI.open(LATEST_README_URL, &:read)
+    version = readme[/final data files for version (\d+\.\d+\.\d+)/, 1]
+    raise 'Could not identify a final Unicode release.' unless version
+
+    version
+  end
+
+  def downloads(version)
+    files = { LICENSE_URL => 'LICENSE-UNICODE' }
+    UCD_FILES.each do |name|
+      files["https://www.unicode.org/Public/#{version}/ucd/#{name}.txt"] = "#{name}.txt"
+    end
+    files
+  end
+
+  def download(url, destination)
+    URI.open(url) do |data|
+      IO.copy_stream(data, File.join(@repo, destination))
+    end
   end
 end
+
+UnicodeUpdater.new(repo: File.expand_path('..', __dir__)).update if $PROGRAM_NAME == __FILE__
