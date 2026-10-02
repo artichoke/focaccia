@@ -27,7 +27,6 @@ Use the repository tasks:
 
 ```sh
 mise run unicode:update
-git add CaseFolding.txt LICENSE-UNICODE
 mise run unicode:build
 mise run fmt
 mise run lint
@@ -37,8 +36,8 @@ cargo package --allow-dirty
 
 Review every generated diff. Confirm the downloaded license is present in the
 crate package and that generated tables are deterministic on a second build. The
-explicit staging step is required by the generator's clean-input guard; stage
-the generated Rust tables after reviewing them.
+updater resolves the final release once before downloading versioned inputs.
+Stage the generated Rust tables after reviewing them.
 
 A Unicode data update changes observable folding behavior. Prepare the next
 minor Focaccia release unless a maintainer directs otherwise. Update

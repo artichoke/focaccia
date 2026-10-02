@@ -36,7 +36,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-focaccia = "2.1.0"
+focaccia = "2.2.0"
 ```
 
 Then make case insensitive string comparisons like:
@@ -131,7 +131,7 @@ releases.
 
 ## Unicode Version
 
-Focaccia implements Unicode case folding with the Unicode 17.0.0 case folding
+Focaccia implements Unicode case folding with the Unicode 18.0.0 case folding
 ruleset.
 
 Each new release of Unicode may bring updates to the `CaseFolding.txt` which is
