@@ -9,7 +9,7 @@ use super::full;
 /// mappings from `SpecialCasing.txt`, such as inserting a dot above accented I
 /// or J. No Unicode normalization is performed.
 ///
-/// See [Ruby's case mapping options](https://github.com/ruby/ruby/blob/v3_4_10/doc/case_mapping.rdoc#case-mapping-options).
+/// See [Ruby's case mapping options](https://docs.ruby-lang.org/en/4.0/language/case_mapping_rdoc.html#label-Case+mapping+options).
 ///
 /// # Examples
 ///
@@ -32,7 +32,7 @@ pub fn casecmp(left: &str, right: &str) -> Ordering {
 /// mappings from `SpecialCasing.txt`, such as inserting a dot above accented I
 /// or J. No Unicode normalization is performed.
 ///
-/// See [Ruby's case mapping options](https://github.com/ruby/ruby/blob/v3_4_10/doc/case_mapping.rdoc#case-mapping-options).
+/// See [Ruby's case mapping options](https://docs.ruby-lang.org/en/4.0/language/case_mapping_rdoc.html#label-Case+mapping+options).
 ///
 /// # Examples
 ///

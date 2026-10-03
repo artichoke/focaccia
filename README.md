@@ -11,7 +11,7 @@ implement case folding operations on the [`Symbol`] and [`String`] classes in
 the Ruby Core implementation in [Artichoke Ruby][artichoke].
 
 [`symbol`]: https://ruby-doc.org/core-3.1.2/Symbol.html
-[`string`]: https://ruby-doc.org/core-3.1.2/String.html
+[`string`]: https://docs.ruby-lang.org/en/4.0/String.html
 [artichoke]: https://github.com/artichoke/artichoke
 
 Focaccia supports full, ASCII, Turkic, and Ruby-compatible Lithuanian [Unicode
