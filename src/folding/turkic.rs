@@ -1,6 +1,7 @@
 use core::cmp::Ordering;
 
 use crate::folding::mapping::{Mode, lookup};
+use crate::folding::prefix::{self, Prefix};
 
 /// Compare two strings with Full Unicode case folding for Turkic languages.
 ///
@@ -29,6 +30,10 @@ use crate::folding::mapping::{Mode, lookup};
 #[inline]
 #[must_use]
 pub fn casecmp(left: &str, right: &str) -> Ordering {
+    let (left, right) = match prefix::compare(left, right, Mode::Turkic) {
+        Prefix::Complete(ordering) => return ordering,
+        Prefix::Unicode(left, right) => (left, right),
+    };
     let left = left.chars().flat_map(|c| lookup(c, Mode::Turkic));
     let right = right.chars().flat_map(|c| lookup(c, Mode::Turkic));
     left.cmp(right)
@@ -60,6 +65,10 @@ pub fn casecmp(left: &str, right: &str) -> Ordering {
 #[inline]
 #[must_use]
 pub fn case_eq(left: &str, right: &str) -> bool {
+    let (left, right) = match prefix::compare(left, right, Mode::Turkic) {
+        Prefix::Complete(ordering) => return ordering == Ordering::Equal,
+        Prefix::Unicode(left, right) => (left, right),
+    };
     let left = left.chars().flat_map(|c| lookup(c, Mode::Turkic));
     let right = right.chars().flat_map(|c| lookup(c, Mode::Turkic));
     left.eq(right)

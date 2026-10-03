@@ -4,6 +4,7 @@ mod ascii;
 mod full;
 mod lithuanian;
 mod mapping;
+mod prefix;
 mod turkic;
 
 pub use ascii::case_eq as ascii_case_eq;

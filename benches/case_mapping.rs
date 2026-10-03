@@ -49,7 +49,7 @@ fn main() {
         ),
         (
             "unicode_after_ascii",
-            "prefix: Kelvin".into(),
+            "prefix: \u{212a}elvin".into(),
             "PREFIX: kelvin".into(),
         ),
     ];
