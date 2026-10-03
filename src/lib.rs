@@ -87,7 +87,8 @@
 //! # Unicode Version
 //!
 //! Focaccia implements Unicode case folding with the Unicode 18.0.0 case folding
-//! ruleset.
+//! ruleset. [`UNICODE_VERSION`] exposes the bundled version as a tuple of
+//! major, minor, and patch components.
 //!
 //! Each new release of Unicode may bring updates to the `CaseFolding.txt` which is
 //! the source for the folding mappings in this crate. Updates to the case folding
@@ -124,6 +125,8 @@ mod folding;
 #[cfg(doc)]
 #[cfg_attr(docsrs, doc(cfg(doc)))]
 pub mod unicode_terms {}
+
+pub use folding::UNICODE_VERSION;
 
 pub use folding::{
     ascii_case_eq, ascii_casecmp, unicode_full_case_eq, unicode_full_casecmp,

@@ -11,6 +11,12 @@
 
 use super::{Mapping, Mode};
 
+/// The bundled Unicode case folding version as (major, minor, patch).
+///
+/// This version is independent of the Rust compiler's Unicode tables.
+/// Unicode updates can change comparison results and require a minor crate release.
+pub const UNICODE_VERSION: (u8, u8, u8) = (18, 0, 0);
+
 #[must_use]
 #[allow(clippy::match_same_arms)]
 #[allow(clippy::too_many_lines)]

@@ -126,7 +126,7 @@ link to `alloc` in its `no_std` configuration.
 
 ### Minimum Supported Rust Version
 
-This crate requires at least Rust 1.83.0. This version can be bumped in minor
+This crate requires at least Rust 1.85.0. This version can be bumped in minor
 releases.
 
 ## Unicode Version
