@@ -2,7 +2,7 @@ use core::iter::FusedIterator;
 
 mod lookup;
 
-pub use lookup::lookup;
+pub use lookup::{lookup, UNICODE_VERSION};
 
 #[derive(Debug, Clone, Copy)]
 pub enum Mode {

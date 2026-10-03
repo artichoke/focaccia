@@ -40,9 +40,11 @@ updater resolves the final release once before downloading versioned inputs.
 Stage the generated Rust tables after reviewing them.
 
 A Unicode data update changes observable folding behavior. Prepare the next
-minor Focaccia release unless a maintainer directs otherwise. Update
-`Cargo.toml`, README dependency examples and Unicode prose, and `html_root_url`
-together. Do not create tags, publish crates, or create GitHub releases.
+minor Focaccia release unless a maintainer directs otherwise. The generator
+updates `UNICODE_VERSION` from the CaseFolding header; confirm it matches the
+bundled data. Update `Cargo.toml`, README dependency examples and Unicode prose,
+and `html_root_url` together. Do not create tags, publish crates, or create
+GitHub releases.
 
 Open one pull request with `A-unicode`, `A-release`, `C-automation`, and
 `codex`. Include the old and new Unicode versions, authoritative source links,

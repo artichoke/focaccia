@@ -14,3 +14,5 @@ pub use lithuanian::case_eq as unicode_full_lithuanian_case_eq;
 pub use lithuanian::casecmp as unicode_full_lithuanian_casecmp;
 pub use turkic::case_eq as unicode_full_turkic_case_eq;
 pub use turkic::casecmp as unicode_full_turkic_casecmp;
+
+pub use mapping::UNICODE_VERSION;

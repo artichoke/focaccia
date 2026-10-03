@@ -35,6 +35,9 @@ require 'fileutils'
 
 mappings = File.readlines('CaseFolding.txt')
 
+unicode_version = mappings.first[/\A# CaseFolding-(\d+\.\d+\.\d+)\.txt/, 1]
+raise 'Missing Unicode case folding version.' unless unicode_version
+
 casefolding_version = mappings[0..2].map { |line| "// #{line.delete_prefix('# ')}" }.join.chomp
 
 char_mappings = Hash.new { |hash, key| hash[key] = {} }
@@ -102,6 +105,12 @@ rs.puts(<<~AUTOGEN)
   #{casefolding_version}
 
   use super::{Mapping, Mode};
+
+  /// The bundled Unicode case folding version as (major, minor, patch).
+  ///
+  /// This version is independent of the Rust compiler's Unicode tables.
+  /// Unicode updates can change comparison results and require a minor crate release.
+  pub const UNICODE_VERSION: (u8, u8, u8) = (#{unicode_version.split('.').join(', ')});
 
   #[must_use]
   #[allow(clippy::match_same_arms)]
