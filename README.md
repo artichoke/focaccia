@@ -36,7 +36,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-focaccia = "2.4.0"
+focaccia = "2.5.0"
 ```
 
 Then make case insensitive string comparisons like:
