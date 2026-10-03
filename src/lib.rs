@@ -99,7 +99,7 @@
 //! [dotted and dotless I]: https://en.wikipedia.org/wiki/Dotted_and_dotless_I
 
 #![no_std]
-#![doc(html_root_url = "https://docs.rs/focaccia/2.4.0")]
+#![doc(html_root_url = "https://docs.rs/focaccia/2.5.0")]
 
 #[cfg(any(test, doctest))]
 extern crate std;
