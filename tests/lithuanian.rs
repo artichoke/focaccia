@@ -1,6 +1,6 @@
 use core::cmp::Ordering;
 
-use focaccia::{unicode_full_lithuanian_case_eq, unicode_full_lithuanian_casecmp, CaseFold};
+use focaccia::{CaseFold, unicode_full_lithuanian_case_eq, unicode_full_lithuanian_casecmp};
 
 #[test]
 fn ruby_compatible_lithuanian_comparisons() {

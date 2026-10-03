@@ -1,6 +1,6 @@
 use core::cmp::Ordering;
 
-use crate::folding::mapping::{lookup, Mode};
+use crate::folding::mapping::{Mode, lookup};
 
 /// Compare two strings with Full Unicode case folding for Turkic languages.
 ///
