@@ -1,6 +1,7 @@
 use core::cmp::Ordering;
 
 use crate::folding::mapping::{Mode, lookup};
+use crate::folding::prefix::{self, Prefix};
 
 /// Compare two strings with Full Unicode case folding.
 ///
@@ -18,6 +19,10 @@ use crate::folding::mapping::{Mode, lookup};
 #[inline]
 #[must_use]
 pub fn casecmp(left: &str, right: &str) -> Ordering {
+    let (left, right) = match prefix::compare(left, right, Mode::Full) {
+        Prefix::Complete(ordering) => return ordering,
+        Prefix::Unicode(left, right) => (left, right),
+    };
     let left = left.chars().flat_map(|c| lookup(c, Mode::Full));
     let right = right.chars().flat_map(|c| lookup(c, Mode::Full));
     left.cmp(right)
@@ -38,6 +43,24 @@ pub fn casecmp(left: &str, right: &str) -> Ordering {
 #[inline]
 #[must_use]
 pub fn case_eq(left: &str, right: &str) -> bool {
+    // Reject an early ASCII mismatch before scanning long inputs. For entirely
+    // ASCII strings, reuse core's ASCII equality implementation.
+    match (left.as_bytes().first(), right.as_bytes().first()) {
+        (Some(left_byte), Some(right_byte)) if left_byte.is_ascii() && right_byte.is_ascii() => {
+            if !left_byte.eq_ignore_ascii_case(right_byte) {
+                return false;
+            }
+            if left.is_ascii() && right.is_ascii() {
+                return left.eq_ignore_ascii_case(right);
+            }
+        }
+        (None, _) | (_, None) => return left.is_empty() && right.is_empty(),
+        _ => {}
+    }
+    let (left, right) = match prefix::compare(left, right, Mode::Full) {
+        Prefix::Complete(ordering) => return ordering == Ordering::Equal,
+        Prefix::Unicode(left, right) => (left, right),
+    };
     let left = left.chars().flat_map(|c| lookup(c, Mode::Full));
     let right = right.chars().flat_map(|c| lookup(c, Mode::Full));
     left.eq(right)
