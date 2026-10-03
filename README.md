@@ -132,9 +132,7 @@ releases.
 ## Unicode Version
 
 Focaccia implements Unicode case folding with the Unicode 18.0.0 case folding
-ruleset. `focaccia::UNICODE_VERSION` exposes the bundled version as a
-`(u8, u8, u8)` tuple of major, minor, and patch components, independently of the
-Rust compiler's tables.
+ruleset.
 
 Each new release of Unicode may bring updates to the `CaseFolding.txt` which is
 the source for the folding mappings in this crate. Updates to the case folding
