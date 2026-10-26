@@ -139,18 +139,18 @@ jobs:
 
       - name: Setup mise
         id: mise
-        uses: ./.github/actions/setup-mise
+        uses: $/.github/actions/setup-mise
         with:
           github-token: ${{ github.token }}
 
       - name: Resolve toolchain versions
         id: toolchains
-        uses: ./.github/actions/mise-tool-versions
+        uses: $/.github/actions/mise-tool-versions
         with:
           executable: ${{ steps.mise.outputs.executable }}
 
       - name: Setup Ruby
-        uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8 # v1.327.0
+        uses: ruby/setup-ruby@26e5b7d197ebf60545ee9667bcbace0be11ccaec # v1.334.0
         with:
           ruby-version: ${{ steps.toolchains.outputs.ruby }}
 
@@ -168,13 +168,13 @@ jobs:
 
       - name: Setup mise
         id: mise
-        uses: ./.github/actions/setup-mise
+        uses: $/.github/actions/setup-mise
         with:
           github-token: ${{ github.token }}
 
       - name: Resolve toolchain versions
         id: toolchains
-        uses: ./.github/actions/mise-tool-versions
+        uses: $/.github/actions/mise-tool-versions
         with:
           executable: ${{ steps.mise.outputs.executable }}
 
@@ -184,7 +184,7 @@ jobs:
           run_install: false
 
       - name: Setup Node.js runtime
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: ${{ steps.toolchains.outputs.node }}
           cache: pnpm
