@@ -5,6 +5,7 @@ mod full;
 mod lithuanian;
 mod mapping;
 mod prefix;
+pub(crate) mod scalar;
 mod turkic;
 
 pub use ascii::case_eq as ascii_case_eq;
