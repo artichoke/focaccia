@@ -257,6 +257,46 @@ impl CaseFold {
         Self::Full
     }
 
+    /// Compare caller-decoded Unicode scalar iterators using this strategy.
+    ///
+    /// This operation streams both inputs and does not allocate. Decoding,
+    /// malformed-input policy, and deadline polling belong to the caller.
+    ///
+    /// ```
+    /// use core::cmp::Ordering;
+    /// use focaccia::CaseFold;
+    ///
+    /// assert_eq!(CaseFold::Full.casecmp_chars("Maße".chars(), ['M', 'A', 'S', 'S', 'E']), Ordering::Equal);
+    /// ```
+    #[must_use]
+    pub fn casecmp_chars<L, R>(self, left: L, right: R) -> Ordering
+    where
+        L: IntoIterator<Item = char>,
+        R: IntoIterator<Item = char>,
+    {
+        folding::scalar::casecmp(self, left, right)
+    }
+
+    /// Test caller-decoded Unicode scalar iterators for case-folded equality.
+    ///
+    /// Uses the same mappings as [`Self::case_eq`] without requiring UTF-8
+    /// input or an intermediate string.
+    ///
+    /// ```
+    /// use focaccia::CaseFold;
+    ///
+    /// let left = char::decode_utf16([0x004D, 0x0061, 0x00DF, 0x0065]).map(Result::unwrap);
+    /// assert!(CaseFold::Full.case_eq_chars(left, "MASSE".chars()));
+    /// ```
+    #[must_use]
+    pub fn case_eq_chars<L, R>(self, left: L, right: R) -> bool
+    where
+        L: IntoIterator<Item = char>,
+        R: IntoIterator<Item = char>,
+    {
+        self.casecmp_chars(left, right) == Ordering::Equal
+    }
+
     /// Make a case-insensitive string comparison based on the dispatching
     /// folding strategy.
     ///
