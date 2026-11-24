@@ -25,7 +25,7 @@ jobs:
           - name: ubuntu-latest
             runner: ubuntu-24.04
           - name: windows-latest
-            runner: windows-2025-vs2026
+            runner: windows-2025
           - name: macos-latest
             runner: macos-26
     env:
